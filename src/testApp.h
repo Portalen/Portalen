@@ -38,6 +38,13 @@ public:
     ofxOscReceiver oscRecvServer;
     ofxOscSender oscSendServer;
     
-    int remotePort;
+    int clientListenPortStart;
+    int clientSendPortStart;
+    string clientIp;
+    
     int serverListenPort;
+    string serverIp;
+    
+    bool serverConnected;
+    bool clientConnected;
 };
