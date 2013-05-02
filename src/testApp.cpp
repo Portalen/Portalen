@@ -2,37 +2,109 @@
 
 //--------------------------------------------------------------
 void testApp::setup(){
+//    string serverIp = "jive.local";
+    string serverIp = "127.0.0.1";
+    int serverPort = 8000;
+    serverListenPort = ofRandom(6001,6999);
+    
     streamerSend = new ofxStreamerSender();
-    streamerSend->setup(640, 480, "127.0.0.1", 8888);
     
     streamerRecv = new ofxStreamerReceiver();
-    streamerRecv->setup(8888);
     
     grabber = new ofVideoGrabber();
     grabber->initGrabber(640, 480);
     
     data = (unsigned char*) malloc(sizeof(char)* 640 * 480 * 3*10);
+    
+    
+    oscRecvServer.setup(serverListenPort);
+    oscSendServer.setup(serverIp, serverPort);
+    
+    
+    ofxOscMessage msg;
+    msg.setAddress("/hello");
+    msg.addIntArg(serverListenPort);
+    oscSendServer.sendMessage(msg);
+
+    
+}
+
+void testApp::connectToRemote(string remoteIp, int remotePort){
+    cout<<"Connect to other client on "<<remoteIp<<":"<<remotePort<<endl;
+    
+    oscSend.setup(remoteIp, remotePort);
+    
+    streamerSend->setup(640, 480, remoteIp, remotePort+1);
+
+}
+
+void testApp::listenOnPort(int _remotePort){
+    remotePort = _remotePort;
+    
+    cout<<"Listen on port "<<_remotePort<<endl;
+
+    oscRecv.setup(remotePort);
+    streamerRecv->setup(remotePort+1);
 
 }
 
 //--------------------------------------------------------------
 void testApp::update(){
+    
+    ofxOscMessage msg;
+    msg.setAddress("/hello");
+    msg.addIntArg(serverListenPort);
+
+/*    ofxOscBundle bundle;
+    bundle.addMessage(msg);
+
+    oscSendServer.sendBundle(bundle);
+*/
+    oscSendServer.sendMessage(msg);
+    
+    
+    ofSleepMillis(100);
+
     grabber->update();
     
-    if(grabber->isFrameNew()){
-        
-        ofBuffer buffer;
-        buffer.set((char*)data, 640 * 480 * 3);
-        
-        inputImage.setFromPixels(data, 640, 480, OF_IMAGE_COLOR);
-        
-        streamerSend->encodeFrame(grabber->getPixels(),  640 * 480 * 3);
-        streamerSend->sendFrame();
-    }
+    //   if(grabber->isFrameNew()){
+    
+    ofBuffer buffer;
+    buffer.set((char*)data, 640 * 480 * 3);
+    
+    inputImage.setFromPixels(data, 640, 480, OF_IMAGE_COLOR);
+    
+    streamerSend->encodeFrame(grabber->getPixels(),  640 * 480 * 3);
+    streamerSend->sendFrame();
+    // }
     
     
     streamerRecv->update();
+    
+    while(oscRecv.hasWaitingMessages()){
+        ofxOscMessage msg;
+        oscRecv.getNextMessage(&msg);
+        
+        cout<<msg.getAddress()<<"  "<<msg.getRemotePort()<<endl;
+    }
+    
+    while(oscRecvServer.hasWaitingMessages()){
+        ofxOscMessage msg;
+        oscRecv.getNextMessage(&msg);
 
+        cout<<"Server says: "<<msg.getAddress()<<endl;
+
+        if(msg.getAddress().compare("/setRemote") == 0){
+            connectToRemote(msg.getArgAsString(0), msg.getArgAsInt32(1));
+        }
+        
+        if(msg.getAddress().compare("/setPort") == 0){
+            listenOnPort(msg.getArgAsInt32(0));
+
+        }
+
+    }
+    
     
 }
 

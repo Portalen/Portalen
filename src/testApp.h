@@ -1,6 +1,7 @@
 #pragma once
 
 #include "ofMain.h"
+#include "ofxOsc.h"
 #include "ofxStreamer.h"
 
 class testApp : public ofBaseApp{
@@ -19,6 +20,9 @@ public:
     void dragEvent(ofDragInfo dragInfo);
     void gotMessage(ofMessage msg);
     
+    void connectToRemote(string ip, int port);
+    void listenOnPort(int localPort);
+    
     ofxStreamerReceiver * streamerRecv;
     ofxStreamerSender * streamerSend;
     
@@ -27,4 +31,13 @@ public:
     unsigned char * data ;
 
     ofVideoGrabber * grabber;
+    
+    ofxOscReceiver oscRecv;
+    ofxOscSender oscSend;
+
+    ofxOscReceiver oscRecvServer;
+    ofxOscSender oscSendServer;
+    
+    int remotePort;
+    int serverListenPort;
 };
