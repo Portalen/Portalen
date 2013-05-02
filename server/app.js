@@ -7,9 +7,7 @@ var osc = require('node-osc');
 var oscIn = new osc.Server(8000, '0.0.0.0');
 
 var Client = function(ip, port) {
-	
 	this.oscOut= new osc.Client(ip, port);
-	
 	this.port = port;
 	this.ip = ip;
 }
@@ -63,8 +61,12 @@ oscIn.on("message", function (msg, rinfo) {
 		}
   } else if (msg[0] == "/reset") {
   	reset();
-  }	  
+  } else {
+		console.log(" Jeg aner ikke hvad jeg skal med den besked. " + msg)
+	}
+	
+	
+	 
 });
-
 
 app.listen(3000);
