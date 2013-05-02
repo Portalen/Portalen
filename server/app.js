@@ -29,8 +29,9 @@ var setupClients = function() {
   	
 	if(clients.length == 2) {
 		for(var i = 0; i < 2; i++ ) {
+			
 			var client = clients[i];
-			var otherClient = clients[!i];
+			var otherClient = clients[1-i];
 						
 			client.send(osc.toBuffer("/setRemote", otherClient.ip, otherClient.dataPort));
 			client.send(osc.toBuffer("/setPort", client.dataPort));
@@ -75,11 +76,9 @@ var parseOsc =  function (msg, rinfo) {
 }
 
 oscServer.on("message", function (msg, rinfo) { 
-  try {
-		parseOsc(osc.fromBuffer(msg), rinfo);
-  } catch (error) {
-    console.log("invalid OSC packet");
-  }
+	
+	parseOsc(osc.fromBuffer(msg), rinfo);
+		
 });
 
 app.get('/', function(req, res){
