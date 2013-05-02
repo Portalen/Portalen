@@ -86,7 +86,7 @@ void testApp::update(){
 
         if(msg.getAddress().compare("/setRemote") == 0){
             cout<<msg.getArgTypeName(1)<<endl;
-            connectToRemote(msg.getArgAsString(0), atoi(msg.getArgAsString(1).c_str()));
+            connectToRemote(msg.getArgAsString(0), msg.getArgAsFloat(1));
         }
         
         if(msg.getAddress().compare("/setPort") == 0){
