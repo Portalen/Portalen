@@ -106,7 +106,15 @@ void testApp::update(){
 void testApp::draw(){
     grabber->draw(0, 0, 640, 480);
     
+    ofDrawBitmapString("FPS: "+ofToString(ofGetFrameRate(),0), 5,15);
+    ofDrawBitmapString("StreamSend FPS: "+ofToString(streamerSend->frameRate,0), 5,30);
+    ofDrawBitmapString("Listen Port: "+ofToString(clientListenPortStart), 5,45);
+    
     streamerRecv->draw(640, 0, 640, 480);
+    
+    ofDrawBitmapString("StreamRecv FPS: "+ofToString(streamerRecv->frameRate,0), 640+10,15);
+    ofDrawBitmapString("Client: "+clientIp+":"+ofToString(clientSendPortStart), 640+10,30);
+
 }
 
 //--------------------------------------------------------------
