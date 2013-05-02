@@ -43,8 +43,14 @@ app.get('/reset', function(req, res){
 });
 
 oscIn.on("message", function (msg, rinfo) {
-	if(msg[0] == "/hello") {
-		var responsePort = msg[1];
+		
+	var mI = 0; // messsage index offset for handling osc bundles 
+	if(msg[0] == "#bundle") {
+		mI = 2;
+	}
+		
+	if(msg[mI] == "/hello") {
+		var responsePort = msg[mI+1];
     console.log("Received hello from: " + rinfo.address + 
 	  			  ". Responding on port " + responsePort);
 	  
