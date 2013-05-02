@@ -19,7 +19,8 @@ var Client = function(ip, port, index) {
 	this.dataPort = 7000+index*10
 	
 	this.send = function(oscBuffer) {
-		udp.send(oscBuffer, 0, oscBuffer.length, this.dataPort, this.ip);
+		console.log("Send "+oscBuffer);
+		oscClient.send(oscBuffer, 0, oscBuffer.length, this.port, this.ip);
 	}
 }
 
@@ -28,12 +29,15 @@ var clients = [];
 var setupClients = function() {
   	
 	if(clients.length == 2) {
+		console.log("Setting up clients to talk with each other");
+		
 		for(var i = 0; i < 2; i++ ) {
 			
 			var client = clients[i];
 			var otherClient = clients[1-i];
+			console.log("Telling client "+i+" to send to "+otherClient.ip+":"+otherClient.dataPort+"  and listen on "+client.dataPort);
 						
-			client.send(osc.toBuffer("/setRemote", otherClient.ip, otherClient.dataPort));
+			client.send(osc.toBuffer("/setRemote", [otherClient.ip, otherClient.dataPort]));
 			client.send(osc.toBuffer("/setPort", client.dataPort));
 		}
 		

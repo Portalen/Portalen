@@ -80,12 +80,13 @@ void testApp::update(){
     
     while(oscRecvServer.hasWaitingMessages()){
         ofxOscMessage msg;
-        oscRecv.getNextMessage(&msg);
+        oscRecvServer.getNextMessage(&msg);
 
         cout<<"Server says: "<<msg.getAddress()<<endl;
 
         if(msg.getAddress().compare("/setRemote") == 0){
-            connectToRemote(msg.getArgAsString(0), msg.getArgAsInt32(1));
+            cout<<msg.getArgTypeName(1)<<endl;
+            connectToRemote(msg.getArgAsString(0), msg.getArgAsFloat(1));
         }
         
         if(msg.getAddress().compare("/setPort") == 0){
