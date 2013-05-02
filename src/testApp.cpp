@@ -3,12 +3,23 @@
 //--------------------------------------------------------------
 void testApp::setup(){
 //    string serverIp = "jive.local";
-    string serverIp = "127.0.0.1";
+    serverIp = "127.0.0.1";
     int serverPort = 8000;
     serverListenPort = ofRandom(6001,6999);
     
-    streamerSend = new ofxStreamerSender();
+    //Server connection
+    oscRecvServer.setup(serverListenPort);
+    oscSendServer.setup(serverIp, serverPort);
     
+    //Establish connection
+    ofxOscMessage msg;
+    msg.setAddress("/hello");
+    msg.addIntArg(serverListenPort);
+    oscSendServer.sendMessage(msg);
+    
+
+    //Video
+    streamerSend = new ofxStreamerSender();
     streamerRecv = new ofxStreamerReceiver();
     
     grabber = new ofVideoGrabber();
@@ -16,54 +27,33 @@ void testApp::setup(){
     
     data = (unsigned char*) malloc(sizeof(char)* 640 * 480 * 3*10);
     
-    
-    oscRecvServer.setup(serverListenPort);
-    oscSendServer.setup(serverIp, serverPort);
-    
-    
-    ofxOscMessage msg;
-    msg.setAddress("/hello");
-    msg.addIntArg(serverListenPort);
-    oscSendServer.sendMessage(msg);
-
-    
-}
-
-void testApp::connectToRemote(string remoteIp, int remotePort){
-    cout<<"Connect to other client on "<<remoteIp<<":"<<remotePort<<endl;
-    
-    oscSend.setup(remoteIp, remotePort);
-    
-    streamerSend->setup(640, 480, remoteIp, remotePort+1);
 
 }
 
-void testApp::listenOnPort(int _remotePort){
-    remotePort = _remotePort;
+void testApp::connectToRemote(string ip, int port){
+    clientSendPortStart = port;
+    clientIp = ip;
     
-    cout<<"Listen on port "<<_remotePort<<endl;
+    cout<<"Connect to other client on "<<clientIp<<":"<<clientSendPortStart<<endl;
+    
+    oscSend.setup(clientIp, clientSendPortStart);
+    
+    streamerSend->setup(640, 480, clientIp, clientSendPortStart+1);
 
-    oscRecv.setup(remotePort);
-    streamerRecv->setup(remotePort+1);
+}
+
+void testApp::listenOnPort(int port){
+    clientListenPortStart = port;
+    
+    cout<<"Listen on port "<<clientListenPortStart<<endl;
+
+    oscRecv.setup(clientListenPortStart);
+    streamerRecv->setup(clientListenPortStart+1);
 
 }
 
 //--------------------------------------------------------------
 void testApp::update(){
-    
-    ofxOscMessage msg;
-    msg.setAddress("/hello");
-    msg.addIntArg(serverListenPort);
-
-/*    ofxOscBundle bundle;
-    bundle.addMessage(msg);
-
-    oscSendServer.sendBundle(bundle);
-*/
-    oscSendServer.sendMessage(msg);
-    
-    
-    ofSleepMillis(100);
 
     grabber->update();
     
@@ -85,7 +75,7 @@ void testApp::update(){
         ofxOscMessage msg;
         oscRecv.getNextMessage(&msg);
         
-        cout<<msg.getAddress()<<"  "<<msg.getRemotePort()<<endl;
+        cout<<"Client says: "<<msg.getAddress()<<endl;
     }
     
     while(oscRecvServer.hasWaitingMessages()){
@@ -102,10 +92,7 @@ void testApp::update(){
             listenOnPort(msg.getArgAsInt32(0));
 
         }
-
     }
-    
-    
 }
 
 //--------------------------------------------------------------

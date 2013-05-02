@@ -50,6 +50,11 @@ var parseOsc =  function (msg, rinfo) {
 	
 	console.log("parsing message: " + util.inspect(msg));
 	
+	//If its a bundle, read the first message of the bundle
+	if(msg.oscType == "bundle"){
+		msg = msg.elements[0];
+	}
+	
 	if(msg.address == "/hello") {
 		var responsePort = msg.args[0].value;
     console.log("Received hello from: " + rinfo.address + 
