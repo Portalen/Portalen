@@ -60,24 +60,25 @@ var parseOsc =  function (msg, rinfo) {
 	}
 	
 	if(msg.address == "/hello") {
+		
 		var responsePort = msg.args[0].value;
     console.log("Received hello from: " + rinfo.address + 
 	  			  ". Responding on port " + responsePort);
 	  
 	  if(clients.length > 1) {	  	
-			console.log("Already has two clients, call /reset to reconfigure.");
-	  } else {
+			console.log("Already has two clients. Resetting...");
+			reset();
+	  }
 			
-			
-	  	var client = new Client(rinfo.address, responsePort, clients.length);
-	  	clients.push(client);
+	  var client = new Client(rinfo.address, responsePort, clients.length);
+	  clients.push(client);
 		
-	  	if(clients.length == 2) {
-				// We have 2 clients, lets set them up
-		  	setupClients();
-	  	}	
-		}
-  } else if (msg.address == "/reset") {
+	  if(clients.length == 2) {
+			// We have 2 clients, lets set them up
+		 	setupClients();
+	  }	
+	
+	} else if (msg.address == "/reset") {
   	reset();
   } else {
 		console.log("Unknown message: " + msg)
