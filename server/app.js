@@ -18,14 +18,21 @@ var clients = [];
 
 var setupClients = function() {
   	
-	for(var i = 0; i < 2; i++ ) {
-		var client = clients[i];
-		var otherClient = clients[!i];
+	if(clients.length == 2) {
+		for(var i = 0; i < 2; i++ ) {
+			var client = clients[i];
+			var otherClient = clients[!i];
 		
-		client.oscOut.send('/setRemote', otherClient.ip, 7000+i*10);
-		client.oscOut.send('/setPort', 7000+(!i)*10);   
+			client.oscOut.send('/setRemote', otherClient.ip, 7000+i*10);
+			client.oscOut.send('/setPort', 7000+(!i)*10);   
+		}
+	} else {
+		console.log("There needs to be exactly two clients");
 	}
-	
+}
+
+var reset = function() {
+	remotes = [];
 }
 
 app.get('/', function(req, res){
@@ -33,25 +40,30 @@ app.get('/', function(req, res){
 });
 
 app.get('/reset', function(req, res){
-  remotes = [];
+  reset();
   res.send('Remotes have been reset.');
 });
 
-oscIn.on("/hello", function (msg, rinfo) {
-	  
-	  var responsePort = msg[1];
-      console.log("Received hello from: " + rinfo.address + 
+oscIn.on("message", function (msg, rinfo) {
+	if(msg[0] == "/hello") {
+		var responsePort = msg[1];
+    console.log("Received hello from: " + rinfo.address + 
 	  			  ". Responding on port " + responsePort);
 	  
-	  var client = new Client(rinfo.address, responsePort);
-	  
-	  clients.push(client);
-	  
-	  if(clients.length > 1) {
-		  // We have 2 clients
-		  setupClients();
-	  }
-	  
+	  if(clients.length > 1) {	  	
+			console.log("Already has two clients, call /reset to reconfigure.");
+	  } else {
+	  	var client = new Client(rinfo.address, responsePort);
+	  	clients.push(client);
+		
+	  	if(clients.length == 2) {
+				// We have 2 clients, lets set them up
+		  	setupClients();
+	  	}	
+		}
+  } else if (msg[0] == "/reset") {
+  	reset();
+  }	  
 });
 
 
