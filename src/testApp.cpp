@@ -2,8 +2,8 @@
 
 //--------------------------------------------------------------
 void testApp::setup(){
-//    string serverIp = "jive.local";
-    serverIp = "127.0.0.1";
+    string serverIp = "jive.local";
+//    serverIp = "127.0.0.1";
     int serverPort = 8000;
     serverListenPort = ofRandom(6001,6999);
     
@@ -54,19 +54,19 @@ void testApp::listenOnPort(int port){
 
 //--------------------------------------------------------------
 void testApp::update(){
-
+    
     grabber->update();
     
-    //   if(grabber->isFrameNew()){
-    
-    ofBuffer buffer;
-    buffer.set((char*)data, 640 * 480 * 3);
-    
-    inputImage.setFromPixels(data, 640, 480, OF_IMAGE_COLOR);
-    
-    streamerSend->encodeFrame(grabber->getPixels(),  640 * 480 * 3);
-    streamerSend->sendFrame();
-    // }
+    if(grabber->isFrameNew()){
+        
+        ofBuffer buffer;
+        buffer.set((char*)data, 640 * 480 * 3);
+        
+        inputImage.setFromPixels(data, 640, 480, OF_IMAGE_COLOR);
+        
+        streamerSend->encodeFrame(grabber->getPixels(),  640 * 480 * 3);
+        streamerSend->sendFrame();
+    }
     
     
     streamerRecv->update();
@@ -85,8 +85,12 @@ void testApp::update(){
         cout<<"Server says: "<<msg.getAddress()<<endl;
 
         if(msg.getAddress().compare("/setRemote") == 0){
-            cout<<msg.getArgTypeName(1)<<endl;
-            connectToRemote(msg.getArgAsString(0), msg.getArgAsFloat(1));
+            string cIp = msg.getArgAsString(0);
+            if(cIp.compare("127.0.0.1") == 0 && msg.getRemoteIp().compare("127.0.0.1") != 0){
+                cIp = msg.getRemoteIp();
+            }
+            
+            connectToRemote(cIp, msg.getArgAsInt32(1));
         }
         
         if(msg.getAddress().compare("/setPort") == 0){
