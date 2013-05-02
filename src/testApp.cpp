@@ -27,6 +27,8 @@ void testApp::setup(){
     
     data = (unsigned char*) malloc(sizeof(char)* 640 * 480 * 3*10);
     
+    
+    ofSetFrameRate(50);
 
 }
 
@@ -57,7 +59,7 @@ void testApp::update(){
     
     grabber->update();
     
-    if(grabber->isFrameNew()){
+   // if(grabber->isFrameNew()){
         
         ofBuffer buffer;
         buffer.set((char*)data, 640 * 480 * 3);
@@ -66,7 +68,7 @@ void testApp::update(){
         
         streamerSend->encodeFrame(grabber->getPixels(),  640 * 480 * 3);
         streamerSend->sendFrame();
-    }
+    //}
     
     
     streamerRecv->update();
