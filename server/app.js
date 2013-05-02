@@ -4,16 +4,13 @@ var app = express();
 var osc = require('node-osc');
 
 //var Remote = require("../remote");
-var oscIn = new osc.Server(6000, '0.0.0.0');
+var oscIn = new osc.Server(8000, '0.0.0.0');
 
 var Client = function(ip, port) {
-	
-	
 	
 	this.oscOut= new osc.Client(ip, port);
 	
 	this.port = port;
-	
 	this.ip = ip;
 }
 
@@ -29,7 +26,6 @@ var setupClients = function() {
 		client.oscOut.send('/setPort', 7000+(!i)*10);   
 	}
 	
-
 }
 
 app.get('/', function(req, res){
@@ -42,11 +38,11 @@ app.get('/reset', function(req, res){
 });
 
 oscIn.on("/hello", function (msg, rinfo) {
-	
-      console.log("Received hello from: " + rinfo.address);
-      console.log(rinfo);	  
 	  
-	  var responsePort = msg;
+	  var responsePort = msg[1];
+      console.log("Received hello from: " + rinfo.address + 
+	  			  ". Responding on port " + responsePort);
+	  
 	  var client = new Client(rinfo.address, responsePort);
 	  
 	  clients.push(client);
