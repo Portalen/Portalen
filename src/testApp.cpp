@@ -68,6 +68,8 @@ void testApp::setup(){
         thisCamSy.setName("Portalen: Camera");
         remoteCamSy.setName("Portalen: Remote Camera");
     }
+    
+    pong.setup();
 
 }
 
@@ -144,13 +146,15 @@ void testApp::update(){
 
         }
     }
+    
+    pong.update();
 }
 
 //--------------------------------------------------------------
 void testApp::draw(){
     ofBackground(0, 0, 0);
     ofSetColor(255, 255, 255);
-    grabber->draw(220, 0, 640*0.5, 480*0.5);
+ //   grabber->draw(220, 0, 640*0.5, 480*0.5);
     tracker.draw(220, 480*0.5, 640*0.5, 480*0.5);
     
   /*  ofDrawBitmapString("FPS: "+ofToString(ofGetFrameRate(),0), 5,15);
@@ -172,6 +176,8 @@ void testApp::draw(){
             remoteCamSy.publishTexture(&streamerRecv->getTextureReference());
         }
     }
+    
+    pong.fbo.draw(220, 0, 640*0.5, 480*0.5);
 
 }
 
@@ -191,7 +197,7 @@ void testApp::keyReleased(int key){
 
 //--------------------------------------------------------------
 void testApp::mouseMoved(int x, int y){
-
+    pong.playerPosition = ofPoint((float)x/ofGetWidth(),(float)y/ofGetHeight());
 }
 
 //--------------------------------------------------------------

@@ -39,6 +39,7 @@
 		DDD7E0D91733BB0A0095FBF7 /* tinyxmlerror.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DDD7E0D31733BB0A0095FBF7 /* tinyxmlerror.cpp */; };
 		DDD7E0DA1733BB0A0095FBF7 /* tinyxmlparser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DDD7E0D41733BB0A0095FBF7 /* tinyxmlparser.cpp */; };
 		DDD7E0DB1733BB0A0095FBF7 /* ofxXmlSettings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DDD7E0D61733BB0A0095FBF7 /* ofxXmlSettings.cpp */; };
+		DDD7E0DF1733DC9E0095FBF7 /* pong.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DDD7E0DD1733DC9E0095FBF7 /* pong.cpp */; };
 		DDE4F0A41732D00100724D87 /* IpEndpointName.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DDE4F0801732D00100724D87 /* IpEndpointName.cpp */; };
 		DDE4F0A51732D00100724D87 /* NetworkingUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DDE4F0851732D00100724D87 /* NetworkingUtils.cpp */; };
 		DDE4F0A61732D00100724D87 /* UdpSocket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DDE4F0861732D00100724D87 /* UdpSocket.cpp */; };
@@ -239,6 +240,8 @@
 		DDD7E0D41733BB0A0095FBF7 /* tinyxmlparser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tinyxmlparser.cpp; sourceTree = "<group>"; };
 		DDD7E0D61733BB0A0095FBF7 /* ofxXmlSettings.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxXmlSettings.cpp; sourceTree = "<group>"; };
 		DDD7E0D71733BB0A0095FBF7 /* ofxXmlSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxXmlSettings.h; sourceTree = "<group>"; };
+		DDD7E0DD1733DC9E0095FBF7 /* pong.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = pong.cpp; sourceTree = "<group>"; };
+		DDD7E0DE1733DC9E0095FBF7 /* pong.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pong.h; sourceTree = "<group>"; };
 		DDE4F07B1732D00100724D87 /* install.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = install.xml; sourceTree = "<group>"; };
 		DDE4F0801732D00100724D87 /* IpEndpointName.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = IpEndpointName.cpp; sourceTree = "<group>"; };
 		DDE4F0811732D00100724D87 /* IpEndpointName.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IpEndpointName.h; sourceTree = "<group>"; };
@@ -1043,6 +1046,8 @@
 				E4B69E1D0A3A1BDC003C02F2 /* main.cpp */,
 				E4B69E1E0A3A1BDC003C02F2 /* testApp.cpp */,
 				E4B69E1F0A3A1BDC003C02F2 /* testApp.h */,
+				DDD7E0DE1733DC9E0095FBF7 /* pong.h */,
+				DDD7E0DD1733DC9E0095FBF7 /* pong.cpp */,
 			);
 			path = src;
 			sourceTree = SOURCE_ROOT;
@@ -1171,6 +1176,7 @@
 				044CFDE51733C7CA00AC3982 /* SyphonNameboundClient.m in Sources */,
 				044CFDE61733C7CA00AC3982 /* ofxSyphonClient.mm in Sources */,
 				044CFDE71733C7CA00AC3982 /* ofxSyphonServer.mm in Sources */,
+				DDD7E0DF1733DC9E0095FBF7 /* pong.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
