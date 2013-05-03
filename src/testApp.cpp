@@ -30,7 +30,6 @@ void testApp::setup(){
     
     data = (unsigned char*) malloc(sizeof(char)* 640 * 480 * 3*10);
 
-    ofSetFrameRate(50);
     ofSetWindowTitle("Portalen");
     
     // Syphon
@@ -162,9 +161,10 @@ void testApp::update(){
     
 
     
-    ofPoint user = ofPoint(-0.5*tracker.getX()/640.0+0.5, -0.5*tracker.getY()/480.0 + 0.5);
-    pong.playerPosition += (user-pong.playerPosition)*0.4;
-    
+    if(tracker.active){
+        ofPoint user = ofPoint(-0.5*tracker.getX()/640.0+0.5, -0.5*tracker.getY()/480.0 + 0.5);
+        pong.playerPosition += (user-pong.playerPosition)*0.4;
+    }
     pong.update();
 }
 
