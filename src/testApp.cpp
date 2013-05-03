@@ -30,10 +30,12 @@ void testApp::setup(){
     ofSetWindowTitle("Portalen");
     
     // Syphon
+    useSyphon = true;
     
-    thisCamSy.setName("Portalen: Camera");
-    remoteCamSy.setName("Portalen: Remote Camera");
-    thisOverlaySy.setName("Portalen: overlay");
+    if (useSyphon) {
+        thisCamSy.setName("Portalen: Camera");
+        remoteCamSy.setName("Portalen: Remote Camera");
+    }
 
 }
 
@@ -109,7 +111,7 @@ void testApp::update(){
 //--------------------------------------------------------------
 void testApp::draw(){
     grabber->draw(0, 0, 640, 480);
-    thisCamSy.publishTexture(&grabber->getTextureReference());
+    
     
     ofDrawBitmapString("FPS: "+ofToString(ofGetFrameRate(),0), 5,15);
     ofDrawBitmapString("StreamSend FPS: "+ofToString(streamerSend->frameRate,0), 5,30);
@@ -117,10 +119,17 @@ void testApp::draw(){
     ofDrawBitmapString("Listen Port: "+ofToString(clientListenPortStart), 5,60);
     
     streamerRecv->draw(640, 0, 640, 480);
-    remoteCamSy.publishTexture(&streamerRecv->getTextureReference());
     
     ofDrawBitmapString("StreamRecv FPS: "+ofToString(streamerRecv->frameRate,0), 640+10,15);
     ofDrawBitmapString("Client: "+clientIp+":"+ofToString(clientSendPortStart), 640+10,30);
+    
+    if (useSyphon) {
+        
+        thisCamSy.publishTexture(&grabber->getTextureReference());
+        if(streamerRecv->isConnected()) {
+            remoteCamSy.publishTexture(&streamerRecv->getTextureReference());
+        }
+    }
 
 }
 

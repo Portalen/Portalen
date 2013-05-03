@@ -49,13 +49,9 @@ public:
     bool clientConnected;
     
     // Syphon
+    bool useSyphon;
     ofxSyphonServer thisCamSy;
     ofxSyphonServer remoteCamSy;
-    ofxSyphonServer thisOverlaySy;
-    
-    ofFbo thisOverlayFbo;
-    
-    // 
     
     
 };

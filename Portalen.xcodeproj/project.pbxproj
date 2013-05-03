@@ -11,6 +11,7 @@
 		044CFDE51733C7CA00AC3982 /* SyphonNameboundClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 044CFDD71733C7CA00AC3982 /* SyphonNameboundClient.m */; };
 		044CFDE61733C7CA00AC3982 /* ofxSyphonClient.mm in Sources */ = {isa = PBXBuildFile; fileRef = 044CFDDC1733C7CA00AC3982 /* ofxSyphonClient.mm */; };
 		044CFDE71733C7CA00AC3982 /* ofxSyphonServer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 044CFDDE1733C7CA00AC3982 /* ofxSyphonServer.mm */; };
+		044CFDEE1733D23F00AC3982 /* Syphon.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 044CFDD41733C7CA00AC3982 /* Syphon.framework */; };
 		BBAB23CB13894F3D00AA2426 /* GLUT.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = BBAB23BE13894E4700AA2426 /* GLUT.framework */; };
 		DD3D66D917326BCA008698C7 /* ofxStreamerReceiver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DD3D66D517326BCA008698C7 /* ofxStreamerReceiver.cpp */; };
 		DD3D66DA17326BCA008698C7 /* ofxStreamerSender.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DD3D66D717326BCA008698C7 /* ofxStreamerSender.cpp */; };
@@ -84,6 +85,7 @@
 			dstSubfolderSpec = 10;
 			files = (
 				BBAB23CB13894F3D00AA2426 /* GLUT.framework in CopyFiles */,
+				044CFDEE1733D23F00AC3982 /* Syphon.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
