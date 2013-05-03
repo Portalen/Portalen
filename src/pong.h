@@ -9,6 +9,7 @@ public:
     ofFbo fbo;
     
     void setup();
+    void render();
     void update();
     
     

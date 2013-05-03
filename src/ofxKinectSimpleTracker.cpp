@@ -9,6 +9,8 @@
 
 #include "ofxKinectSimpleTracker.h"
 
+#define SCALE_FACTOR 0.1
+
 ofxKinectSimpleTracker::ofxKinectSimpleTracker()
 {
     kinect = new ofxKinect();
@@ -43,8 +45,8 @@ ofxKinectSimpleTracker::ofxKinectSimpleTracker()
     clientWidth=kinect->getWidth();
     clientHeight=kinect->getHeight();
     
-    x=100;
-    y=100;
+    x=320;
+    y=240;
     
     target_filter=width;
     gain=0.00001;
@@ -80,18 +82,12 @@ void ofxKinectSimpleTracker::update(){
                     
                     ofPoint cur = kinect->getWorldCoordinateAt(x, y);
                     cur += ofPoint(0,0, translateWorldZ);
+                    cur += ofPoint(translateWorldX, translateWorldY, 0);
                     cur.rotate(rotateWorldX, 0, 0);
-                    cur += ofPoint(translateWorldX+320, translateWorldY+320, 0);
-                    cur.x *= 0.5;
-                    cur.y *= 0.5;
+                    cur *= SCALE_FACTOR;
+                    cur += ofPoint(320, 320, 0);
                     
-                    if(cur.z < rooflevel){
-                        ofSetColor(255,0,0);
-                    } else if(cur.z > floorlevel){
-                        ofSetColor(0, 255, 0);
-                    } else {
-                        ofSetColor(255);
-                    }
+             
                     if(cur.x > 0 && cur.x < 640 && cur.y > 0 && cur.y  < 480){
                         rotatedPixels[int(cur.x) + 640 * int(cur.y)] = cur.z;
                     }
@@ -99,7 +95,7 @@ void ofxKinectSimpleTracker::update(){
             }
         }
 
-        
+        /*
         if(x<width/2)
             x=width/2;
         if(x>clientWidth-width/2)
@@ -108,7 +104,7 @@ void ofxKinectSimpleTracker::update(){
             y=height/2;
         if(y>clientHeight-height/2)
             y=clientHeight-height/2;
-        
+        */
         float vx=0;
         float vy=0;
         float z=0;
@@ -126,6 +122,11 @@ void ofxKinectSimpleTracker::update(){
                 //				ofPoint cur = kinect->getWorldCoordinateFor(tx, ty);
                 
                 ofPoint cur = ofPoint(tx, ty, rotatedPixels[tx+640*ty]);
+            
+            /*    cur -= ofPoint(320,240,0);
+                cur.x /= SCALE_FACTOR;
+                cur.y /= SCALE_FACTOR;
+                cur += ofPoint(320,240,0);*/
 
                 //                ofPoint cur;
                 //                cur.z = depth->getPixelDepth(tx, ty);
@@ -139,8 +140,8 @@ void ofxKinectSimpleTracker::update(){
                     n++;
                 }
                 
-                vx+=(float)tx*g;
-                vy+=(float)ty*g;
+                vx+=(float)cur.x*g;
+                vy+=(float)cur.y*g;
                 z+=g;
             }
         }
@@ -236,10 +237,10 @@ void ofxKinectSimpleTracker::renderFbo(){
     fbo->begin();{
         ofClear(0);
         ofSetColor(255,255,255);
-        //        kinect->drawDepth(0, 0, clientWidth, clientHeight);
+           //    kinect->drawDepth(0, 0, clientWidth, clientHeight);
         
         glPushMatrix();
-        //ofScale(1, 1, -1);
+        ofScale(1, 1, -1);
         //ofTranslate(translateWorldX, translateWorldY, -translateWorldZ); // center the points a bit
         
         glPointSize(2);
@@ -266,9 +267,9 @@ void ofxKinectSimpleTracker::renderFbo(){
                 ofPoint cur = ofPoint(x, y, rotatedPixels[x + 640*y]);
                 if(cur.z != 0){
                     if(cur.z < rooflevel){
-                        ofSetColor(255,0,0);
+                        ofSetColor(50,0,0);
                     } else if(cur.z > floorlevel){
-                        ofSetColor(0, 255, 0);
+                        ofSetColor(0, 50, 0);
                     } else {
                         ofSetColor(255);
                     }
@@ -294,7 +295,7 @@ void ofxKinectSimpleTracker::renderFbo(){
             ofSetColor(255, 0, 0);
         }
         ofNoFill();
-        ofRect(this->x - this->width/2,this->y - this->height/2,this->width,this->height);
+        ofRect(this->getX() - this->width/2,this->getY() - this->height/2,this->width,this->height);
         ofPopStyle();
         
         //	kinect.getDepthTextureReference().draw(0,0,kinect.width,kinect.height);
@@ -307,12 +308,12 @@ void ofxKinectSimpleTracker::renderFbo(){
         {
             
             ofSetColor(0,255,0);
-            ofEllipse(this->x,this->y,20,20);
+            ofEllipse(this->getX(),this->getY(),20,20);
         }
         else
         {
             ofSetColor(255,0,0);
-            ofRect(this->x-10,this->y-10,20,20);
+            ofRect(this->getX()-10,this->getY()-10,20,20);
         }
         ofPopStyle();
         
@@ -322,4 +323,24 @@ void ofxKinectSimpleTracker::renderFbo(){
 
 ofTexture& ofxKinectSimpleTracker::getTextureReference(){
     return fbo->getTextureReference();
+}
+
+float ofxKinectSimpleTracker::getX(){
+    float ret = x;
+    ret -= 320;
+    ret /= SCALE_FACTOR;
+    ret += 320;
+    
+    return ret;
+    
+}
+
+float ofxKinectSimpleTracker::getY(){
+    float ret = y;
+    ret -= 240;
+    ret /= SCALE_FACTOR;
+    ret += 240 ;
+    
+    return ret;
+    
 }

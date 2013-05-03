@@ -1,12 +1,12 @@
 #include "pong.h"
 
 #define PADDLE_WIDTH 0.1
-#define PADDLE_HEIGHT 0.05
+#define PADDLE_HEIGHT 0.02
 
-#define BALL_SIZE 0.05
+#define BALL_SIZE 0.02
 
 void Pong::setup(){
-    fbo.allocate(1024, 1024);
+    fbo.allocate(512, 1024);
     
     
     oscSender = nil;
@@ -15,7 +15,7 @@ void Pong::setup(){
 
 void Pong::launchBall(){
     ballPosition = ofPoint(0.5,0.5);
-    ballDir = ofVec2f(ofRandom(-1,1), ofRandom(-1,1));
+    ballDir = 0.7*ofVec2f(ofRandom(-1,1), ofRandom(-1,1));
     ballDir.normalize();
     
     publishBall();
@@ -55,35 +55,28 @@ void Pong::update(){
     }
     if(ballPosition.y > 1 &&  ballDir.y > 0){
         ballDir.y *= -1;
-    //    publishBall();
-
+        //    publishBall();
+        
     }
     
     if(ballPosition.x > playerPosition.x-PADDLE_WIDTH*0.5 &&
        ballPosition.x < playerPosition.x+PADDLE_WIDTH*0.5 &&
-       ballPosition.y > playerPosition.y &&
+       ballPosition.y > playerPosition.y-PADDLE_HEIGHT &&
        ballPosition.y < playerPosition.y+PADDLE_HEIGHT &&
        ballDir.y < 0){
         ballDir.y *= -1;
-    
+        
         publishBall();
-    
+        
     }
     
     fbo.begin();{
-        ofClear(255,0,0);
+        ofClear(0,0,0,0);
         glScaled(fbo.getWidth(), fbo.getHeight(), 1);
-        ofSetColor(255,255,255);
-        ofRect(playerPosition.x-PADDLE_WIDTH*0.5, playerPosition.y, PADDLE_WIDTH, PADDLE_HEIGHT);
-        ofRect(otherPlayerPosition.x-PADDLE_WIDTH*0.5, (1-otherPlayerPosition.y), PADDLE_WIDTH, PADDLE_HEIGHT);
-        
-        
-        ofRect(ballPosition.x-BALL_SIZE, ballPosition.y-BALL_SIZE*0.5, BALL_SIZE, BALL_SIZE);
+        render();
         
     }fbo.end();
-    
-    
-    
+       
     if(oscSender){
         ofxOscMessage msg;
         msg.setAddress("/pong/playerPosition");
@@ -94,6 +87,21 @@ void Pong::update(){
     }
     
 }
+
+
+void Pong::render(){
+    ofSetColor(255,255,255);
+    ofRect(playerPosition.x-PADDLE_WIDTH*0.5, playerPosition.y, PADDLE_WIDTH, PADDLE_HEIGHT);
+    ofRect(otherPlayerPosition.x-PADDLE_WIDTH*0.5, (1-otherPlayerPosition.y), PADDLE_WIDTH, PADDLE_HEIGHT);
+    
+    //Ball
+    ofRect(ballPosition.x-BALL_SIZE, ballPosition.y-BALL_SIZE*0.5, BALL_SIZE, BALL_SIZE);
+    
+    //Line
+    ofLine(0, 0.5, 1, 0.5);
+    
+}
+
 
 void Pong::receiveOscMessage(ofxOscMessage msg){
     cout<<"Pong message "<<msg.getAddress()<<endl;

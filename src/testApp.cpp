@@ -3,7 +3,7 @@
 //--------------------------------------------------------------
 void testApp::setup(){
     string serverIp = "jive.local";
-    serverIp = "127.0.0.1";
+//    serverIp = "127.0.0.1";
     int serverPort = 8000;
     serverListenPort = ofRandom(6001,6999);
     
@@ -34,10 +34,9 @@ void testApp::setup(){
     ofSetWindowTitle("Portalen");
     
     // Syphon
-    useSyphon = false
-    ;
+    useSyphon = true;
     
-    ofSetFrameRate(50);
+    ofSetFrameRate(40);
     
     tracker.open();
     
@@ -52,13 +51,18 @@ void testApp::setup(){
     gui->addSlider("WORLD ROTATE X", -90, 90, &tracker.rotateWorldX);
     gui->addSlider("WORLD TRANSLATE X", -640, 640, &tracker.translateWorldX);
     gui->addSlider("WORLD TRANSLATE Y", -1640, 1640, &tracker.translateWorldY);
-    gui->addSlider("WORLD TRANSLATE Z", -2000, 0, &tracker.translateWorldZ);
+    gui->addSlider("WORLD TRANSLATE Z", -8000, 0, &tracker.translateWorldZ);
 
     gui->addSpacer();
 
-    gui->addSlider("FLOOR LEVEL", -2000, 5000, &tracker.floorlevel);
-    gui->addSlider("ROOF LEVEL", -2000, 5000, &tracker.rooflevel);
+    gui->addSlider("FLOOR LEVEL", -1000, 0, &tracker.floorlevel);
+    gui->addSlider("ROOF LEVEL", -1000, 0, &tracker.rooflevel);
 
+    gui->addSpacer();
+
+    gui->addFPS();
+    
+    
     gui->loadSettings("settings.xml");
 
 
@@ -68,10 +72,13 @@ void testApp::setup(){
     if (useSyphon) {
         thisCamSy.setName("Portalen: Camera");
         remoteCamSy.setName("Portalen: Remote Camera");
+        syphonAll.setName("Portalen: The Syphon");
+        mergeFbo.allocate(1024, 1024);
     }
     
     pong.setup();
-
+    
+    
 }
 
 void testApp::guiEvent(ofxUIEventArgs &e){
@@ -104,9 +111,10 @@ void testApp::listenOnPort(int port){
 
 //--------------------------------------------------------------
 void testApp::update(){
-    
+    cout<<tracker.getX()<<"  "<<tracker.getY()<<endl;
+
     //tracker.rotateWorldX = sin(ofGetElapsedTimeMillis()/1000.0)*30;
-    //tracker.update();
+    tracker.update();
     grabber->update();
     
    // if(grabber->isFrameNew()){
@@ -160,10 +168,26 @@ void testApp::update(){
 
 //--------------------------------------------------------------
 void testApp::draw(){
+    if(useSyphon){
+        mergeFbo.begin();
+        ofClear(0,0,0,0);
+        pong.fbo.draw(0, 0, 512, 1024);
+        streamerRecv->draw(512, 0, 512, 512);
+        mergeFbo.end();
+        syphonAll.publishTexture(&mergeFbo.getTextureReference());
+
+    }
+    
+    ofPushMatrix();
     ofBackground(0, 0, 0);
     ofSetColor(255, 255, 255);
- //   grabber->draw(220, 0, 640*0.5, 480*0.5);
-    tracker.draw(220, 480*0.5, 640*0.5, 480*0.5);
+    
+    ofTranslate(220, 0);
+    tracker.draw(640, 0, 640*0.5, 480*0.5);
+    tracker.kinect->draw(640, 480*0.5, 640*0.5, 480*0.5);
+    
+    grabber->draw(640+320, 0, 640*0.5, 480*0.5);
+    
     
   /*  ofDrawBitmapString("FPS: "+ofToString(ofGetFrameRate(),0), 5,15);
    
@@ -172,20 +196,25 @@ void testApp::draw(){
     ofDrawBitmapString("Server IP: "+serverIp, 5,45);
     ofDrawBitmapString("Listen Port: "+ofToString(clientListenPortStart), 5,60);
     */
-    streamerRecv->draw(640, 0, 640, 480);
+    streamerRecv->draw(640, 480, 640, 480);
    /*
     ofDrawBitmapString("StreamRecv FPS: "+ofToString(streamerRecv->frameRate,0), 640+10,15);
     ofDrawBitmapString("Client: "+clientIp+":"+ofToString(clientSendPortStart), 640+10,30);
     */
     if (useSyphon) {
         
-        thisCamSy.publishTexture(&grabber->getTextureReference());
+        /*thisCamSy.publishTexture(&grabber->getTextureReference());
         if(streamerRecv->isConnected()) {
             remoteCamSy.publishTexture(&streamerRecv->getTextureReference());
         }
+         */
+        
+        
     }
     
-    pong.fbo.draw(220, 0, 640*0.5, 480*0.5);
+    pong.fbo.draw(0, 0, 640, 480*2);
+    
+    ofPopMatrix();
 
 }
 
@@ -207,7 +236,10 @@ void testApp::keyReleased(int key){
 
 //--------------------------------------------------------------
 void testApp::mouseMoved(int x, int y){
-    pong.playerPosition = ofPoint((float)x/ofGetWidth(),(float)y/ofGetHeight());
+    pong.playerPosition = ofPoint((float)x/ofGetWidth(),0.5*(float)y/ofGetHeight());
+    if(pong.playerPosition.y > 0.5){
+        pong.playerPosition.y = 0.5;
+    }
 }
 
 //--------------------------------------------------------------

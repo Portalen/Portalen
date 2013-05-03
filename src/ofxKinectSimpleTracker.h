@@ -34,13 +34,18 @@ public:
     
     float rooflevel;
 	float floorlevel;
+    
+    float getY();
+    float getX();
 
 private:
+    float x;
+    float y;
+    
+
     void renderFbo();
     ofFbo * fbo;
 
-	float x;
-    float y;
 
 	float default_x;
 	float default_y;

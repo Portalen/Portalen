@@ -62,6 +62,9 @@ public:
     bool useSyphon;
     ofxSyphonServer thisCamSy;
     ofxSyphonServer remoteCamSy;
+    
+    ofFbo mergeFbo;
+    ofxSyphonServer syphonAll;
 
     Pong pong;
 };
