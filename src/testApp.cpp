@@ -3,7 +3,7 @@
 //--------------------------------------------------------------
 void testApp::setup(){
     string serverIp = "jive.local";
-//  serverIp = "127.0.0.1";
+    serverIp = "127.0.0.1";
     int serverPort = 8000;
     serverListenPort = ofRandom(6001,6999);
     
@@ -34,7 +34,8 @@ void testApp::setup(){
     ofSetWindowTitle("Portalen");
     
     // Syphon
-    useSyphon = true;
+    useSyphon = false
+    ;
     
     ofSetFrameRate(50);
     
@@ -85,6 +86,9 @@ void testApp::connectToRemote(string ip, int port){
     
     oscSend.setup(clientIp, clientSendPortStart);
     streamerSend->setup(640, 480, clientIp, clientSendPortStart+1);
+    
+    pong.oscSender = &oscSend;
+
 
 }
 
@@ -102,7 +106,7 @@ void testApp::listenOnPort(int port){
 void testApp::update(){
     
     //tracker.rotateWorldX = sin(ofGetElapsedTimeMillis()/1000.0)*30;
-    tracker.update();
+    //tracker.update();
     grabber->update();
     
    // if(grabber->isFrameNew()){
@@ -124,6 +128,10 @@ void testApp::update(){
         oscRecv.getNextMessage(&msg);
         
         cout<<"Client says: "<<msg.getAddress()<<endl;
+        
+        if(msg.getAddress().find("/pong") != string::npos){
+            pong.receiveOscMessage(msg);
+        }
     }
     
     while(oscRecvServer.hasWaitingMessages()){
@@ -187,7 +195,9 @@ void testApp::exit(){
 
 //--------------------------------------------------------------
 void testApp::keyPressed(int key){
-
+    if(key == ' '){
+        pong.launchBall();
+    }
 }
 
 //--------------------------------------------------------------

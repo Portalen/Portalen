@@ -16,8 +16,11 @@ public:
     ofPoint ballPosition;
     ofVec2f ballDir;
     
+    ofPoint otherPlayerPosition;
+    
     ofxOscSender * oscSender;
     
-    void receiveOsvMessage(ofxOscMessage msg);
-    
+    void receiveOscMessage(ofxOscMessage msg);
+    void launchBall();
+    void publishBall();
 };
