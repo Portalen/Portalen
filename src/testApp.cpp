@@ -111,8 +111,6 @@ void testApp::listenOnPort(int port){
 
 //--------------------------------------------------------------
 void testApp::update(){
-    cout<<tracker.getX()<<"  "<<tracker.getY()<<endl;
-
     //tracker.rotateWorldX = sin(ofGetElapsedTimeMillis()/1000.0)*30;
     tracker.update();
     grabber->update();
@@ -159,9 +157,13 @@ void testApp::update(){
         
         if(msg.getAddress().compare("/setPort") == 0){
             listenOnPort(msg.getArgAsInt32(0));
-
         }
     }
+    
+
+    
+    ofPoint user = ofPoint(-0.5*tracker.getX()/640.0+0.5, -0.5*tracker.getY()/480.0 + 0.5);
+    pong.playerPosition += (user-pong.playerPosition)*0.4;
     
     pong.update();
 }

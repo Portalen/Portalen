@@ -2,6 +2,7 @@
 
 #include "ofxKinect.h"
 
+
 class ofxKinectSimpleTracker
 {
 public:
@@ -67,4 +68,6 @@ private:
 	float apex;
 
     int rotatedPixels[640*480];
+    
+    
 };

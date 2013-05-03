@@ -57,6 +57,7 @@ ofxKinectSimpleTracker::ofxKinectSimpleTracker()
 }
 
 
+
 bool ofxKinectSimpleTracker::open(){
     return kinect->open();
 }
@@ -69,21 +70,43 @@ void ofxKinectSimpleTracker::draw(int x, int y, int w, int h){
     fbo->draw(x, y, w, h);
 }
 
+
 void ofxKinectSimpleTracker::update(){
     kinect->update();
     
     if(kinect->isFrameNew()){
+      //  mutex.lock();
 //        memset(rotatedPixels, 0, 640*480*sizeof(int));
         std::fill(rotatedPixels, rotatedPixels+640*480, 0);
         
-        for(int y=0;y<480;y++){
-            for(int x=0;x<640;x++){
+#pragma omp parallel for
+        for(int y=0;y<480;y+=2){
+#pragma omp parallel for
+            for(int x=0;x<640;x+=2){
                 if(kinect->getDistanceAt(x, y) > 0) {
                     
                     ofPoint cur = kinect->getWorldCoordinateAt(x, y);
                     cur += ofPoint(0,0, translateWorldZ);
                     cur += ofPoint(translateWorldX, translateWorldY, 0);
+
                     cur.rotate(rotateWorldX, 0, 0);
+                    
+                    //Optimized rotate
+                 /*  float a = (float)cos(DEG_TO_RAD*(rotateWorldX));
+                    float b = (float)sin(DEG_TO_RAD*(rotateWorldX));
+                    float c = 1;
+                    float d = 0;
+                    float e = 1;
+                    float f = 0;
+                    
+                    float nx = c * e * cur.x - c * f * cur.y + d * cur.z;
+                    float ny = (a * f + b * d * e) * cur.x + (a * e - b * d * f) * cur.y - b * c * cur.z;
+                    float nz = (b * f - a * d * e) * cur.x + (a * d * f + b * e) * cur.y + a * c * cur.z;
+                    
+                    cur.x = nx; cur.y = ny; cur.z = nz;
+                    */
+                    
+                    
                     cur *= SCALE_FACTOR;
                     cur += ofPoint(320, 320, 0);
                     
@@ -95,7 +118,7 @@ void ofxKinectSimpleTracker::update(){
             }
         }
 
-        /*
+        
         if(x<width/2)
             x=width/2;
         if(x>clientWidth-width/2)
@@ -104,7 +127,7 @@ void ofxKinectSimpleTracker::update(){
             y=height/2;
         if(y>clientHeight-height/2)
             y=clientHeight-height/2;
-        */
+        
         float vx=0;
         float vy=0;
         float z=0;
@@ -226,6 +249,8 @@ void ofxKinectSimpleTracker::update(){
         
         */
         renderFbo();
+        
+      //  mutex.unlock();
     }
 }
 
@@ -295,7 +320,7 @@ void ofxKinectSimpleTracker::renderFbo(){
             ofSetColor(255, 0, 0);
         }
         ofNoFill();
-        ofRect(this->getX() - this->width/2,this->getY() - this->height/2,this->width,this->height);
+        ofRect(this->getX()+320 - this->width/2,this->getY()+240 - this->height/2,this->width,this->height);
         ofPopStyle();
         
         //	kinect.getDepthTextureReference().draw(0,0,kinect.width,kinect.height);
@@ -308,12 +333,12 @@ void ofxKinectSimpleTracker::renderFbo(){
         {
             
             ofSetColor(0,255,0);
-            ofEllipse(this->getX(),this->getY(),20,20);
+            ofEllipse(this->getX()+320,this->getY()+240,20,20);
         }
         else
         {
             ofSetColor(255,0,0);
-            ofRect(this->getX()-10,this->getY()-10,20,20);
+            ofRect(this->getX()-10+320,this->getY()+240-10,20,20);
         }
         ofPopStyle();
         
@@ -329,7 +354,6 @@ float ofxKinectSimpleTracker::getX(){
     float ret = x;
     ret -= 320;
     ret /= SCALE_FACTOR;
-    ret += 320;
     
     return ret;
     
@@ -339,8 +363,7 @@ float ofxKinectSimpleTracker::getY(){
     float ret = y;
     ret -= 240;
     ret /= SCALE_FACTOR;
-    ret += 240 ;
-    
+
     return ret;
     
 }

@@ -1,7 +1,7 @@
 #include "pong.h"
 
-#define PADDLE_WIDTH 0.1
-#define PADDLE_HEIGHT 0.02
+#define PADDLE_WIDTH 0.2
+#define PADDLE_HEIGHT 0.03
 
 #define BALL_SIZE 0.02
 
@@ -15,8 +15,10 @@ void Pong::setup(){
 
 void Pong::launchBall(){
     ballPosition = ofPoint(0.5,0.5);
-    ballDir = 0.7*ofVec2f(ofRandom(-1,1), ofRandom(-1,1));
+    ballDir = ofVec2f(ofRandom(-1,1), ofRandom(-1,1));
     ballDir.normalize();
+    
+    ballDir *= 0.3;
     
     publishBall();
 }
@@ -112,7 +114,6 @@ void Pong::receiveOscMessage(ofxOscMessage msg){
         ballDir.x = msg.getArgAsFloat(2);
         ballDir.y = -1*msg.getArgAsFloat(3);
         
-        ballDir.normalize();
     }
     
     if(msg.getAddress().compare("/pong/playerPosition") == 0){
