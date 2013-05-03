@@ -3,6 +3,7 @@
 #include "ofMain.h"
 #include "ofxOsc.h"
 #include "ofxStreamer.h"
+#include "ofxKinectSimpleTracker.h"
 
 class testApp : public ofBaseApp{
 public:
@@ -47,4 +48,6 @@ public:
     
     bool serverConnected;
     bool clientConnected;
+    
+    ofxKinectSimpleTracker tracker;
 };

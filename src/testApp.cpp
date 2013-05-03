@@ -22,13 +22,19 @@ void testApp::setup(){
     streamerSend = new ofxStreamerSender();
     streamerRecv = new ofxStreamerReceiver();
     
+    
+    ofSetLogLevel(OF_LOG_VERBOSE);
     grabber = new ofVideoGrabber();
+    grabber->listDevices();
     grabber->initGrabber(640, 480);
+
     
     data = (unsigned char*) malloc(sizeof(char)* 640 * 480 * 3*10);
     
     
     ofSetFrameRate(50);
+    
+    tracker.open();
 
 }
 
@@ -56,7 +62,7 @@ void testApp::listenOnPort(int port){
 
 //--------------------------------------------------------------
 void testApp::update(){
-    
+    tracker.update();
     grabber->update();
     
    // if(grabber->isFrameNew()){
@@ -104,7 +110,8 @@ void testApp::update(){
 
 //--------------------------------------------------------------
 void testApp::draw(){
-    grabber->draw(0, 0, 640, 480);
+    grabber->draw(0, 0, 640*0.5, 480*0.5);
+    tracker.draw(0, 480*0.5, 640*0.5, 480*0.5);
     
     ofDrawBitmapString("FPS: "+ofToString(ofGetFrameRate(),0), 5,15);
     ofDrawBitmapString("StreamSend FPS: "+ofToString(streamerSend->frameRate,0), 5,30);
