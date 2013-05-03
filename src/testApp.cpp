@@ -3,7 +3,7 @@
 //--------------------------------------------------------------
 void testApp::setup(){
     string serverIp = "jive.local";
-//    serverIp = "127.0.0.1";
+//  serverIp = "127.0.0.1";
     int serverPort = 8000;
     serverListenPort = ofRandom(6001,6999);
     
@@ -16,7 +16,6 @@ void testApp::setup(){
     msg.setAddress("/hello");
     msg.addIntArg(serverListenPort);
     oscSendServer.sendMessage(msg);
-    
 
     //Video
     streamerSend = new ofxStreamerSender();
@@ -30,7 +29,12 @@ void testApp::setup(){
 
     
     data = (unsigned char*) malloc(sizeof(char)* 640 * 480 * 3*10);
+
+    ofSetFrameRate(50);
+    ofSetWindowTitle("Portalen");
     
+    // Syphon
+    useSyphon = true;
     
     ofSetFrameRate(50);
     
@@ -60,6 +64,10 @@ void testApp::setup(){
     gui->setColorBack(ofColor(255,100));
     gui->setWidgetColor(OFX_UI_WIDGET_COLOR_BACK, ofColor(255,100));
 
+    if (useSyphon) {
+        thisCamSy.setName("Portalen: Camera");
+        remoteCamSy.setName("Portalen: Remote Camera");
+    }
 
 }
 
@@ -74,7 +82,6 @@ void testApp::connectToRemote(string ip, int port){
     cout<<"Connect to other client on "<<clientIp<<":"<<clientSendPortStart<<endl;
     
     oscSend.setup(clientIp, clientSendPortStart);
-    
     streamerSend->setup(640, 480, clientIp, clientSendPortStart+1);
 
 }
@@ -147,14 +154,24 @@ void testApp::draw(){
     tracker.draw(220, 480*0.5, 640*0.5, 480*0.5);
     
   /*  ofDrawBitmapString("FPS: "+ofToString(ofGetFrameRate(),0), 5,15);
+   
+    ofDrawBitmapString("FPS: "+ofToString(ofGetFrameRate(),0), 5,15);
     ofDrawBitmapString("StreamSend FPS: "+ofToString(streamerSend->frameRate,0), 5,30);
     ofDrawBitmapString("Server IP: "+serverIp, 5,45);
     ofDrawBitmapString("Listen Port: "+ofToString(clientListenPortStart), 5,60);
     */
     streamerRecv->draw(640, 0, 640, 480);
-    
+   /*
     ofDrawBitmapString("StreamRecv FPS: "+ofToString(streamerRecv->frameRate,0), 640+10,15);
     ofDrawBitmapString("Client: "+clientIp+":"+ofToString(clientSendPortStart), 640+10,30);
+    */
+    if (useSyphon) {
+        
+        thisCamSy.publishTexture(&grabber->getTextureReference());
+        if(streamerRecv->isConnected()) {
+            remoteCamSy.publishTexture(&streamerRecv->getTextureReference());
+        }
+    }
 
 }
 

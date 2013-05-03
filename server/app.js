@@ -5,12 +5,20 @@ var osc = require('osc-min');
 var dgram = require('dgram')
 var util = require("util");
 
+var pub = __dirname + '/public';
 
 var inPort = 8000;
 var httpPort = 3000;
 
 var oscServer = dgram.createSocket("udp4");
 var oscClient = dgram.createSocket("udp4");
+
+app.use(app.router);
+app.use(express.static(pub));
+app.use(express.errorHandler());
+
+app.set('views', __dirname + '/views');
+app.set('view engine', 'jade');
 
 var Client = function(ip, port, index) {
 	this.index = index;
@@ -26,34 +34,27 @@ var Client = function(ip, port, index) {
 
 var clients = [];
 
-var setupClients = function() {
-  	
+var setupClients = function() { 
 	if(clients.length == 2) {
 		console.log("Setting up clients to talk with each other");
 		
 		for(var i = 0; i < 2; i++ ) {
-			
 			var client = clients[i];
 			var otherClient = clients[1-i];
 			console.log("Telling client "+i+" to send to "+otherClient.ip+":"+otherClient.dataPort+"  and listen on "+client.dataPort);
 						
 			client.send(osc.toBuffer("/setRemote", [otherClient.ip, otherClient.dataPort]));
 			client.send(osc.toBuffer("/setPort", client.dataPort));
-		}
-		
-	} else {
-		console.log("There needs to be exactly two clients");
+		}	
 	}
 }
 
 var reset = function() {
-	remotes = [];
+	clients = [];
 }
 
 var parseOsc =  function (msg, rinfo) {
-	
-	console.log("parsing message: " + util.inspect(msg));
-	
+		
 	//If its a bundle, read the first message of the bundle
 	if(msg.oscType == "bundle"){
 		msg = msg.elements[0];
@@ -86,13 +87,11 @@ var parseOsc =  function (msg, rinfo) {
 }
 
 oscServer.on("message", function (msg, rinfo) { 
-	
 	parseOsc(osc.fromBuffer(msg), rinfo);
-		
 });
 
 app.get('/', function(req, res){
-  res.render("index.html");
+  res.render("index.html", {clients: clients} );
 });
 
 app.get('/reset', function(req, res){

@@ -2,6 +2,7 @@
 
 #include "ofMain.h"
 #include "ofxOsc.h"
+#include "ofxSyphon.h"
 #include "ofxStreamer.h"
 #include "ofxKinectSimpleTracker.h"
 #include "ofxUI.h"
@@ -29,7 +30,6 @@ public:
     ofxStreamerReceiver * streamerRecv;
     ofxStreamerSender * streamerSend;
     
-    
     ofImage inputImage;
     unsigned char * data ;
 
@@ -56,4 +56,10 @@ public:
     ofxUICanvas *gui;
 	void guiEvent(ofxUIEventArgs &e);
 
+    // Syphon
+    bool useSyphon;
+    ofxSyphonServer thisCamSy;
+    ofxSyphonServer remoteCamSy;
+
+    
 };
