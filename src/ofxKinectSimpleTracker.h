@@ -26,6 +26,15 @@ public:
 	float offset;
     
     
+    float rotateWorldX;
+    float translateWorldX;
+    float translateWorldY;
+    float translateWorldZ;
+    
+    
+    float rooflevel;
+	float floorlevel;
+
 private:
     void renderFbo();
     ofFbo * fbo;
@@ -50,9 +59,7 @@ private:
 	int clientWidth;
     int clientHeight;
 
-	float rooflevel;
-	float floorlevel;
 	float apex;
 
-
+    int rotatedPixels[640*480];
 };

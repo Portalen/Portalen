@@ -71,6 +71,34 @@ void ofxKinectSimpleTracker::update(){
     kinect->update();
     
     if(kinect->isFrameNew()){
+//        memset(rotatedPixels, 0, 640*480*sizeof(int));
+        std::fill(rotatedPixels, rotatedPixels+640*480, 0);
+        
+        for(int y=0;y<480;y++){
+            for(int x=0;x<640;x++){
+                if(kinect->getDistanceAt(x, y) > 0) {
+                    
+                    ofPoint cur = kinect->getWorldCoordinateAt(x, y);
+                    cur += ofPoint(0,0, translateWorldZ);
+                    cur.rotate(rotateWorldX, 0, 0);
+                    cur += ofPoint(translateWorldX+320, translateWorldY+320, 0);
+                    cur.x *= 0.5;
+                    cur.y *= 0.5;
+                    
+                    if(cur.z < rooflevel){
+                        ofSetColor(255,0,0);
+                    } else if(cur.z > floorlevel){
+                        ofSetColor(0, 255, 0);
+                    } else {
+                        ofSetColor(255);
+                    }
+                    if(cur.x > 0 && cur.x < 640 && cur.y > 0 && cur.y  < 480){
+                        rotatedPixels[int(cur.x) + 640 * int(cur.y)] = cur.z;
+                    }
+                }
+            }
+        }
+
         
         if(x<width/2)
             x=width/2;
@@ -97,7 +125,8 @@ void ofxKinectSimpleTracker::update(){
                 
                 //				ofPoint cur = kinect->getWorldCoordinateFor(tx, ty);
                 
-                ofPoint cur = kinect->getWorldCoordinateAt(tx,ty,0);
+                ofPoint cur = ofPoint(tx, ty, rotatedPixels[tx+640*ty]);
+
                 //                ofPoint cur;
                 //                cur.z = depth->getPixelDepth(tx, ty);
                 
@@ -183,7 +212,7 @@ void ofxKinectSimpleTracker::update(){
         //		 y=clientHeight-height/2;
         //
         
-        float xp=x-clientWidth/2.0;
+        /*float xp=x-clientWidth/2.0;
         float yp=y-clientHeight/2.0;
         
         azimuth=ofRadToDeg(atan2(xp,-yp))+offset;
@@ -194,7 +223,7 @@ void ofxKinectSimpleTracker::update(){
         
         radius=radius/((clientHeight/2.0)-width/2.0);
         
-        
+        */
         renderFbo();
     }
 }
@@ -203,12 +232,60 @@ void ofxKinectSimpleTracker::update(){
 
 
 void ofxKinectSimpleTracker::renderFbo(){
+    
     fbo->begin();{
+        ofClear(0);
         ofSetColor(255,255,255);
-        kinect->drawDepth(0, 0, clientWidth, clientHeight);
+        //        kinect->drawDepth(0, 0, clientWidth, clientHeight);
         
-        ofPushStyle();
-        if(this->active)
+        glPushMatrix();
+        //ofScale(1, 1, -1);
+        //ofTranslate(translateWorldX, translateWorldY, -translateWorldZ); // center the points a bit
+        
+        glPointSize(2);
+        glBegin(GL_POINTS);
+        for(int y=0;y<kinect->height;y++){
+            for(int x=0;x<kinect->width;x++){
+                /*if(kinect->getDistanceAt(x, y) > 0) {
+                    
+                    ofPoint cur = kinect->getWorldCoordinateAt(x, y);
+                    cur += ofPoint(0,0, translateWorldZ);
+                    cur.rotate(rotateWorldX, 0, 0);
+                    cur += ofPoint(translateWorldX+320, translateWorldY+320, 0);
+
+                    if(cur.z < rooflevel){
+                        ofSetColor(255,0,0);
+                    } else if(cur.z > floorlevel){
+                        ofSetColor(0, 255, 0);
+                    } else {
+                        ofSetColor(255);
+                    }
+                    glVertex3d(cur.x, cur.y, cur.z);
+                }*/
+                
+                ofPoint cur = ofPoint(x, y, rotatedPixels[x + 640*y]);
+                if(cur.z != 0){
+                    if(cur.z < rooflevel){
+                        ofSetColor(255,0,0);
+                    } else if(cur.z > floorlevel){
+                        ofSetColor(0, 255, 0);
+                    } else {
+                        ofSetColor(255);
+                    }
+                    
+                    glVertex3d(cur.x, cur.y, cur.z);
+                }
+            }
+        }
+        glEnd();
+        glPopMatrix();
+        glPointSize(1);
+        
+        
+        glPushMatrix();
+        glTranslated(0, 0, 0.5*(floorlevel+rooflevel));
+         ofPushStyle();
+         if(this->active)
         {
             ofSetColor(0, 255, 0);
         }
@@ -238,6 +315,8 @@ void ofxKinectSimpleTracker::renderFbo(){
             ofRect(this->x-10,this->y-10,20,20);
         }
         ofPopStyle();
+        
+        glPopMatrix();
     } fbo->end();
 }
 

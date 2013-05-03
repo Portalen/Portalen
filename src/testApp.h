@@ -4,6 +4,7 @@
 #include "ofxOsc.h"
 #include "ofxStreamer.h"
 #include "ofxKinectSimpleTracker.h"
+#include "ofxUI.h"
 
 class testApp : public ofBaseApp{
 public:
@@ -20,6 +21,7 @@ public:
     void windowResized(int w, int h);
     void dragEvent(ofDragInfo dragInfo);
     void gotMessage(ofMessage msg);
+    void exit();
     
     void connectToRemote(string ip, int port);
     void listenOnPort(int localPort);
@@ -50,4 +52,8 @@ public:
     bool clientConnected;
     
     ofxKinectSimpleTracker tracker;
+    
+    ofxUICanvas *gui;
+	void guiEvent(ofxUIEventArgs &e);
+
 };
