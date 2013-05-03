@@ -27,11 +27,13 @@ void testApp::setup(){
     data = (unsigned char*) malloc(sizeof(char)* 640 * 480 * 3*10);
 
     ofSetFrameRate(50);
-    
     ofSetWindowTitle("Portalen");
     
-    // syphon
-    syphonOut.setName("Remote");
+    // Syphon
+    
+    thisCamSy.setName("Portalen: Camera");
+    remoteCamSy.setName("Portalen: Remote Camera");
+    thisOverlaySy.setName("Portalen: overlay");
 
 }
 
@@ -42,7 +44,6 @@ void testApp::connectToRemote(string ip, int port){
     cout<<"Connect to other client on "<<clientIp<<":"<<clientSendPortStart<<endl;
     
     oscSend.setup(clientIp, clientSendPortStart);
-    
     streamerSend->setup(640, 480, clientIp, clientSendPortStart+1);
 
 }
@@ -108,12 +109,14 @@ void testApp::update(){
 //--------------------------------------------------------------
 void testApp::draw(){
     grabber->draw(0, 0, 640, 480);
+    thisCamSy.publishTexture(&grabber->getTextureReference());
     
     ofDrawBitmapString("FPS: "+ofToString(ofGetFrameRate(),0), 5,15);
     ofDrawBitmapString("StreamSend FPS: "+ofToString(streamerSend->frameRate,0), 5,30);
     ofDrawBitmapString("Listen Port: "+ofToString(clientListenPortStart), 5,45);
     
     streamerRecv->draw(640, 0, 640, 480);
+    remoteCamSy.publishTexture(&streamerRecv->getTextureReference());
     
     ofDrawBitmapString("StreamRecv FPS: "+ofToString(streamerRecv->frameRate,0), 640+10,15);
     ofDrawBitmapString("Client: "+clientIp+":"+ofToString(clientSendPortStart), 640+10,30);
