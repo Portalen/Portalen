@@ -2,6 +2,7 @@
 
 #include "ofMain.h"
 #include "ofxOsc.h"
+#include "ofxSyphon.h"
 #include "ofxStreamer.h"
 
 class testApp : public ofBaseApp{
@@ -26,7 +27,6 @@ public:
     ofxStreamerReceiver * streamerRecv;
     ofxStreamerSender * streamerSend;
     
-    
     ofImage inputImage;
     unsigned char * data ;
 
@@ -47,4 +47,10 @@ public:
     
     bool serverConnected;
     bool clientConnected;
+    
+    // Syphon
+    ofxSyphonServer syphonOut;
+    ofFbo fboOut;
+    
+    
 };

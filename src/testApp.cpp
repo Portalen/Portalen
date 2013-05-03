@@ -3,7 +3,7 @@
 //--------------------------------------------------------------
 void testApp::setup(){
     string serverIp = "jive.local";
-//    serverIp = "127.0.0.1";
+//  serverIp = "127.0.0.1";
     int serverPort = 8000;
     serverListenPort = ofRandom(6001,6999);
     
@@ -16,7 +16,6 @@ void testApp::setup(){
     msg.setAddress("/hello");
     msg.addIntArg(serverListenPort);
     oscSendServer.sendMessage(msg);
-    
 
     //Video
     streamerSend = new ofxStreamerSender();
@@ -26,9 +25,13 @@ void testApp::setup(){
     grabber->initGrabber(640, 480);
     
     data = (unsigned char*) malloc(sizeof(char)* 640 * 480 * 3*10);
-    
-    
+
     ofSetFrameRate(50);
+    
+    ofSetWindowTitle("Portalen");
+    
+    // syphon
+    syphonOut.setName("Remote");
 
 }
 
