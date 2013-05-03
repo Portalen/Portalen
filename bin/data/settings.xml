@@ -1,0 +1,30 @@
+<Widget>
+    <Kind>4</Kind>
+    <Name>WORLD ROTATE X</Name>
+    <Value>54.532028198</Value>
+</Widget>
+<Widget>
+    <Kind>4</Kind>
+    <Name>WORLD TRANSLATE X</Name>
+    <Value>-173.399017334</Value>
+</Widget>
+<Widget>
+    <Kind>4</Kind>
+    <Name>WORLD TRANSLATE Y</Name>
+    <Value>-1640.000000000</Value>
+</Widget>
+<Widget>
+    <Kind>4</Kind>
+    <Name>WORLD TRANSLATE Z</Name>
+    <Value>-3704.433593750</Value>
+</Widget>
+<Widget>
+    <Kind>4</Kind>
+    <Name>FLOOR LEVEL</Name>
+    <Value>-133.004882812</Value>
+</Widget>
+<Widget>
+    <Kind>4</Kind>
+    <Name>ROOF LEVEL</Name>
+    <Value>-1000.000000000</Value>
+</Widget>
