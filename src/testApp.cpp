@@ -162,7 +162,7 @@ void testApp::update(){
 
     
     if(tracker.active){
-        ofPoint user = ofPoint(-0.5*tracker.getX()/640.0+0.5, -0.5*tracker.getY()/480.0 + 0.5);
+        ofPoint user = ofPoint(-0.4*tracker.getX()/640.0+0.5, -0.2*tracker.getY()/480.0 + 0.5);
         pong.playerPosition += (user-pong.playerPosition)*0.4;
     }
     pong.update();

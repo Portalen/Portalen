@@ -1,6 +1,6 @@
 #include "pong.h"
 
-#define PADDLE_WIDTH 0.2
+#define PADDLE_WIDTH 0.3
 #define PADDLE_HEIGHT 0.03
 
 #define BALL_SIZE 0.02
