@@ -1,6 +1,8 @@
 #pragma once
 
 #include "ofMain.h"
+#include "pong.h"
+
 #include "ofxOsc.h"
 #include "ofxSyphon.h"
 #include "ofxStreamer.h"
@@ -61,5 +63,5 @@ public:
     ofxSyphonServer thisCamSy;
     ofxSyphonServer remoteCamSy;
 
-    
+    Pong pong;
 };
