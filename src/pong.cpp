@@ -66,7 +66,7 @@ void Pong::update(){
        ballPosition.y > playerPosition.y-PADDLE_HEIGHT &&
        ballPosition.y < playerPosition.y+PADDLE_HEIGHT &&
        ballDir.y < 0){
-        ballDir.y *= -1;
+        ballDir.y *= -1.1;
         
         publishBall();
         

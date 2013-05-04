@@ -28,6 +28,7 @@ public:
     
     
     float rotateWorldX;
+    float rotateWorldZ;
     float translateWorldX;
     float translateWorldY;
     float translateWorldZ;
@@ -39,9 +40,10 @@ public:
     float getY();
     float getX();
 
-private:
     float x;
     float y;
+
+private:
     
 
     void renderFbo();
