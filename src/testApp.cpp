@@ -53,9 +53,10 @@ void testApp::setup(){
     gui->addLabel("PORTALEN", OFX_UI_FONT_LARGE);
     gui->addSpacer();
     gui->addSlider("WORLD ROTATE X", -90, 90, &tracker.rotateWorldX);
-    gui->addSlider("WORLD TRANSLATE X", -640, 640, &tracker.translateWorldX);
+    gui->addSlider("WORLD TRANSLATE X", -940, 940, &tracker.translateWorldX);
     gui->addSlider("WORLD TRANSLATE Y", -1640, 1640, &tracker.translateWorldY);
     gui->addSlider("WORLD TRANSLATE Z", -8000, 0, &tracker.translateWorldZ);
+    gui->addSlider("WORLD ROTATE Z", -180, 180, &tracker.rotateWorldZ);
 
     gui->addSpacer();
 
@@ -180,7 +181,7 @@ void testApp::update(){
 
     
     if(tracker.active){
-        ofPoint user = ofPoint(-0.4*tracker.getX()/640.0+0.5, -0.2*tracker.getY()/480.0 + 0.5);
+        ofPoint user = ofPoint(-0.25*tracker.getX()/640.0+0.5, -0.10*tracker.getY()/480.0 + 0.5);
         pong.playerPosition += (user-pong.playerPosition)*0.4;
     }
     pong.update();
@@ -249,6 +250,10 @@ void testApp::exit(){
 void testApp::keyPressed(int key){
     if(key == ' '){
         pong.launchBall();
+    }
+    if(key == 'x'){
+        tracker.x = 320;
+        tracker.y = 240;
     }
 }
 

@@ -90,7 +90,7 @@ void ofxKinectSimpleTracker::update(){
                     cur += ofPoint(translateWorldX, translateWorldY, 0);
 
                     cur.rotate(rotateWorldX, 0, 0);
-                    
+                    cur.rotate(0, 0, rotateWorldZ);
                     //Optimized rotate
                  /*  float a = (float)cos(DEG_TO_RAD*(rotateWorldX));
                     float b = (float)sin(DEG_TO_RAD*(rotateWorldX));
