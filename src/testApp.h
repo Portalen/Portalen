@@ -8,6 +8,7 @@
 #include "ofxStreamer.h"
 #include "ofxKinectSimpleTracker.h"
 #include "ofxUI.h"
+#include "Canon.h"
 
 class testApp : public ofBaseApp{
 public:
@@ -57,7 +58,11 @@ public:
     
     ofxUICanvas *gui;
 	void guiEvent(ofxUIEventArgs &e);
-
+    
+    // Canon
+    bool useCanon;
+    roxlu::Canon canon;
+    
     // Syphon
     bool useSyphon;
     ofxSyphonServer thisCamSy;

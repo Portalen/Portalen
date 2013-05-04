@@ -3,7 +3,7 @@
 //--------------------------------------------------------------
 void testApp::setup(){
     string serverIp = "jive.local";
-//    serverIp = "127.0.0.1";
+//  serverIp = "127.0.0.1";
     int serverPort = 8000;
     serverListenPort = ofRandom(6001,6999);
     
@@ -21,11 +21,18 @@ void testApp::setup(){
     streamerSend = new ofxStreamerSender();
     streamerRecv = new ofxStreamerReceiver();
     
-    
     ofSetLogLevel(OF_LOG_VERBOSE);
-    grabber = new ofVideoGrabber();
-    grabber->listDevices();
-    grabber->initGrabber(640, 480);
+    
+    useCanon = false;
+    
+    if (useCanon) {
+        canon.start();
+    } else {
+        grabber = new ofVideoGrabber();
+        grabber->listDevices();
+        //grabber->setDeviceID(1);
+        grabber->initGrabber(640, 480);
+    }
 
     
     data = (unsigned char*) malloc(sizeof(char)* 640 * 480 * 3*10);
@@ -38,8 +45,6 @@ void testApp::setup(){
     ofSetFrameRate(40);
     
     tracker.open();
-    
-    
     
     gui = new ofxUICanvas();
     gui->setFont("NewMedia Fett.ttf");
@@ -59,8 +64,7 @@ void testApp::setup(){
 
     gui->addSpacer();
 
-    gui->addFPS();
-    
+    gui->addFPS();    
     
     gui->loadSettings("settings.xml");
 
@@ -76,7 +80,6 @@ void testApp::setup(){
     }
     
     pong.setup();
-    
     
 }
 
@@ -112,18 +115,33 @@ void testApp::listenOnPort(int port){
 void testApp::update(){
     //tracker.rotateWorldX = sin(ofGetElapsedTimeMillis()/1000.0)*30;
     tracker.update();
-    grabber->update();
+    
+    
+    if(useCanon) {
+        if(!canon.isLiveViewActive() && canon.isSessionOpen()) {
+            canon.startLiveView();
+        }
+    } else {
+        grabber->update();
+    }
+    
     
    // if(grabber->isFrameNew()){
         
         ofBuffer buffer;
         buffer.set((char*)data, 640 * 480 * 3);
         
-        inputImage.setFromPixels(data, 640, 480, OF_IMAGE_COLOR);
-        
+        //inputImage.setFromPixels(data, 640, 480, OF_IMAGE_COLOR); is this used?
+    
+    if(useCanon) {
+        streamerSend->encodeFrame(canon.live_pixels.getPixels(),
+                                  canon.live_pixels.getWidth() * canon.live_pixels.getHeight() * 3);
+    } else {
         streamerSend->encodeFrame(grabber->getPixels(),  640 * 480 * 3);
-        streamerSend->sendFrame();
-    //}
+    }
+    
+    streamerSend->sendFrame();
+    
     
     
     streamerRecv->update();
@@ -188,8 +206,11 @@ void testApp::draw(){
     tracker.draw(640, 0, 640*0.5, 480*0.5);
     tracker.kinect->draw(640, 480*0.5, 640*0.5, 480*0.5);
     
-    grabber->draw(640+320, 0, 640*0.5, 480*0.5);
-    
+    if(useCanon) {
+        canon.drawLiveView(640+320, 0);
+    } else {
+        grabber->draw(640+320, 0, 640*0.5, 480*0.5);
+    }
     
   /*  ofDrawBitmapString("FPS: "+ofToString(ofGetFrameRate(),0), 5,15);
    
