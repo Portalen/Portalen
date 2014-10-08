@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		04301D4719E574BC00240A80 /* Syphon.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 049ED11B19E52E5A00CA5310 /* Syphon.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		04301D4C19E57B1E00240A80 /* VideoDecodeAcceleration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04301D4B19E57B1E00240A80 /* VideoDecodeAcceleration.framework */; };
+		04301D6419E57C1900240A80 /* libiconv.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 049ED0FD19E52E3B00CA5310 /* libiconv.2.dylib */; };
 		049ED10219E52E3B00CA5310 /* ofxStreamerReceiver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 049ED0F119E52E3B00CA5310 /* ofxStreamerReceiver.cpp */; };
 		049ED10319E52E3B00CA5310 /* ofxStreamerSender.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 049ED0F319E52E3B00CA5310 /* ofxStreamerSender.cpp */; };
 		049ED10419E52E3B00CA5310 /* libavcodec.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 049ED0F719E52E3B00CA5310 /* libavcodec.a */; };
@@ -81,6 +83,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		04301D4B19E57B1E00240A80 /* VideoDecodeAcceleration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VideoDecodeAcceleration.framework; path = ../../../../../../../System/Library/Frameworks/VideoDecodeAcceleration.framework; sourceTree = "<group>"; };
 		049ED0F019E52E3B00CA5310 /* ofxStreamer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxStreamer.h; sourceTree = "<group>"; };
 		049ED0F119E52E3B00CA5310 /* ofxStreamerReceiver.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ofxStreamerReceiver.cpp; sourceTree = "<group>"; };
 		049ED0F219E52E3B00CA5310 /* ofxStreamerReceiver.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxStreamerReceiver.h; sourceTree = "<group>"; };
@@ -140,6 +143,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				04301D6419E57C1900240A80 /* libiconv.2.dylib in Frameworks */,
 				049ED10D19E52E3B00CA5310 /* libx264.a in Frameworks */,
 				6474CBF619BCE019003C94E2 /* AVFoundation.framework in Frameworks */,
 				049ED10B19E52E3B00CA5310 /* libswresample.a in Frameworks */,
@@ -170,6 +174,7 @@
 				E4C2424910CC5A17004149E2 /* IOKit.framework in Frameworks */,
 				049ED10619E52E3B00CA5310 /* libavfilter.a in Frameworks */,
 				E7E077E515D3B63C0020DFD4 /* CoreVideo.framework in Frameworks */,
+				04301D4C19E57B1E00240A80 /* VideoDecodeAcceleration.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -304,6 +309,7 @@
 		BBAB23C913894ECA00AA2426 /* system frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				04301D4B19E57B1E00240A80 /* VideoDecodeAcceleration.framework */,
 				6474CBF019BCE00B003C94E2 /* AVFoundation.framework */,
 				6474CBF119BCE00B003C94E2 /* CoreMedia.framework */,
 				6474CBF219BCE00B003C94E2 /* QuartzCore.framework */,
@@ -495,7 +501,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = E4EB6923138AFD0F00A09F29 /* Project.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(NATIVE_ARCH)";
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CONFIGURATION_BUILD_DIR = "$(SRCROOT)/bin/";
 				COPY_PHASE_STRIP = NO;
 				DEAD_CODE_STRIPPING = YES;
@@ -525,7 +531,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = E4EB6923138AFD0F00A09F29 /* Project.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(NATIVE_ARCH)";
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CONFIGURATION_BUILD_DIR = "$(SRCROOT)/bin/";
 				COPY_PHASE_STRIP = YES;
 				DEAD_CODE_STRIPPING = YES;
@@ -555,6 +561,7 @@
 		E4B69B600A3A1757003C02F2 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -576,9 +583,9 @@
 				INSTALL_PATH = "$(HOME)/Applications";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					/Users/johan/Development/openFrameworks/addons/ofxStreamer/libs/osx,
-					"/Users/johan/Development/openFrameworks/addons/ofxStreamer/include/**",
+					"\"$(SRCROOT)/../../../addons/ofxStreamer/libs/osx/ /Users/johan/Development/openFrameworks/addons/ofxStreamer/libs/osx",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				OTHER_LDFLAGS = (
 					"$(OF_CORE_LIBS)",
 					"\"$(SRCROOT)/../../../addons/ofxStreamer/libs/osx/libx264.a\"",
@@ -594,6 +601,7 @@
 		E4B69B610A3A1757003C02F2 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -614,9 +622,9 @@
 				INSTALL_PATH = "$(HOME)/Applications";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					/Users/johan/Development/openFrameworks/addons/ofxStreamer/libs/osx,
-					"/Users/johan/Development/openFrameworks/addons/ofxStreamer/include/**",
+					"\"$(SRCROOT)/../../../addons/ofxStreamer/libs/osx/ /Users/johan/Development/openFrameworks/addons/ofxStreamer/libs/osx",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				OTHER_LDFLAGS = (
 					"$(OF_CORE_LIBS)",
 					"\"$(SRCROOT)/../../../addons/ofxStreamer/libs/osx/libx264.a\"",

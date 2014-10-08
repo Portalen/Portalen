@@ -1,6 +1,7 @@
 #pragma once
 
 #include "ofMain.h"
+#include "ofxStreamer.h"
 
 class ofApp : public ofBaseApp{
 
@@ -8,7 +9,7 @@ class ofApp : public ofBaseApp{
 		void setup();
 		void update();
 		void draw();
-
+        void exit();
 		void keyPressed(int key);
 		void keyReleased(int key);
 		void mouseMoved(int x, int y );
@@ -20,7 +21,8 @@ class ofApp : public ofBaseApp{
 		void gotMessage(ofMessage msg);
     
     
-    
-    //ofVideo
+    ofVideoGrabber grabber;
+    ofxStreamerReceiver receiver;
+    ofxStreamerSender sender;
 		
 };
