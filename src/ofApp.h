@@ -2,6 +2,9 @@
 
 #include "ofMain.h"
 #include "ofxStreamer.h"
+#include "ofxOpenCv.h"
+
+#define REMOTE_HOST "127.0.0.1"
 
 class ofApp : public ofBaseApp{
 
@@ -24,5 +27,14 @@ class ofApp : public ofBaseApp{
     ofVideoGrabber grabber;
     ofxStreamerReceiver receiver;
     ofxStreamerSender sender;
-		
+    
+    ofFbo camOutFbo;
+    ofFbo outputFbo;
+    
+    ofPixels outPixels;
+    ofxCvColorImage image;
+    
+    
+    int newframes = 0;
+    
 };
