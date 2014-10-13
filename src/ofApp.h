@@ -2,6 +2,18 @@
 
 #include "ofMain.h"
 #include "ofxStreamer.h"
+#include "ofxOpenCv.h"
+#include "Canon.h"
+#include "ofxOsc.h"
+
+#define REMOTE_HOST "127.0.0.1"
+
+class RegionOfInterest {
+public:
+    ofVec2f center;
+    float radius;
+    float zoom;
+};
 
 class ofApp : public ofBaseApp{
 
@@ -22,7 +34,37 @@ class ofApp : public ofBaseApp{
     
     
     ofVideoGrabber grabber;
-    ofxStreamerReceiver receiver;
-    ofxStreamerSender sender;
-		
+    
+    ofxOscReceiver oscReciver;
+    ofxOscSender oscSender;
+    
+    ofxStreamerReceiver hqreceiver;
+    ofxStreamerReceiver lqreceiver;
+    
+    ofxStreamerSender hqsender;
+    ofxStreamerSender lqsender;
+    
+    float hqFrameRate = 25;
+    
+    float streamWidth, streamHeight;
+    
+    ofFbo camFbo;
+    ofFbo camOutFboHQ;
+    ofFbo camOutFboLQ;
+    ofFbo outputFbo;
+    
+    ofPixels outPixelsHQ;
+    ofPixels outPixelsLQ;
+    ofxCvColorImage image;
+    
+    int newframes = 0;
+    
+    roxlu::Canon canon;
+    
+    float lastTime;
+    
+    RegionOfInterest roi;
+    
+    float roiMaxRadius;
+    
 };
