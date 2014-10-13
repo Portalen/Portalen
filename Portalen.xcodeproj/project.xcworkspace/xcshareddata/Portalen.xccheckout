@@ -18,10 +18,14 @@
 		<string>https://github.com/dzlonline/ofxBiquadFilter.git</string>
 		<key>52B71DD912E8CAADAB5FE3D86EF4E31231D19B99</key>
 		<string>https://github.com/roxlu/ofxCanon.git</string>
+		<key>8B7D3B297962C41A4A67EFE4DB1DBDE53440A0BB</key>
+		<string>git://github.com/morethanlogic/ofxBlur.git</string>
 		<key>95F9C16A6B271369C7057F98D16770911E9E4317</key>
 		<string>https://github.com/HalfdanJ/ofxStreamer.git</string>
 		<key>9E8ACADAC9EF3F41431C6635E743659C22425736</key>
 		<string>github.com:Portalen/Portalen.git</string>
+		<key>B7CCA6A8C889ED4C803FBF307564FD139754E943</key>
+		<string>https://github.com/patriciogonzalezvivo/ofxFX.git</string>
 		<key>F4CCB893AFADB97238A965FD2F28717F1CAAE613</key>
 		<string>https://github.com/astellato/ofxSyphon.git</string>
 	</dict>
@@ -34,13 +38,17 @@
 		<key>37526DA425E5430474A14FBFA1BC4525160B5FC1</key>
 		<string>../../../addons/ofxCv</string>
 		<key>3FD0A6B0728805B39B1EC65C31D9BA97C2D2ABC7</key>
-		<string>../../../../../addons/ofxBiquadFilter</string>
+		<string>../../../addons/ofxBiquadFilter</string>
 		<key>52B71DD912E8CAADAB5FE3D86EF4E31231D19B99</key>
 		<string>../../../addons/ofxCanon</string>
+		<key>8B7D3B297962C41A4A67EFE4DB1DBDE53440A0BB</key>
+		<string>../../../../../addons/ofxBlur</string>
 		<key>95F9C16A6B271369C7057F98D16770911E9E4317</key>
 		<string>../../../openFrameworks/addons/ofxStreamer</string>
 		<key>9E8ACADAC9EF3F41431C6635E743659C22425736</key>
 		<string>../..</string>
+		<key>B7CCA6A8C889ED4C803FBF307564FD139754E943</key>
+		<string>../../../../../addons/ofxFX</string>
 		<key>F4CCB893AFADB97238A965FD2F28717F1CAAE613</key>
 		<string>../../../openFrameworks/addons/ofxSyphon</string>
 	</dict>
@@ -64,6 +72,14 @@
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>8B7D3B297962C41A4A67EFE4DB1DBDE53440A0BB</string>
+			<key>IDESourceControlWCCName</key>
+			<string>ofxBlur</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
 			<string>52B71DD912E8CAADAB5FE3D86EF4E31231D19B99</string>
 			<key>IDESourceControlWCCName</key>
 			<string>ofxCanon</string>
@@ -75,6 +91,14 @@
 			<string>37526DA425E5430474A14FBFA1BC4525160B5FC1</string>
 			<key>IDESourceControlWCCName</key>
 			<string>ofxCv</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>B7CCA6A8C889ED4C803FBF307564FD139754E943</string>
+			<key>IDESourceControlWCCName</key>
+			<string>ofxFX</string>
 		</dict>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>

@@ -3,7 +3,7 @@
 //--------------------------------------------------------------
 void ofApp::setup(){
     
-    ofSetCircleResolution(100);
+    ofSetCircleResolution(140);
 
     //ofLogLevel(OF_LOG_SILENT);
     ofSetFrameRate(30);
@@ -12,38 +12,48 @@ void ofApp::setup(){
     streamWidth = 1056;
     streamHeight = 704;
     
-    
     roiMaxRadius = 200;
     
     roi.center = ofVec2f(streamWidth,streamHeight);
     roi.radius = 200;
-    roi.zoom = 1.15;
+    roi.zoom = 1.09;
     
     roiCenterFilter.setFc(0.04);
     roiCenterFilter.setType(OFX_BIQUAD_TYPE_LOWPASS);
     
+    int internalFormat = GL_RGB8;
+
+    
 #ifdef USE_WEBCAM
     grabber.initGrabber(streamWidth, streamHeight);
-    int internalFormat = GL_RGB8;
 
-    
 
 #else
-
     canon.start();
-    int internalFormat = GL_RGB8;
-
     
 #endif
-
+    
+    if(ofIsGLProgrammableRenderer()){
+        shaderBlurX.load("shadersGL3/shaderBlurX");
+        shaderBlurY.load("shadersGL3/shaderBlurY");
+    }else{
+        shaderBlurX.load("shadersGL2/shaderBlurX");
+        shaderBlurY.load("shadersGL2/shaderBlurY");
+        shaderDesaturate.load("shadersGL2/desaturate");
+    }
+    
+    fboBlurOnePass.allocate(streamWidth, streamHeight);
+    fboBlurTwoPass.allocate(streamWidth, streamHeight);
     
     camFbo.allocate(streamWidth, streamHeight, internalFormat);
     camOutFboHQ.allocate(roiMaxRadius*2, roiMaxRadius*2, internalFormat);
-    camOutFboLQ.allocate(streamWidth/8, streamHeight/8, internalFormat);
+    camOutFboLQ.allocate(streamWidth/4, streamHeight/4, internalFormat);
+    
+    outFbo.allocate(streamWidth, streamHeight, internalFormat);
     
     
     hqsender.setup(roiMaxRadius*2, roiMaxRadius*2, REMOTE_HOST, 1234);//, "placebo", "zerolatency");
-    lqsender.setup(streamWidth/8, streamHeight/8, REMOTE_HOST, 1235);//, "ultrafast", "zerolatency");
+    lqsender.setup(streamWidth/4, streamHeight/4, REMOTE_HOST, 1235);//, "ultrafast", "zerolatency");
     
 
     hqreceiver.setup(1234);
@@ -76,6 +86,7 @@ void ofApp::setup(){
         angle += step;  
     }
     
+    
 }
 
 //--------------------------------------------------------------
@@ -106,10 +117,11 @@ void ofApp::update(){
 
 //--------------------------------------------------------------
 void ofApp::draw(){
+    ofSetColor(ofColor::white);
     
-
-    ofSetWindowTitle(ofToString(ofGetFrameRate()));
-
+    float blur = 2.2f;
+    
+    //ofSetWindowTitle(ofToString(ofGetFrameRate()));
     ofSetColor(255, 255, 255, 255);
     
     
@@ -121,17 +133,17 @@ void ofApp::draw(){
         camFbo.end();
     }
 #endif
-
     
         camOutFboHQ.begin();
         ofBackground(0,0,0);
         ofTranslate(-roi.center+roiMaxRadius);
         camFbo.draw(0,0);
-        //camFbo.getTextureReference().drawSubsection(0, 0, roiMaxRadius, roiMaxRadius, 0, 0);
         camOutFboHQ.end();
         
         camOutFboLQ.begin();
+        shaderDesaturate.begin();
         camFbo.draw(0,0,camOutFboLQ.getWidth(),camOutFboLQ.getHeight());
+        shaderDesaturate.end();
         camOutFboLQ.end();
     
     
@@ -150,30 +162,46 @@ void ofApp::draw(){
     camFbo.draw(0,0,streamWidth/2, streamHeight/2);
     camOutFboHQ.draw(0,streamHeight/2,camOutFboHQ.getWidth(),camOutFboHQ.getHeight());
     
-    ofPushMatrix();
+    ofPushMatrix(); {
     ofScale(0.5,0.5);
     ofNoFill();
     ofRect(roi.center.x - roiMaxRadius, roi.center.y - roiMaxRadius, roiMaxRadius*2, roiMaxRadius*2);
     ofCircle(roi.center, roi.radius);
     ofFill();
-    ofPopMatrix();
+    } ofPopMatrix();
     
-    ofPushMatrix();
+    fboBlurOnePass.begin();
     
-    ofTranslate(streamWidth/2,  0);
+    shaderBlurX.begin();
+    shaderBlurX.setUniform1f("blurAmnt", blur);
+    lqreceiver.draw(0, 0, outFbo.getWidth(), outFbo.getHeight());
+    shaderBlurX.end();
+    fboBlurOnePass.end();
     
-    lqreceiver.draw(0, 0, streamWidth/2  , streamHeight/2 );
-    ofSetColor(255,255,255,255);
+    fboBlurTwoPass.begin();
+    shaderBlurY.begin();
+    shaderBlurY.setUniform1f("blurAmnt", blur);
+    fboBlurOnePass.draw(0, 0);
+    shaderBlurY.end();
+    fboBlurTwoPass.end();
     
-    ofScale(0.5,0.5);
+    outFbo.begin();
+    
+    ofSetColor(ofColor::white);
+    fboBlurTwoPass.draw(0, 0);
+    
+    //ofScale(0.5,0.5);
     //hqreceiver.draw(roi.center - roiMaxRadius);
+    //hqreceiver.getTextureReference().setAlphaMask(<#ofTexture &mask#>)
+    
+    ofPushMatrix();{
     
     hqreceiver.getTextureReference().bind();
     
     //ofCircle(roi.center*ofVec2f(streamWidth/2, streamHeight/2), roi.radius*streamHeight);
     ofTranslate(roi.center);
     ofScale(roi.zoom, roi.zoom);
-
+    
     glBegin(GL_POLYGON);
     for(int i = 0; i < NormCirclePts.size(); i++){
         glTexCoord2f(NormCircleCoords[i].x, NormCircleCoords[i].y);
@@ -181,12 +209,24 @@ void ofApp::draw(){
     }
     glEnd();
     
+    
     hqreceiver.getTextureReference().unbind();
+        
+    }ofPopMatrix();
+    
+    outFbo.end();
+    
+        
+    
+    ofPushMatrix();{
+    
+    ofTranslate(streamWidth/2,  0);
+    outFbo.draw(0,0);
     
     
+    }ofPopMatrix();
     
-    ofPopMatrix();
-
+    
     
 }
 

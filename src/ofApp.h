@@ -6,12 +6,15 @@
 #include "ofMain.h"
 #include "ofxStreamer.h"
 #include "ofxOpenCv.h"
+#include "ofxOsc.h"
+#include "ofxBiquadFilter.h"
+#include "ofxGui.h"
+
+
+
 #ifndef USE_WEBCAM
 #include "Canon.h"
 #endif
-#include "ofxOsc.h"
-#include "ofxBiquadFilter.h"
-
 
 class RegionOfInterest {
 public:
@@ -60,7 +63,7 @@ class ofApp : public ofBaseApp{
     ofFbo camOutFboHQ;
     ofFbo camOutFboLQ;
     
-    ofFbo outputFbo;
+    ofFbo outFbo;
     
     ofPixels outPixelsHQ;
     ofPixels outPixelsLQ;
@@ -75,6 +78,20 @@ class ofApp : public ofBaseApp{
     vector <ofPoint> NormCircleCoords;
     
     ofxBiquadFilter2f roiCenterFilter;
+    
+    ofxPanel gui;
+    ofParameterGroup params;
+    
+    ofParameter<float> roiSize;
+    ofParameter<float> roiZoom;
+    
+    ofShader shaderBlurX;
+    ofShader shaderBlurY;
+    
+    ofShader shaderDesaturate;
+    
+    ofFbo fboBlurOnePass;
+    ofFbo fboBlurTwoPass;
     
     
 };

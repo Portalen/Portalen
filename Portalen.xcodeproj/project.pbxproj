@@ -80,8 +80,17 @@
 		049ED12119E52E5A00CA5310 /* ofxSyphonServerDirectory.mm in Sources */ = {isa = PBXBuildFile; fileRef = 049ED11619E52E5A00CA5310 /* ofxSyphonServerDirectory.mm */; };
 		049ED12219E52E5A00CA5310 /* Syphon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 049ED11B19E52E5A00CA5310 /* Syphon.framework */; };
 		049ED12319E52E5A00CA5310 /* SyphonNameboundClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 049ED11E19E52E5A00CA5310 /* SyphonNameboundClient.m */; };
+		04A911AF19EC6C000072CCC4 /* ofxBlur.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04A911AD19EC6C000072CCC4 /* ofxBlur.cpp */; };
 		04CB0E7819EC42290048ABDC /* ofxBiquadFilter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04CB0E7419EC42290048ABDC /* ofxBiquadFilter.cpp */; };
 		04CB0E7919EC42290048ABDC /* ofxBiquadFilterInstance.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04CB0E7619EC42290048ABDC /* ofxBiquadFilterInstance.cpp */; };
+		04CB0E8E19EC54270048ABDC /* ofxBaseGui.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04CB0E7D19EC54270048ABDC /* ofxBaseGui.cpp */; };
+		04CB0E8F19EC54270048ABDC /* ofxButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04CB0E7F19EC54270048ABDC /* ofxButton.cpp */; };
+		04CB0E9019EC54270048ABDC /* ofxGuiGroup.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04CB0E8219EC54270048ABDC /* ofxGuiGroup.cpp */; };
+		04CB0E9119EC54270048ABDC /* ofxLabel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04CB0E8419EC54270048ABDC /* ofxLabel.cpp */; };
+		04CB0E9219EC54270048ABDC /* ofxPanel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04CB0E8619EC54270048ABDC /* ofxPanel.cpp */; };
+		04CB0E9319EC54270048ABDC /* ofxSlider.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04CB0E8819EC54270048ABDC /* ofxSlider.cpp */; };
+		04CB0E9419EC54270048ABDC /* ofxSliderGroup.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04CB0E8A19EC54270048ABDC /* ofxSliderGroup.cpp */; };
+		04CB0E9519EC54270048ABDC /* ofxToggle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04CB0E8C19EC54270048ABDC /* ofxToggle.cpp */; };
 		6474CBF619BCE019003C94E2 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6474CBF019BCE00B003C94E2 /* AVFoundation.framework */; };
 		6474CBF719BCE019003C94E2 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6474CBF119BCE00B003C94E2 /* CoreMedia.framework */; };
 		6474CBF819BCE019003C94E2 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6474CBF219BCE00B003C94E2 /* QuartzCore.framework */; };
@@ -368,10 +377,43 @@
 		049ED11B19E52E5A00CA5310 /* Syphon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Syphon.framework; sourceTree = "<group>"; };
 		049ED11D19E52E5A00CA5310 /* SyphonNameboundClient.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SyphonNameboundClient.h; sourceTree = "<group>"; };
 		049ED11E19E52E5A00CA5310 /* SyphonNameboundClient.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SyphonNameboundClient.m; sourceTree = "<group>"; };
+		04A911AD19EC6C000072CCC4 /* ofxBlur.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ofxBlur.cpp; sourceTree = "<group>"; };
+		04A911AE19EC6C000072CCC4 /* ofxBlur.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxBlur.h; sourceTree = "<group>"; };
+		04A911B319EC8A050072CCC4 /* shaderBlurX.frag */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = shaderBlurX.frag; sourceTree = "<group>"; };
+		04A911B419EC8A050072CCC4 /* shaderBlurX.vert */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = shaderBlurX.vert; sourceTree = "<group>"; };
+		04A911B519EC8A050072CCC4 /* shaderBlurY.frag */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = shaderBlurY.frag; sourceTree = "<group>"; };
+		04A911B619EC8A050072CCC4 /* shaderBlurY.vert */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = shaderBlurY.vert; sourceTree = "<group>"; };
+		04A911B819EC8A050072CCC4 /* shaderBlurX.frag */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = shaderBlurX.frag; sourceTree = "<group>"; };
+		04A911B919EC8A050072CCC4 /* shaderBlurX.vert */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = shaderBlurX.vert; sourceTree = "<group>"; };
+		04A911BA19EC8A050072CCC4 /* shaderBlurY.frag */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = shaderBlurY.frag; sourceTree = "<group>"; };
+		04A911BB19EC8A050072CCC4 /* shaderBlurY.vert */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = shaderBlurY.vert; sourceTree = "<group>"; };
+		04A911BD19EC8A050072CCC4 /* shaderBlurX.frag */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = shaderBlurX.frag; sourceTree = "<group>"; };
+		04A911BE19EC8A050072CCC4 /* shaderBlurX.vert */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = shaderBlurX.vert; sourceTree = "<group>"; };
+		04A911BF19EC8A050072CCC4 /* shaderBlurY.frag */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = shaderBlurY.frag; sourceTree = "<group>"; };
+		04A911C019EC8A050072CCC4 /* shaderBlurY.vert */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = shaderBlurY.vert; sourceTree = "<group>"; };
+		04A911C119EC90540072CCC4 /* desaturate.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = desaturate.frag; sourceTree = "<group>"; };
+		04A911C319EC90790072CCC4 /* desaturate.vert */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = desaturate.vert; sourceTree = "<group>"; };
 		04CB0E7419EC42290048ABDC /* ofxBiquadFilter.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ofxBiquadFilter.cpp; sourceTree = "<group>"; };
 		04CB0E7519EC42290048ABDC /* ofxBiquadFilter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxBiquadFilter.h; sourceTree = "<group>"; };
 		04CB0E7619EC42290048ABDC /* ofxBiquadFilterInstance.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ofxBiquadFilterInstance.cpp; sourceTree = "<group>"; };
 		04CB0E7719EC42290048ABDC /* ofxBiquadFilterInstance.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxBiquadFilterInstance.h; sourceTree = "<group>"; };
+		04CB0E7D19EC54270048ABDC /* ofxBaseGui.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ofxBaseGui.cpp; sourceTree = "<group>"; };
+		04CB0E7E19EC54270048ABDC /* ofxBaseGui.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxBaseGui.h; sourceTree = "<group>"; };
+		04CB0E7F19EC54270048ABDC /* ofxButton.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ofxButton.cpp; sourceTree = "<group>"; };
+		04CB0E8019EC54270048ABDC /* ofxButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxButton.h; sourceTree = "<group>"; };
+		04CB0E8119EC54270048ABDC /* ofxGui.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxGui.h; sourceTree = "<group>"; };
+		04CB0E8219EC54270048ABDC /* ofxGuiGroup.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ofxGuiGroup.cpp; sourceTree = "<group>"; };
+		04CB0E8319EC54270048ABDC /* ofxGuiGroup.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxGuiGroup.h; sourceTree = "<group>"; };
+		04CB0E8419EC54270048ABDC /* ofxLabel.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ofxLabel.cpp; sourceTree = "<group>"; };
+		04CB0E8519EC54270048ABDC /* ofxLabel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxLabel.h; sourceTree = "<group>"; };
+		04CB0E8619EC54270048ABDC /* ofxPanel.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ofxPanel.cpp; sourceTree = "<group>"; };
+		04CB0E8719EC54270048ABDC /* ofxPanel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxPanel.h; sourceTree = "<group>"; };
+		04CB0E8819EC54270048ABDC /* ofxSlider.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ofxSlider.cpp; sourceTree = "<group>"; };
+		04CB0E8919EC54270048ABDC /* ofxSlider.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxSlider.h; sourceTree = "<group>"; };
+		04CB0E8A19EC54270048ABDC /* ofxSliderGroup.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ofxSliderGroup.cpp; sourceTree = "<group>"; };
+		04CB0E8B19EC54270048ABDC /* ofxSliderGroup.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxSliderGroup.h; sourceTree = "<group>"; };
+		04CB0E8C19EC54270048ABDC /* ofxToggle.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ofxToggle.cpp; sourceTree = "<group>"; };
+		04CB0E8D19EC54270048ABDC /* ofxToggle.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxToggle.h; sourceTree = "<group>"; };
 		6474CBF019BCE00B003C94E2 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		6474CBF119BCE00B003C94E2 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		6474CBF219BCE00B003C94E2 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -1120,6 +1162,62 @@
 			path = src;
 			sourceTree = "<group>";
 		};
+		04A911AB19EC6C000072CCC4 /* ofxBlur */ = {
+			isa = PBXGroup;
+			children = (
+				04A911AC19EC6C000072CCC4 /* src */,
+			);
+			name = ofxBlur;
+			sourceTree = "<group>";
+		};
+		04A911AC19EC6C000072CCC4 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				04A911AD19EC6C000072CCC4 /* ofxBlur.cpp */,
+				04A911AE19EC6C000072CCC4 /* ofxBlur.h */,
+			);
+			name = src;
+			path = ../../../addons/ofxBlur/src;
+			sourceTree = "<group>";
+		};
+		04A911B219EC8A050072CCC4 /* shadersES2 */ = {
+			isa = PBXGroup;
+			children = (
+				04A911B319EC8A050072CCC4 /* shaderBlurX.frag */,
+				04A911B419EC8A050072CCC4 /* shaderBlurX.vert */,
+				04A911B519EC8A050072CCC4 /* shaderBlurY.frag */,
+				04A911B619EC8A050072CCC4 /* shaderBlurY.vert */,
+			);
+			name = shadersES2;
+			path = bin/data/shadersES2;
+			sourceTree = "<group>";
+		};
+		04A911B719EC8A050072CCC4 /* shadersGL2 */ = {
+			isa = PBXGroup;
+			children = (
+				04A911B819EC8A050072CCC4 /* shaderBlurX.frag */,
+				04A911B919EC8A050072CCC4 /* shaderBlurX.vert */,
+				04A911BA19EC8A050072CCC4 /* shaderBlurY.frag */,
+				04A911BB19EC8A050072CCC4 /* shaderBlurY.vert */,
+				04A911C119EC90540072CCC4 /* desaturate.frag */,
+				04A911C319EC90790072CCC4 /* desaturate.vert */,
+			);
+			name = shadersGL2;
+			path = bin/data/shadersGL2;
+			sourceTree = "<group>";
+		};
+		04A911BC19EC8A050072CCC4 /* shadersGL3 */ = {
+			isa = PBXGroup;
+			children = (
+				04A911BD19EC8A050072CCC4 /* shaderBlurX.frag */,
+				04A911BE19EC8A050072CCC4 /* shaderBlurX.vert */,
+				04A911BF19EC8A050072CCC4 /* shaderBlurY.frag */,
+				04A911C019EC8A050072CCC4 /* shaderBlurY.vert */,
+			);
+			name = shadersGL3;
+			path = bin/data/shadersGL3;
+			sourceTree = "<group>";
+		};
 		04CB0E7219EC42290048ABDC /* ofxBiquadFilter */ = {
 			isa = PBXGroup;
 			children = (
@@ -1140,9 +1238,44 @@
 			path = ../../../addons/ofxBiquadFilter/src;
 			sourceTree = "<group>";
 		};
+		04CB0E7B19EC54270048ABDC /* ofxGui */ = {
+			isa = PBXGroup;
+			children = (
+				04CB0E7C19EC54270048ABDC /* src */,
+			);
+			name = ofxGui;
+			sourceTree = "<group>";
+		};
+		04CB0E7C19EC54270048ABDC /* src */ = {
+			isa = PBXGroup;
+			children = (
+				04CB0E7D19EC54270048ABDC /* ofxBaseGui.cpp */,
+				04CB0E7E19EC54270048ABDC /* ofxBaseGui.h */,
+				04CB0E7F19EC54270048ABDC /* ofxButton.cpp */,
+				04CB0E8019EC54270048ABDC /* ofxButton.h */,
+				04CB0E8119EC54270048ABDC /* ofxGui.h */,
+				04CB0E8219EC54270048ABDC /* ofxGuiGroup.cpp */,
+				04CB0E8319EC54270048ABDC /* ofxGuiGroup.h */,
+				04CB0E8419EC54270048ABDC /* ofxLabel.cpp */,
+				04CB0E8519EC54270048ABDC /* ofxLabel.h */,
+				04CB0E8619EC54270048ABDC /* ofxPanel.cpp */,
+				04CB0E8719EC54270048ABDC /* ofxPanel.h */,
+				04CB0E8819EC54270048ABDC /* ofxSlider.cpp */,
+				04CB0E8919EC54270048ABDC /* ofxSlider.h */,
+				04CB0E8A19EC54270048ABDC /* ofxSliderGroup.cpp */,
+				04CB0E8B19EC54270048ABDC /* ofxSliderGroup.h */,
+				04CB0E8C19EC54270048ABDC /* ofxToggle.cpp */,
+				04CB0E8D19EC54270048ABDC /* ofxToggle.h */,
+			);
+			name = src;
+			path = ../../../addons/ofxGui/src;
+			sourceTree = "<group>";
+		};
 		BB4B014C10F69532006C3DED /* addons */ = {
 			isa = PBXGroup;
 			children = (
+				04A911AB19EC6C000072CCC4 /* ofxBlur */,
+				04CB0E7B19EC54270048ABDC /* ofxGui */,
 				04CB0E7219EC42290048ABDC /* ofxBiquadFilter */,
 				0432679019EBED8C0030EDA6 /* ofxOsc */,
 				0432674F19EBCA710030EDA6 /* ofxCanon */,
@@ -1209,6 +1342,9 @@
 			children = (
 				E4B6FCAD0C3E899E008CF71C /* openFrameworks-Info.plist */,
 				E4EB6923138AFD0F00A09F29 /* Project.xcconfig */,
+				04A911B219EC8A050072CCC4 /* shadersES2 */,
+				04A911B719EC8A050072CCC4 /* shadersGL2 */,
+				04A911BC19EC8A050072CCC4 /* shadersGL3 */,
 				E4B69E1C0A3A1BDC003C02F2 /* src */,
 				E4EEC9E9138DF44700A80321 /* openFrameworks */,
 				BB4B014C10F69532006C3DED /* addons */,
@@ -1323,7 +1459,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				04CB0E9419EC54270048ABDC /* ofxSliderGroup.cpp in Sources */,
 				0432677A19EBCA710030EDA6 /* CanonTaskDownloadEVF.cpp in Sources */,
+				04CB0E9319EC54270048ABDC /* ofxSlider.cpp in Sources */,
 				0432677819EBCA710030EDA6 /* CanonTask.cpp in Sources */,
 				0432677C19EBCA710030EDA6 /* CanonTaskEndEVF.cpp in Sources */,
 				043267BE19EBED8C0030EDA6 /* ofxOscReceiver.cpp in Sources */,
@@ -1335,12 +1473,14 @@
 				0432674919EB4C3F0030EDA6 /* ObjectFinder.cpp in Sources */,
 				0432678319EBCA710030EDA6 /* CanonTaskTakePicture.cpp in Sources */,
 				043267C519EBED8C0030EDA6 /* OscReceivedElements.cpp in Sources */,
+				04CB0E8E19EC54270048ABDC /* ofxBaseGui.cpp in Sources */,
 				043267C019EBED8C0030EDA6 /* IpEndpointName.cpp in Sources */,
 				E4B69E200A3A1BDC003C02F2 /* main.cpp in Sources */,
 				043267C119EBED8C0030EDA6 /* NetworkingUtils.cpp in Sources */,
 				04301E7119E5994000240A80 /* ofxCvHaarFinder.cpp in Sources */,
 				043267C219EBED8C0030EDA6 /* UdpSocket.cpp in Sources */,
 				049ED12319E52E5A00CA5310 /* SyphonNameboundClient.m in Sources */,
+				04CB0E9019EC54270048ABDC /* ofxGuiGroup.cpp in Sources */,
 				0432678019EBCA710030EDA6 /* CanonTaskQueue.cpp in Sources */,
 				04301E7019E5994000240A80 /* ofxCvGrayscaleImage.cpp in Sources */,
 				0432674A19EB4C3F0030EDA6 /* RunningBackground.cpp in Sources */,
@@ -1352,10 +1492,12 @@
 				0432674219EB4C3F0030EDA6 /* ETF.cpp in Sources */,
 				0432674C19EB4C3F0030EDA6 /* Utilities.cpp in Sources */,
 				0432674419EB4C3F0030EDA6 /* Calibration.cpp in Sources */,
+				04A911AF19EC6C000072CCC4 /* ofxBlur.cpp in Sources */,
 				0432677619EBCA710030EDA6 /* CanonEventListener.cpp in Sources */,
 				0432677E19EBCA710030EDA6 /* CanonTaskInit.cpp in Sources */,
 				0432674319EB4C3F0030EDA6 /* fdog.cpp in Sources */,
 				E4B69E210A3A1BDC003C02F2 /* ofApp.cpp in Sources */,
+				04CB0E9519EC54270048ABDC /* ofxToggle.cpp in Sources */,
 				043267C419EBED8C0030EDA6 /* OscPrintReceivedElements.cpp in Sources */,
 				043267BB19EBED8C0030EDA6 /* ofxOscBundle.cpp in Sources */,
 				043267BD19EBED8C0030EDA6 /* ofxOscParameterSync.cpp in Sources */,
@@ -1365,12 +1507,15 @@
 				0432674519EB4C3F0030EDA6 /* ContourFinder.cpp in Sources */,
 				04301E6E19E5994000240A80 /* ofxCvContourFinder.cpp in Sources */,
 				049ED10319E52E3B00CA5310 /* ofxStreamerSender.cpp in Sources */,
+				04CB0E9219EC54270048ABDC /* ofxPanel.cpp in Sources */,
 				043267C319EBED8C0030EDA6 /* OscOutboundPacketStream.cpp in Sources */,
 				0432674619EB4C3F0030EDA6 /* Distance.cpp in Sources */,
 				0432677B19EBCA710030EDA6 /* CanonTaskDownloadPicture.cpp in Sources */,
 				043267BF19EBED8C0030EDA6 /* ofxOscSender.cpp in Sources */,
+				04CB0E9119EC54270048ABDC /* ofxLabel.cpp in Sources */,
 				0432678119EBCA710030EDA6 /* CanonTaskShutdown.cpp in Sources */,
 				0432678219EBCA710030EDA6 /* CanonTaskStartEVF.cpp in Sources */,
+				04CB0E8F19EC54270048ABDC /* ofxButton.cpp in Sources */,
 				049ED11F19E52E5A00CA5310 /* ofxSyphonClient.mm in Sources */,
 				0432674719EB4C3F0030EDA6 /* Flow.cpp in Sources */,
 				04301E7219E5994000240A80 /* ofxCvImage.cpp in Sources */,
