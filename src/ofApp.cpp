@@ -17,9 +17,10 @@ void ofApp::setup(){
     
     roi.center = ofVec2f(streamWidth,streamHeight);
     roi.radius = 200;
-    roi.zoom = 1;
+    roi.zoom = 1.15;
     
-    
+    roiCenterFilter.setFc(0.04);
+    roiCenterFilter.setType(OFX_BIQUAD_TYPE_LOWPASS);
     
 #ifdef USE_WEBCAM
     grabber.initGrabber(streamWidth, streamHeight);
@@ -80,7 +81,7 @@ void ofApp::setup(){
 //--------------------------------------------------------------
 void ofApp::update(){
     
-    roi.center = ofVec2f(mouseX*2, mouseY*2);
+    roi.center = roiCenterFilter.update(ofVec2f(mouseX*2, mouseY*2));
     
     lqreceiver.update();
     hqreceiver.update();
@@ -170,8 +171,9 @@ void ofApp::draw(){
     hqreceiver.getTextureReference().bind();
     
     //ofCircle(roi.center*ofVec2f(streamWidth/2, streamHeight/2), roi.radius*streamHeight);
-    
     ofTranslate(roi.center);
+    ofScale(roi.zoom, roi.zoom);
+
     glBegin(GL_POLYGON);
     for(int i = 0; i < NormCirclePts.size(); i++){
         glTexCoord2f(NormCircleCoords[i].x, NormCircleCoords[i].y);

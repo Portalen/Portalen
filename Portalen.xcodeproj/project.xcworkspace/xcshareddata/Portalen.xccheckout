@@ -14,6 +14,8 @@
 		<string>github.com:openframeworks/openFrameworks.git</string>
 		<key>37526DA425E5430474A14FBFA1BC4525160B5FC1</key>
 		<string>https://github.com/kylemcdonald/ofxCv.git</string>
+		<key>3FD0A6B0728805B39B1EC65C31D9BA97C2D2ABC7</key>
+		<string>https://github.com/dzlonline/ofxBiquadFilter.git</string>
 		<key>52B71DD912E8CAADAB5FE3D86EF4E31231D19B99</key>
 		<string>https://github.com/roxlu/ofxCanon.git</string>
 		<key>95F9C16A6B271369C7057F98D16770911E9E4317</key>
@@ -31,6 +33,8 @@
 		<string>../../../openFrameworks</string>
 		<key>37526DA425E5430474A14FBFA1BC4525160B5FC1</key>
 		<string>../../../addons/ofxCv</string>
+		<key>3FD0A6B0728805B39B1EC65C31D9BA97C2D2ABC7</key>
+		<string>../../../../../addons/ofxBiquadFilter</string>
 		<key>52B71DD912E8CAADAB5FE3D86EF4E31231D19B99</key>
 		<string>../../../addons/ofxCanon</string>
 		<key>95F9C16A6B271369C7057F98D16770911E9E4317</key>
@@ -48,6 +52,14 @@
 	<string>9E8ACADAC9EF3F41431C6635E743659C22425736</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>3FD0A6B0728805B39B1EC65C31D9BA97C2D2ABC7</string>
+			<key>IDESourceControlWCCName</key>
+			<string>ofxBiquadFilter</string>
+		</dict>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>

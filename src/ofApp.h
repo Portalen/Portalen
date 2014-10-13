@@ -10,7 +10,7 @@
 #include "Canon.h"
 #endif
 #include "ofxOsc.h"
-
+#include "ofxBiquadFilter.h"
 
 
 class RegionOfInterest {
@@ -73,5 +73,8 @@ class ofApp : public ofBaseApp{
     
     vector <ofPoint> NormCirclePts;
     vector <ofPoint> NormCircleCoords;
+    
+    ofxBiquadFilter2f roiCenterFilter;
+    
     
 };
