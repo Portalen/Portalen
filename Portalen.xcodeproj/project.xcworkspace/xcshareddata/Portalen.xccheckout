@@ -12,6 +12,10 @@
 	<dict>
 		<key>2DE9C8846D9375EAACFABA8963120E8E7719BAF5</key>
 		<string>github.com:openframeworks/openFrameworks.git</string>
+		<key>37526DA425E5430474A14FBFA1BC4525160B5FC1</key>
+		<string>https://github.com/kylemcdonald/ofxCv.git</string>
+		<key>52B71DD912E8CAADAB5FE3D86EF4E31231D19B99</key>
+		<string>https://github.com/roxlu/ofxCanon.git</string>
 		<key>95F9C16A6B271369C7057F98D16770911E9E4317</key>
 		<string>https://github.com/HalfdanJ/ofxStreamer.git</string>
 		<key>9E8ACADAC9EF3F41431C6635E743659C22425736</key>
@@ -25,6 +29,10 @@
 	<dict>
 		<key>2DE9C8846D9375EAACFABA8963120E8E7719BAF5</key>
 		<string>../../../openFrameworks</string>
+		<key>37526DA425E5430474A14FBFA1BC4525160B5FC1</key>
+		<string>../../../addons/ofxCv</string>
+		<key>52B71DD912E8CAADAB5FE3D86EF4E31231D19B99</key>
+		<string>../../../addons/ofxCanon</string>
 		<key>95F9C16A6B271369C7057F98D16770911E9E4317</key>
 		<string>../../../openFrameworks/addons/ofxStreamer</string>
 		<key>9E8ACADAC9EF3F41431C6635E743659C22425736</key>
@@ -40,6 +48,22 @@
 	<string>9E8ACADAC9EF3F41431C6635E743659C22425736</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>52B71DD912E8CAADAB5FE3D86EF4E31231D19B99</string>
+			<key>IDESourceControlWCCName</key>
+			<string>ofxCanon</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>37526DA425E5430474A14FBFA1BC4525160B5FC1</string>
+			<key>IDESourceControlWCCName</key>
+			<string>ofxCv</string>
+		</dict>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
