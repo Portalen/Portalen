@@ -1,12 +1,17 @@
 #pragma once
 
+#define USE_WEBCAM
+#define REMOTE_HOST "127.0.0.1"
+
 #include "ofMain.h"
 #include "ofxStreamer.h"
 #include "ofxOpenCv.h"
+#ifndef USE_WEBCAM
 #include "Canon.h"
+#endif
 #include "ofxOsc.h"
 
-#define REMOTE_HOST "127.0.0.1"
+
 
 class RegionOfInterest {
 public:
@@ -32,8 +37,11 @@ class ofApp : public ofBaseApp{
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
     
-    
+#ifdef USE_WEBCAM
     ofVideoGrabber grabber;
+#else
+    roxlu::Canon canon;
+#endif
     
     ofxOscReceiver oscReciver;
     ofxOscSender oscSender;
@@ -44,13 +52,14 @@ class ofApp : public ofBaseApp{
     ofxStreamerSender hqsender;
     ofxStreamerSender lqsender;
     
-    float hqFrameRate = 25;
+    float hqFrameRate = 30;
     
     float streamWidth, streamHeight;
     
     ofFbo camFbo;
     ofFbo camOutFboHQ;
     ofFbo camOutFboLQ;
+    
     ofFbo outputFbo;
     
     ofPixels outPixelsHQ;
@@ -59,12 +68,14 @@ class ofApp : public ofBaseApp{
     
     int newframes = 0;
     
-    roxlu::Canon canon;
     
     float lastTime;
     
     RegionOfInterest roi;
     
     float roiMaxRadius;
+    
+    vector <ofPoint> NormCirclePts;
+    vector <ofPoint> NormCircleCoords;
     
 };
