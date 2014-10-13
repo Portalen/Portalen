@@ -44,8 +44,6 @@ void ofApp::setup(){
     hqsender.setup(roiMaxRadius*2, roiMaxRadius*2, REMOTE_HOST, 1234);//, "placebo", "zerolatency");
     lqsender.setup(streamWidth/8, streamHeight/8, REMOTE_HOST, 1235);//, "ultrafast", "zerolatency");
     
-    
-
 
     hqreceiver.setup(1234);
     lqreceiver.setup(1235);
@@ -108,15 +106,10 @@ void ofApp::update(){
 //--------------------------------------------------------------
 void ofApp::draw(){
     
-    //ofDisableArbTex();
 
     ofSetWindowTitle(ofToString(ofGetFrameRate()));
-    //sender.sendFrame(grabber.getPixelsRef());
-    
-    //outputFbo.begin();
-    //outputFbo.end();
+
     ofSetColor(255, 255, 255, 255);
-    //grabber.draw(0, 0);
     
     
 #ifdef USE_WEBCAM
@@ -172,14 +165,13 @@ void ofApp::draw(){
     ofSetColor(255,255,255,255);
     
     ofScale(0.5,0.5);
-    hqreceiver.draw(roi.center - roiMaxRadius);
+    //hqreceiver.draw(roi.center - roiMaxRadius);
     
-    /*hqreceiver.getTextureReference().bind();
+    hqreceiver.getTextureReference().bind();
     
     //ofCircle(roi.center*ofVec2f(streamWidth/2, streamHeight/2), roi.radius*streamHeight);
     
-    ofTranslate(roi.center/2);
-    ofScale(0.5,0.5);
+    ofTranslate(roi.center);
     glBegin(GL_POLYGON);
     for(int i = 0; i < NormCirclePts.size(); i++){
         glTexCoord2f(NormCircleCoords[i].x, NormCircleCoords[i].y);
@@ -188,7 +180,7 @@ void ofApp::draw(){
     glEnd();
     
     hqreceiver.getTextureReference().unbind();
-     */
+    
     
     
     ofPopMatrix();

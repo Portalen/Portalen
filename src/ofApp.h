@@ -64,10 +64,6 @@ class ofApp : public ofBaseApp{
     
     ofPixels outPixelsHQ;
     ofPixels outPixelsLQ;
-    ofxCvColorImage image;
-    
-    int newframes = 0;
-    
     
     float lastTime;
     
