@@ -27,6 +27,26 @@
 		047DE99819ED866600360084 /* Syphon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 047DE99119ED866600360084 /* Syphon.framework */; };
 		047DE99919ED866700360084 /* SyphonNameboundClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 047DE99419ED866600360084 /* SyphonNameboundClient.m */; };
 		047DE99A19ED867500360084 /* Syphon.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = 047DE99119ED866600360084 /* Syphon.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		047DE9C019ED8A4E00360084 /* Canon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 047DE99D19ED8A4E00360084 /* Canon.cpp */; };
+		047DE9C119ED8A4E00360084 /* CanonConnection.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 047DE99F19ED8A4E00360084 /* CanonConnection.cpp */; };
+		047DE9C219ED8A4E00360084 /* CanonEventListener.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 047DE9A319ED8A4E00360084 /* CanonEventListener.cpp */; };
+		047DE9C319ED8A4E00360084 /* CanonPictureEvent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 047DE9A519ED8A4E00360084 /* CanonPictureEvent.cpp */; };
+		047DE9C419ED8A4E00360084 /* CanonTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 047DE9A819ED8A4E00360084 /* CanonTask.cpp */; };
+		047DE9C519ED8A4E00360084 /* CanonTaskCloseSession.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 047DE9AA19ED8A4E00360084 /* CanonTaskCloseSession.cpp */; };
+		047DE9C619ED8A4E00360084 /* CanonTaskDownloadEVF.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 047DE9AC19ED8A4E00360084 /* CanonTaskDownloadEVF.cpp */; };
+		047DE9C719ED8A4E00360084 /* CanonTaskDownloadPicture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 047DE9AE19ED8A4E00360084 /* CanonTaskDownloadPicture.cpp */; };
+		047DE9C819ED8A4E00360084 /* CanonTaskEndEVF.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 047DE9B019ED8A4E00360084 /* CanonTaskEndEVF.cpp */; };
+		047DE9C919ED8A4E00360084 /* CanonTaskGetProperty.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 047DE9B219ED8A4E00360084 /* CanonTaskGetProperty.cpp */; };
+		047DE9CA19ED8A4E00360084 /* CanonTaskInit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 047DE9B419ED8A4E00360084 /* CanonTaskInit.cpp */; };
+		047DE9CB19ED8A4E00360084 /* CanonTaskOpenSession.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 047DE9B619ED8A4E00360084 /* CanonTaskOpenSession.cpp */; };
+		047DE9CC19ED8A4E00360084 /* CanonTaskQueue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 047DE9B819ED8A4E00360084 /* CanonTaskQueue.cpp */; };
+		047DE9CD19ED8A4E00360084 /* CanonTaskShutdown.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 047DE9BA19ED8A4E00360084 /* CanonTaskShutdown.cpp */; };
+		047DE9CE19ED8A4E00360084 /* CanonTaskStartEVF.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 047DE9BC19ED8A4E00360084 /* CanonTaskStartEVF.cpp */; };
+		047DE9CF19ED8A4E00360084 /* CanonTaskTakePicture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 047DE9BE19ED8A4E00360084 /* CanonTaskTakePicture.cpp */; };
+		047DE9D619ED8AC100360084 /* DPP.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 047DE9D019ED8AC100360084 /* DPP.framework */; };
+		047DE9D719ED8AC100360084 /* EDSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 047DE9D119ED8AC100360084 /* EDSDK.framework */; };
+		047DE9D819ED8ACD00360084 /* DPP.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = 047DE9D019ED8AC100360084 /* DPP.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		047DE9D919ED8ACD00360084 /* EDSDK.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = 047DE9D119ED8AC100360084 /* EDSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		049ED10219E52E3B00CA5310 /* ofxStreamerReceiver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 049ED0F119E52E3B00CA5310 /* ofxStreamerReceiver.cpp */; };
 		049ED10319E52E3B00CA5310 /* ofxStreamerSender.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 049ED0F319E52E3B00CA5310 /* ofxStreamerSender.cpp */; };
 		049ED10419E52E3B00CA5310 /* libavcodec.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 049ED0F719E52E3B00CA5310 /* libavcodec.a */; };
@@ -108,6 +128,8 @@
 			files = (
 				BBAB23CB13894F3D00AA2426 /* GLUT.framework in Copy Files */,
 				047DE99A19ED867500360084 /* Syphon.framework in Copy Files */,
+				047DE9D819ED8ACD00360084 /* DPP.framework in Copy Files */,
+				047DE9D919ED8ACD00360084 /* EDSDK.framework in Copy Files */,
 			);
 			name = "Copy Files";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -158,6 +180,46 @@
 		047DE99119ED866600360084 /* Syphon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Syphon.framework; sourceTree = "<group>"; };
 		047DE99319ED866600360084 /* SyphonNameboundClient.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SyphonNameboundClient.h; sourceTree = "<group>"; };
 		047DE99419ED866600360084 /* SyphonNameboundClient.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SyphonNameboundClient.m; sourceTree = "<group>"; };
+		047DE99D19ED8A4E00360084 /* Canon.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Canon.cpp; sourceTree = "<group>"; };
+		047DE99E19ED8A4E00360084 /* Canon.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Canon.h; sourceTree = "<group>"; };
+		047DE99F19ED8A4E00360084 /* CanonConnection.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CanonConnection.cpp; sourceTree = "<group>"; };
+		047DE9A019ED8A4E00360084 /* CanonConnection.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CanonConnection.h; sourceTree = "<group>"; };
+		047DE9A119ED8A4E00360084 /* CanonDebug.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CanonDebug.h; sourceTree = "<group>"; };
+		047DE9A219ED8A4E00360084 /* CanonEvent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CanonEvent.h; sourceTree = "<group>"; };
+		047DE9A319ED8A4E00360084 /* CanonEventListener.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CanonEventListener.cpp; sourceTree = "<group>"; };
+		047DE9A419ED8A4E00360084 /* CanonEventListener.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CanonEventListener.h; sourceTree = "<group>"; };
+		047DE9A519ED8A4E00360084 /* CanonPictureEvent.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CanonPictureEvent.cpp; sourceTree = "<group>"; };
+		047DE9A619ED8A4E00360084 /* CanonPictureEvent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CanonPictureEvent.h; sourceTree = "<group>"; };
+		047DE9A719ED8A4E00360084 /* CanonSDK.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CanonSDK.h; sourceTree = "<group>"; };
+		047DE9A819ED8A4E00360084 /* CanonTask.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CanonTask.cpp; sourceTree = "<group>"; };
+		047DE9A919ED8A4E00360084 /* CanonTask.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CanonTask.h; sourceTree = "<group>"; };
+		047DE9AA19ED8A4E00360084 /* CanonTaskCloseSession.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CanonTaskCloseSession.cpp; sourceTree = "<group>"; };
+		047DE9AB19ED8A4E00360084 /* CanonTaskCloseSession.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CanonTaskCloseSession.h; sourceTree = "<group>"; };
+		047DE9AC19ED8A4E00360084 /* CanonTaskDownloadEVF.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CanonTaskDownloadEVF.cpp; sourceTree = "<group>"; };
+		047DE9AD19ED8A4E00360084 /* CanonTaskDownloadEVF.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CanonTaskDownloadEVF.h; sourceTree = "<group>"; };
+		047DE9AE19ED8A4E00360084 /* CanonTaskDownloadPicture.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CanonTaskDownloadPicture.cpp; sourceTree = "<group>"; };
+		047DE9AF19ED8A4E00360084 /* CanonTaskDownloadPicture.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CanonTaskDownloadPicture.h; sourceTree = "<group>"; };
+		047DE9B019ED8A4E00360084 /* CanonTaskEndEVF.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CanonTaskEndEVF.cpp; sourceTree = "<group>"; };
+		047DE9B119ED8A4E00360084 /* CanonTaskEndEVF.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CanonTaskEndEVF.h; sourceTree = "<group>"; };
+		047DE9B219ED8A4E00360084 /* CanonTaskGetProperty.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CanonTaskGetProperty.cpp; sourceTree = "<group>"; };
+		047DE9B319ED8A4E00360084 /* CanonTaskGetProperty.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CanonTaskGetProperty.h; sourceTree = "<group>"; };
+		047DE9B419ED8A4E00360084 /* CanonTaskInit.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CanonTaskInit.cpp; sourceTree = "<group>"; };
+		047DE9B519ED8A4E00360084 /* CanonTaskInit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CanonTaskInit.h; sourceTree = "<group>"; };
+		047DE9B619ED8A4E00360084 /* CanonTaskOpenSession.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CanonTaskOpenSession.cpp; sourceTree = "<group>"; };
+		047DE9B719ED8A4E00360084 /* CanonTaskOpenSession.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CanonTaskOpenSession.h; sourceTree = "<group>"; };
+		047DE9B819ED8A4E00360084 /* CanonTaskQueue.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CanonTaskQueue.cpp; sourceTree = "<group>"; };
+		047DE9B919ED8A4E00360084 /* CanonTaskQueue.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CanonTaskQueue.h; sourceTree = "<group>"; };
+		047DE9BA19ED8A4E00360084 /* CanonTaskShutdown.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CanonTaskShutdown.cpp; sourceTree = "<group>"; };
+		047DE9BB19ED8A4E00360084 /* CanonTaskShutdown.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CanonTaskShutdown.h; sourceTree = "<group>"; };
+		047DE9BC19ED8A4E00360084 /* CanonTaskStartEVF.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CanonTaskStartEVF.cpp; sourceTree = "<group>"; };
+		047DE9BD19ED8A4E00360084 /* CanonTaskStartEVF.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CanonTaskStartEVF.h; sourceTree = "<group>"; };
+		047DE9BE19ED8A4E00360084 /* CanonTaskTakePicture.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CanonTaskTakePicture.cpp; sourceTree = "<group>"; };
+		047DE9BF19ED8A4E00360084 /* CanonTaskTakePicture.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CanonTaskTakePicture.h; sourceTree = "<group>"; };
+		047DE9D019ED8AC100360084 /* DPP.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = DPP.framework; sourceTree = "<group>"; };
+		047DE9D119ED8AC100360084 /* EDSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = EDSDK.framework; sourceTree = "<group>"; };
+		047DE9D319ED8AC100360084 /* EDSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDSDK.h; sourceTree = "<group>"; };
+		047DE9D419ED8AC100360084 /* EDSDKErrors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDSDKErrors.h; sourceTree = "<group>"; };
+		047DE9D519ED8AC100360084 /* EDSDKTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDSDKTypes.h; sourceTree = "<group>"; };
 		049ED0F019E52E3B00CA5310 /* ofxStreamer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxStreamer.h; sourceTree = "<group>"; };
 		049ED0F119E52E3B00CA5310 /* ofxStreamerReceiver.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ofxStreamerReceiver.cpp; sourceTree = "<group>"; };
 		049ED0F219E52E3B00CA5310 /* ofxStreamerReceiver.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxStreamerReceiver.h; sourceTree = "<group>"; };
@@ -346,6 +408,7 @@
 			files = (
 				04301D6419E57C1900240A80 /* libiconv.2.dylib in Frameworks */,
 				049ED10D19E52E3B00CA5310 /* libx264.a in Frameworks */,
+				047DE9D719ED8AC100360084 /* EDSDK.framework in Frameworks */,
 				223EC15819ED231C00FADE7C /* opencv.a in Frameworks */,
 				6474CBF619BCE019003C94E2 /* AVFoundation.framework in Frameworks */,
 				049ED10B19E52E3B00CA5310 /* libswresample.a in Frameworks */,
@@ -365,6 +428,7 @@
 				E45BE97B0E8CC7DD009D7055 /* AGL.framework in Frameworks */,
 				E45BE97C0E8CC7DD009D7055 /* ApplicationServices.framework in Frameworks */,
 				E45BE97D0E8CC7DD009D7055 /* AudioToolbox.framework in Frameworks */,
+				047DE9D619ED8AC100360084 /* DPP.framework in Frameworks */,
 				E45BE97F0E8CC7DD009D7055 /* CoreAudio.framework in Frameworks */,
 				049ED10719E52E3B00CA5310 /* libavformat.a in Frameworks */,
 				E45BE9800E8CC7DD009D7055 /* CoreFoundation.framework in Frameworks */,
@@ -545,6 +609,70 @@
 				047DE99419ED866600360084 /* SyphonNameboundClient.m */,
 			);
 			path = src;
+			sourceTree = "<group>";
+		};
+		047DE99B19ED8A4E00360084 /* ofxCanon */ = {
+			isa = PBXGroup;
+			children = (
+				047DE9D019ED8AC100360084 /* DPP.framework */,
+				047DE9D119ED8AC100360084 /* EDSDK.framework */,
+				047DE9D219ED8AC100360084 /* Header */,
+				047DE99C19ED8A4E00360084 /* src */,
+			);
+			name = ofxCanon;
+			sourceTree = "<group>";
+		};
+		047DE99C19ED8A4E00360084 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				047DE99D19ED8A4E00360084 /* Canon.cpp */,
+				047DE99E19ED8A4E00360084 /* Canon.h */,
+				047DE99F19ED8A4E00360084 /* CanonConnection.cpp */,
+				047DE9A019ED8A4E00360084 /* CanonConnection.h */,
+				047DE9A119ED8A4E00360084 /* CanonDebug.h */,
+				047DE9A219ED8A4E00360084 /* CanonEvent.h */,
+				047DE9A319ED8A4E00360084 /* CanonEventListener.cpp */,
+				047DE9A419ED8A4E00360084 /* CanonEventListener.h */,
+				047DE9A519ED8A4E00360084 /* CanonPictureEvent.cpp */,
+				047DE9A619ED8A4E00360084 /* CanonPictureEvent.h */,
+				047DE9A719ED8A4E00360084 /* CanonSDK.h */,
+				047DE9A819ED8A4E00360084 /* CanonTask.cpp */,
+				047DE9A919ED8A4E00360084 /* CanonTask.h */,
+				047DE9AA19ED8A4E00360084 /* CanonTaskCloseSession.cpp */,
+				047DE9AB19ED8A4E00360084 /* CanonTaskCloseSession.h */,
+				047DE9AC19ED8A4E00360084 /* CanonTaskDownloadEVF.cpp */,
+				047DE9AD19ED8A4E00360084 /* CanonTaskDownloadEVF.h */,
+				047DE9AE19ED8A4E00360084 /* CanonTaskDownloadPicture.cpp */,
+				047DE9AF19ED8A4E00360084 /* CanonTaskDownloadPicture.h */,
+				047DE9B019ED8A4E00360084 /* CanonTaskEndEVF.cpp */,
+				047DE9B119ED8A4E00360084 /* CanonTaskEndEVF.h */,
+				047DE9B219ED8A4E00360084 /* CanonTaskGetProperty.cpp */,
+				047DE9B319ED8A4E00360084 /* CanonTaskGetProperty.h */,
+				047DE9B419ED8A4E00360084 /* CanonTaskInit.cpp */,
+				047DE9B519ED8A4E00360084 /* CanonTaskInit.h */,
+				047DE9B619ED8A4E00360084 /* CanonTaskOpenSession.cpp */,
+				047DE9B719ED8A4E00360084 /* CanonTaskOpenSession.h */,
+				047DE9B819ED8A4E00360084 /* CanonTaskQueue.cpp */,
+				047DE9B919ED8A4E00360084 /* CanonTaskQueue.h */,
+				047DE9BA19ED8A4E00360084 /* CanonTaskShutdown.cpp */,
+				047DE9BB19ED8A4E00360084 /* CanonTaskShutdown.h */,
+				047DE9BC19ED8A4E00360084 /* CanonTaskStartEVF.cpp */,
+				047DE9BD19ED8A4E00360084 /* CanonTaskStartEVF.h */,
+				047DE9BE19ED8A4E00360084 /* CanonTaskTakePicture.cpp */,
+				047DE9BF19ED8A4E00360084 /* CanonTaskTakePicture.h */,
+			);
+			name = src;
+			path = ../../../addons/ofxCanon/src;
+			sourceTree = "<group>";
+		};
+		047DE9D219ED8AC100360084 /* Header */ = {
+			isa = PBXGroup;
+			children = (
+				047DE9D319ED8AC100360084 /* EDSDK.h */,
+				047DE9D419ED8AC100360084 /* EDSDKErrors.h */,
+				047DE9D519ED8AC100360084 /* EDSDKTypes.h */,
+			);
+			path = Header;
 			sourceTree = "<group>";
 		};
 		049ED0EE19E52E3B00CA5310 /* ofxStreamer */ = {
@@ -985,6 +1113,7 @@
 		BB4B014C10F69532006C3DED /* addons */ = {
 			isa = PBXGroup;
 			children = (
+				047DE99B19ED8A4E00360084 /* ofxCanon */,
 				047DE98419ED866600360084 /* ofxSyphon */,
 				223EC08D19ED231C00FADE7C /* ofxOpenCv */,
 				04A911AB19EC6C000072CCC4 /* ofxBlur */,
@@ -1170,15 +1299,23 @@
 			files = (
 				04CB0E9419EC54270048ABDC /* ofxSliderGroup.cpp in Sources */,
 				04CB0E9319EC54270048ABDC /* ofxSlider.cpp in Sources */,
+				047DE9CE19ED8A4E00360084 /* CanonTaskStartEVF.cpp in Sources */,
+				047DE9C019ED8A4E00360084 /* Canon.cpp in Sources */,
+				047DE9C119ED8A4E00360084 /* CanonConnection.cpp in Sources */,
+				047DE9C419ED8A4E00360084 /* CanonTask.cpp in Sources */,
 				223EC17019ED269B00FADE7C /* ofxBiquadFilter.cpp in Sources */,
 				223EC17119ED269E00FADE7C /* ofxBiquadFilterInstance.cpp in Sources */,
 				043267BE19EBED8C0030EDA6 /* ofxOscReceiver.cpp in Sources */,
+				047DE9C219ED8A4E00360084 /* CanonEventListener.cpp in Sources */,
 				223EC15319ED231C00FADE7C /* ofxCvFloatImage.cpp in Sources */,
 				049ED10219E52E3B00CA5310 /* ofxStreamerReceiver.cpp in Sources */,
 				043267C519EBED8C0030EDA6 /* OscReceivedElements.cpp in Sources */,
 				04CB0E8E19EC54270048ABDC /* ofxBaseGui.cpp in Sources */,
 				043267C019EBED8C0030EDA6 /* IpEndpointName.cpp in Sources */,
+				047DE9CC19ED8A4E00360084 /* CanonTaskQueue.cpp in Sources */,
 				223EC15219ED231C00FADE7C /* ofxCvContourFinder.cpp in Sources */,
+				047DE9C719ED8A4E00360084 /* CanonTaskDownloadPicture.cpp in Sources */,
+				047DE9C919ED8A4E00360084 /* CanonTaskGetProperty.cpp in Sources */,
 				223EC15719ED231C00FADE7C /* ofxCvShortImage.cpp in Sources */,
 				E4B69E200A3A1BDC003C02F2 /* main.cpp in Sources */,
 				047DE99919ED866700360084 /* SyphonNameboundClient.m in Sources */,
@@ -1189,22 +1326,30 @@
 				223EC15119ED231C00FADE7C /* ofxCvColorImage.cpp in Sources */,
 				04CB0E9019EC54270048ABDC /* ofxGuiGroup.cpp in Sources */,
 				043267C619EBED8C0030EDA6 /* OscTypes.cpp in Sources */,
+				047DE9CD19ED8A4E00360084 /* CanonTaskShutdown.cpp in Sources */,
+				047DE9CF19ED8A4E00360084 /* CanonTaskTakePicture.cpp in Sources */,
 				223EC17219ED26BD00FADE7C /* ofxBlur.cpp in Sources */,
 				E4B69E210A3A1BDC003C02F2 /* ofApp.cpp in Sources */,
 				04CB0E9519EC54270048ABDC /* ofxToggle.cpp in Sources */,
 				043267C419EBED8C0030EDA6 /* OscPrintReceivedElements.cpp in Sources */,
 				043267BB19EBED8C0030EDA6 /* ofxOscBundle.cpp in Sources */,
 				043267BD19EBED8C0030EDA6 /* ofxOscParameterSync.cpp in Sources */,
+				047DE9CA19ED8A4E00360084 /* CanonTaskInit.cpp in Sources */,
 				049ED10319E52E3B00CA5310 /* ofxStreamerSender.cpp in Sources */,
+				047DE9C319ED8A4E00360084 /* CanonPictureEvent.cpp in Sources */,
+				047DE9C619ED8A4E00360084 /* CanonTaskDownloadEVF.cpp in Sources */,
 				04CB0E9219EC54270048ABDC /* ofxPanel.cpp in Sources */,
 				043267C319EBED8C0030EDA6 /* OscOutboundPacketStream.cpp in Sources */,
+				047DE9CB19ED8A4E00360084 /* CanonTaskOpenSession.cpp in Sources */,
 				043267BF19EBED8C0030EDA6 /* ofxOscSender.cpp in Sources */,
 				047DE99519ED866600360084 /* ofxSyphonClient.mm in Sources */,
 				223EC15419ED231C00FADE7C /* ofxCvGrayscaleImage.cpp in Sources */,
+				047DE9C819ED8A4E00360084 /* CanonTaskEndEVF.cpp in Sources */,
 				04CB0E9119EC54270048ABDC /* ofxLabel.cpp in Sources */,
 				04CB0E8F19EC54270048ABDC /* ofxButton.cpp in Sources */,
 				223EC15519ED231C00FADE7C /* ofxCvHaarFinder.cpp in Sources */,
 				043267BC19EBED8C0030EDA6 /* ofxOscMessage.cpp in Sources */,
+				047DE9C519ED8A4E00360084 /* CanonTaskCloseSession.cpp in Sources */,
 				047DE99719ED866600360084 /* ofxSyphonServerDirectory.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1292,6 +1437,7 @@
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
 					"$(SRCROOT)/../../../addons/ofxCanon/framework",
 					"$(SRCROOT)/../../../addons/ofxSyphon/libs/Syphon/lib/osx",
+					"$(PROJECT_DIR)",
 				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)/../../../libs/glut/lib/osx\"";
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -1331,6 +1477,7 @@
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
 					"$(SRCROOT)/../../../addons/ofxCanon/framework",
 					"$(SRCROOT)/../../../addons/ofxSyphon/libs/Syphon/lib/osx",
+					"$(PROJECT_DIR)",
 				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)/../../../libs/glut/lib/osx\"";
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
