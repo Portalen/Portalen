@@ -42,13 +42,13 @@
 		<key>52B71DD912E8CAADAB5FE3D86EF4E31231D19B99</key>
 		<string>../../../addons/ofxCanon</string>
 		<key>8B7D3B297962C41A4A67EFE4DB1DBDE53440A0BB</key>
-		<string>../../../../../addons/ofxBlur</string>
+		<string>../../../addons/ofxBlur</string>
 		<key>95F9C16A6B271369C7057F98D16770911E9E4317</key>
 		<string>../../../openFrameworks/addons/ofxStreamer</string>
 		<key>9E8ACADAC9EF3F41431C6635E743659C22425736</key>
 		<string>../..</string>
 		<key>B7CCA6A8C889ED4C803FBF307564FD139754E943</key>
-		<string>../../../../../addons/ofxFX</string>
+		<string>../../../addons/ofxFX</string>
 		<key>F4CCB893AFADB97238A965FD2F28717F1CAAE613</key>
 		<string>../../../openFrameworks/addons/ofxSyphon</string>
 	</dict>

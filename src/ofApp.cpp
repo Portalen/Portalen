@@ -203,8 +203,13 @@ void ofApp::draw(){
     
     outFbo.begin();
     
-    ofSetColor(ofColor::white);
+    camFbo.draw(0,0,outFbo.getWidth(),outFbo.getHeight());
+    
+    ofSetColor(255,255,255,200);
     fboBlurTwoPass.draw(0, 0);
+    
+    ofSetColor(255,255,255,255);
+
     
     //ofScale(0.5,0.5);
     //hqreceiver.draw(roi.center - roiMaxRadius);
