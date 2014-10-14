@@ -1,18 +1,32 @@
 #pragma once
 
+//#define USE_WEBCAM
+#define REMOTE_HOST "127.0.0.1"
+
 #include "ofMain.h"
 #include "ofxStreamer.h"
 #include "ofxOpenCv.h"
-#include "Canon.h"
 #include "ofxOsc.h"
+#include "ofxBiquadFilter.h"
+#include "ofxGui.h"
 
-#define REMOTE_HOST "127.0.0.1"
+
+
+#ifndef USE_WEBCAM
+#include "Canon.h"
+#endif
 
 class RegionOfInterest {
 public:
     ofVec2f center;
+    ofVec2f lastCenter;
     float radius;
     float zoom;
+    float alpha;
+    
+    ofxBiquadFilter2f centerFilter;
+    
+    ofxBiquadFilter2f highPass;
 };
 
 class ofApp : public ofBaseApp{
@@ -32,8 +46,11 @@ class ofApp : public ofBaseApp{
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
     
-    
+#ifdef USE_WEBCAM
     ofVideoGrabber grabber;
+#else
+    roxlu::Canon canon;
+#endif
     
     ofxOscReceiver oscReciver;
     ofxOscSender oscSender;
@@ -44,27 +61,45 @@ class ofApp : public ofBaseApp{
     ofxStreamerSender hqsender;
     ofxStreamerSender lqsender;
     
-    float hqFrameRate = 25;
+    float hqFrameRate = 30;
     
     float streamWidth, streamHeight;
     
     ofFbo camFbo;
     ofFbo camOutFboHQ;
     ofFbo camOutFboLQ;
-    ofFbo outputFbo;
+    
+    ofFbo outFbo;
     
     ofPixels outPixelsHQ;
     ofPixels outPixelsLQ;
-    ofxCvColorImage image;
-    
-    int newframes = 0;
-    
-    roxlu::Canon canon;
     
     float lastTime;
     
     RegionOfInterest roi;
     
     float roiMaxRadius;
+    
+    vector <ofPoint> NormCirclePts;
+    vector <ofPoint> NormCircleCoords;
+    
+
+    
+    ofxPanel gui;
+    ofParameterGroup params;
+    
+    ofParameter<float> roiSize;
+    ofParameter<float> roiZoom;
+    
+    ofShader shaderBlurX;
+    ofShader shaderBlurY;
+    
+    ofShader shaderDesaturate;
+    
+    ofFbo fboBlurOnePass;
+    ofFbo fboBlurTwoPass;
+    
+    
+    
     
 };
