@@ -19,8 +19,14 @@
 class RegionOfInterest {
 public:
     ofVec2f center;
+    ofVec2f lastCenter;
     float radius;
     float zoom;
+    float alpha;
+    
+    ofxBiquadFilter2f centerFilter;
+    
+    ofxBiquadFilter2f highPass;
 };
 
 class ofApp : public ofBaseApp{
@@ -77,7 +83,7 @@ class ofApp : public ofBaseApp{
     vector <ofPoint> NormCirclePts;
     vector <ofPoint> NormCircleCoords;
     
-    ofxBiquadFilter2f roiCenterFilter;
+
     
     ofxPanel gui;
     ofParameterGroup params;
@@ -92,6 +98,8 @@ class ofApp : public ofBaseApp{
     
     ofFbo fboBlurOnePass;
     ofFbo fboBlurTwoPass;
+    
+    
     
     
 };

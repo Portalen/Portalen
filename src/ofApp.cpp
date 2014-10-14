@@ -8,7 +8,6 @@ void ofApp::setup(){
     //ofLogLevel(OF_LOG_SILENT);
     ofSetFrameRate(30);
     
-    
     streamWidth = 1056;
     streamHeight = 704;
     
@@ -18,11 +17,14 @@ void ofApp::setup(){
     roi.radius = 200;
     roi.zoom = 1.09;
     
-    roiCenterFilter.setFc(0.04);
-    roiCenterFilter.setType(OFX_BIQUAD_TYPE_LOWPASS);
+    roi.centerFilter.setFc(0.04);
+    roi.centerFilter.setType(OFX_BIQUAD_TYPE_LOWPASS);
+    
+    roi.highPass.setFc(0.04);
+    roi.highPass.setQ(0.44);
+    roi.highPass.setType(OFX_BIQUAD_TYPE_BANDPASS);
     
     int internalFormat = GL_RGB8;
-
     
 #ifdef USE_WEBCAM
     grabber.initGrabber(streamWidth, streamHeight);
@@ -92,7 +94,15 @@ void ofApp::setup(){
 //--------------------------------------------------------------
 void ofApp::update(){
     
-    roi.center = roiCenterFilter.update(ofVec2f(mouseX*2, mouseY*2));
+    roi.center = roi.centerFilter.update(ofVec2f(mouseX*2, mouseY*2));
+    
+    roi.highPass.update(ofVec2f(mouseX, mouseY));
+    
+    roi.alpha = ofMap((abs(roi.highPass.value().x)+abs(roi.highPass.value().y))/2, 0, 50, 255, 0, true);
+    roi.zoom = ofMap(roi.alpha, 0, 255, 0.6, 1.15, true);
+    roi.radius = ofMap(roi.alpha, 0, 190, roiMaxRadius*0.8, roiMaxRadius, true);
+    
+    //cout<<roi.highPass.value()<<endl;
     
     lqreceiver.update();
     hqreceiver.update();
@@ -195,7 +205,8 @@ void ofApp::draw(){
     //hqreceiver.getTextureReference().setAlphaMask(<#ofTexture &mask#>)
     
     ofPushMatrix();{
-    
+    ofSetColor(255,255,255,roi.alpha);
+
     hqreceiver.getTextureReference().bind();
     
     //ofCircle(roi.center*ofVec2f(streamWidth/2, streamHeight/2), roi.radius*streamHeight);
@@ -209,17 +220,15 @@ void ofApp::draw(){
     }
     glEnd();
     
-    
     hqreceiver.getTextureReference().unbind();
         
     }ofPopMatrix();
     
     outFbo.end();
     
-        
-    
     ofPushMatrix();{
-    
+        ofSetColor(255,255,255,255);
+
     ofTranslate(streamWidth/2,  0);
     outFbo.draw(0,0);
     
