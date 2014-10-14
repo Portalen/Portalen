@@ -53,13 +53,15 @@ void ofApp::setup(){
     
     outFbo.allocate(streamWidth, streamHeight, internalFormat);
     
-    
+#ifdef USE_SENDER
     hqsender.setup(roiMaxRadius*2, roiMaxRadius*2, REMOTE_HOST, 1234);//, "placebo", "zerolatency");
     lqsender.setup(streamWidth/4, streamHeight/4, REMOTE_HOST, 1235);//, "ultrafast", "zerolatency");
-    
+
 
     hqreceiver.setup(1234);
     lqreceiver.setup(1235);
+    
+#endif
     
     camFbo.begin();
     ofClear(0,0,0);
@@ -103,9 +105,10 @@ void ofApp::update(){
     roi.radius = ofMap(roi.alpha, 0, 190, roiMaxRadius*0.8, roiMaxRadius, true);
     
     //cout<<roi.highPass.value()<<endl;
-    
+#ifdef USE_SENDER
     lqreceiver.update();
     hqreceiver.update();
+#endif
     
 #ifdef USE_WEBCAM
     grabber.update();
@@ -158,14 +161,17 @@ void ofApp::draw(){
     
     
     camOutFboLQ.readToPixels(outPixelsLQ);
+#ifdef USE_SENDER
     lqsender.sendFrame(outPixelsLQ);
-    
+#endif
     float timePerFrame = 1.0 / hqFrameRate;
     float currentTime = ofGetElapsedTimef();
     if (currentTime - lastTime > timePerFrame){
         
         camOutFboHQ.readToPixels(outPixelsHQ);
+#ifdef USE_SENDER
         hqsender.sendFrame(outPixelsHQ);
+#endif
         lastTime = currentTime;
     }  
     
@@ -203,12 +209,12 @@ void ofApp::draw(){
     //ofScale(0.5,0.5);
     //hqreceiver.draw(roi.center - roiMaxRadius);
     //hqreceiver.getTextureReference().setAlphaMask(<#ofTexture &mask#>)
-    
+#ifdef USE_SENDER
     ofPushMatrix();{
     ofSetColor(255,255,255,roi.alpha);
 
     hqreceiver.getTextureReference().bind();
-    
+
     //ofCircle(roi.center*ofVec2f(streamWidth/2, streamHeight/2), roi.radius*streamHeight);
     ofTranslate(roi.center);
     ofScale(roi.zoom, roi.zoom);
@@ -221,9 +227,9 @@ void ofApp::draw(){
     glEnd();
     
     hqreceiver.getTextureReference().unbind();
-        
-    }ofPopMatrix();
     
+    }ofPopMatrix();
+#endif
     outFbo.end();
     
     ofPushMatrix();{
