@@ -98,8 +98,8 @@ void ofApp::update(){
     
     roi.highPass.update(ofVec2f(mouseX, mouseY));
     
-    roi.alpha = ofMap((abs(roi.highPass.value().x)+abs(roi.highPass.value().y))/2, 0, 50, 255, 0, true);
-    roi.zoom = ofMap(roi.alpha, 0, 255, 0.6, 1.15, true);
+    roi.alpha = ofMap((abs(roi.highPass.value().x)+abs(roi.highPass.value().y))/2, 0, 50, 240, 0, true);
+    roi.zoom = ofMap(roi.alpha, 0, 240, 0.6, 1.15, true);
     roi.radius = ofMap(roi.alpha, 0, 190, roiMaxRadius*0.8, roiMaxRadius, true);
     
     //cout<<roi.highPass.value()<<endl;
@@ -230,11 +230,11 @@ void ofApp::draw(){
         ofSetColor(255,255,255,255);
 
     ofTranslate(streamWidth/2,  0);
+        ofScale(0.9,0.9);
     outFbo.draw(0,0);
     
     
     }ofPopMatrix();
-    
     
     
 }

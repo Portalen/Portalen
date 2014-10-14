@@ -1,6 +1,6 @@
 #pragma once
 
-#define USE_WEBCAM
+//#define USE_WEBCAM
 #define REMOTE_HOST "127.0.0.1"
 
 #include "ofMain.h"
