@@ -1,12 +1,12 @@
 #pragma once
 
-#define USE_WEBCAM
+//#define USE_WEBCAM
 //#define USE_CANON_LIVEVIEW
 //#define USE_GRABBER
 
 #define USE_SENDER
 
-#define REMOTE_HOST "25.91.17.173"
+#define REMOTE_HOST "25.163.99.7"
 
 #define LOW_QUALITY_STREAM_PORT 9000
 #define HIGH_QUALITY_STREAM_PORT 9100
@@ -89,8 +89,8 @@ class ofApp : public ofBaseApp{
     ofPixels outPixelsHQ;
     ofPixels outPixelsLQ;
     
-    RegionOfInterest localRoi;
-    RegionOfInterest remoteRoi;
+    RegionOfInterest * localRoi;
+    RegionOfInterest * remoteRoi;
     
     float roiMaxRadius;
     
