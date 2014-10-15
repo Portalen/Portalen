@@ -67,13 +67,13 @@ void ofApp::setup(){
     
     camFbo.allocate(streamWidth, streamHeight, internalFormat);
     camOutFboHQ.allocate(roiMaxRadius*2, roiMaxRadius*2, internalFormat);
-    camOutFboLQ.allocate(streamWidth/4, streamHeight/4, internalFormat);
+    camOutFboLQ.allocate(streamWidth/8, streamHeight/8, internalFormat);
     
     outFbo.allocate(streamWidth, streamHeight, internalFormat);
     
 #ifdef USE_SENDER
-    hqsender.setup(roiMaxRadius*2, roiMaxRadius*2, REMOTE_HOST, HIGH_QUALITY_STREAM_PORT);//, "placebo", "zerolatency");
-    lqsender.setup(streamWidth/4, streamHeight/4, REMOTE_HOST, LOW_QUALITY_STREAM_PORT);//, "ultrafast", "zerolatency");
+    hqsender.setup(roiMaxRadius*2, roiMaxRadius*2, REMOTE_HOST, HIGH_QUALITY_STREAM_PORT, "slow", "zerolatency");//, "placebo", "zerolatency");
+    lqsender.setup(streamWidth/8, streamHeight/8, REMOTE_HOST, LOW_QUALITY_STREAM_PORT, "veryslow", "zerolatency");//, "ultrafast", "zerolatency");
 
     hqreceiver.setup(HIGH_QUALITY_STREAM_PORT);
     lqreceiver.setup(LOW_QUALITY_STREAM_PORT);
@@ -291,7 +291,8 @@ void ofApp::draw(){
 #ifdef USE_SENDER
     ofPushMatrix();{
     ofSetColor(255,255,255,remoteRoi->alpha);
-
+    
+    if(hqreceiver.isConnected()) {
     hqreceiver.getTextureReference().bind();
 
     //ofCircle(localRoi->center*ofVec2f(streamWidth/2, streamHeight/2), localRoi->radius*streamHeight);
@@ -306,6 +307,7 @@ void ofApp::draw(){
     glEnd();
     
     hqreceiver.getTextureReference().unbind();
+    }
     
     }ofPopMatrix();
 #endif

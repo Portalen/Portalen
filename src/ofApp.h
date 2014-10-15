@@ -75,9 +75,9 @@ class ofApp : public ofBaseApp{
     float lqFrameLastTime;
     float oscUpdateLastTime;
     
-    float hqFrameRate = 25;
-    float lqFrameRate = 25;
-    float oscUpdateRate = 30;
+    float hqFrameRate = 14;
+    float lqFrameRate = 14;
+    float oscUpdateRate = 20;
     
     float streamWidth, streamHeight;
     
