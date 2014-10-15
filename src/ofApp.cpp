@@ -3,6 +3,9 @@
 //--------------------------------------------------------------
 void ofApp::setup(){
     
+    localRoi.local = true;
+    remoteRoi.local = false;
+    
     ofSetCircleResolution(140);
 
     //ofLogLevel(OF_LOG_SILENT);
@@ -13,16 +16,28 @@ void ofApp::setup(){
     
     roiMaxRadius = 200;
     
-    roi.center = ofVec2f(streamWidth,streamHeight);
-    roi.radius = 200;
-    roi.zoom = 1.09;
+    localRoi.center = ofVec2f(streamWidth,streamHeight);
+    localRoi.radius = 200;
+    localRoi.zoom = 1.09;
     
-    roi.centerFilter.setFc(0.04);
-    roi.centerFilter.setType(OFX_BIQUAD_TYPE_LOWPASS);
+    localRoi.centerFilter.setFc(0.04);
+    localRoi.centerFilter.setType(OFX_BIQUAD_TYPE_LOWPASS);
     
-    roi.highPass.setFc(0.04);
-    roi.highPass.setQ(0.44);
-    roi.highPass.setType(OFX_BIQUAD_TYPE_BANDPASS);
+    localRoi.highPass.setFc(0.04);
+    localRoi.highPass.setQ(0.44);
+    localRoi.highPass.setType(OFX_BIQUAD_TYPE_BANDPASS);
+    
+    remoteRoi.center = ofVec2f(streamWidth,streamHeight);
+    remoteRoi.radius = 200;
+    remoteRoi.zoom = 1.09;
+    
+    remoteRoi.centerFilter.setFc(0.05);
+    remoteRoi.centerFilter.setType(OFX_BIQUAD_TYPE_LOWPASS);
+    
+    remoteRoi.highPass.setFc(0.04);
+    remoteRoi.highPass.setQ(0.44);
+    remoteRoi.highPass.setType(OFX_BIQUAD_TYPE_BANDPASS);
+    
     
     int internalFormat = GL_RGB8;
     
@@ -54,14 +69,17 @@ void ofApp::setup(){
     outFbo.allocate(streamWidth, streamHeight, internalFormat);
     
 #ifdef USE_SENDER
-    hqsender.setup(roiMaxRadius*2, roiMaxRadius*2, REMOTE_HOST, 1234);//, "placebo", "zerolatency");
-    lqsender.setup(streamWidth/4, streamHeight/4, REMOTE_HOST, 1235);//, "ultrafast", "zerolatency");
+    hqsender.setup(roiMaxRadius*2, roiMaxRadius*2, REMOTE_HOST, HIGH_QUALITY_STREAM_PORT);//, "placebo", "zerolatency");
+    lqsender.setup(streamWidth/4, streamHeight/4, REMOTE_HOST, LOW_QUALITY_STREAM_PORT);//, "ultrafast", "zerolatency");
 
-
-    hqreceiver.setup(1234);
-    lqreceiver.setup(1235);
+    hqreceiver.setup(HIGH_QUALITY_STREAM_PORT);
+    lqreceiver.setup(LOW_QUALITY_STREAM_PORT);
     
 #endif
+    
+    oscSender.setup(REMOTE_HOST, OSC_DATA_PORT);
+    oscReceiver.setup(OSC_DATA_PORT);
+
     
     camFbo.begin();
     ofClear(0,0,0);
@@ -70,7 +88,6 @@ void ofApp::setup(){
     int numPts  = 64;
     float angle = 0.0;
     float step  = TWO_PI / (float)(numPts-1);
-    
     
     for(int i = 0; i < numPts; i++){
         
@@ -96,15 +113,7 @@ void ofApp::setup(){
 //--------------------------------------------------------------
 void ofApp::update(){
     
-    roi.center = roi.centerFilter.update(ofVec2f(mouseX*2, mouseY*2));
-    
-    roi.highPass.update(ofVec2f(mouseX, mouseY));
-    
-    roi.alpha = ofMap((abs(roi.highPass.value().x)+abs(roi.highPass.value().y))/2, 0, 50, 240, 0, true);
-    roi.zoom = ofMap(roi.alpha, 0, 240, 0.6, 1.15, true);
-    roi.radius = ofMap(roi.alpha, 0, 190, roiMaxRadius*0.8, roiMaxRadius, true);
-    
-    //cout<<roi.highPass.value()<<endl;
+    //cout<<localRoi.highPass.value()<<endl;
 #ifdef USE_SENDER
     lqreceiver.update();
     hqreceiver.update();
@@ -113,18 +122,90 @@ void ofApp::update(){
 #ifdef USE_WEBCAM
     grabber.update();
     if(grabber.isInitialized() && grabber.isFrameNew()){
-    
         camFbo.begin();
         grabber.draw(0, 0, camFbo.getWidth(), camFbo.getHeight());
         camFbo.end();
     }
-
     
 #else
     if(!canon.isLiveViewActive() && canon.isSessionOpen()) {
         canon.startLiveView();
     }
 #endif
+    
+    
+    // Stream low quality frames
+    float currentTime = ofGetElapsedTimef();
+    float timePerFrame = 1.0 / lqFrameRate;
+    if (currentTime - lqFrameLastTime > timePerFrame){
+        camOutFboLQ.readToPixels(outPixelsLQ);
+#ifdef USE_SENDER
+        lqsender.sendFrame(outPixelsLQ);
+#endif
+        lqFrameLastTime = currentTime;
+    }
+    
+    // Stream high quality frames
+    timePerFrame = 1.0 / hqFrameRate;
+    if (currentTime - hqFrameLastTime > timePerFrame){
+        
+        camOutFboHQ.readToPixels(outPixelsHQ);
+#ifdef USE_SENDER
+        hqsender.sendFrame(outPixelsHQ);
+#endif
+        hqFrameLastTime = currentTime;
+    }
+
+    
+    // send OSC data
+    
+    timePerFrame = 1.0 / hqFrameRate;
+    if (currentTime - hqFrameLastTime > timePerFrame){
+        
+        camOutFboHQ.readToPixels(outPixelsHQ);
+#ifdef USE_SENDER
+        hqsender.sendFrame(outPixelsHQ);
+#endif
+        hqFrameLastTime = currentTime;
+    }
+    
+    
+    localRoi.rawCenter = ofVec2f(mouseX*2, mouseY*2);
+    localRoi.center = localRoi.centerFilter.update(localRoi.rawCenter);
+    localRoi.highPass.update(ofVec2f(mouseX, mouseY));
+    
+    localRoi.alpha = ofMap((abs(localRoi.highPass.value().x)+abs(localRoi.highPass.value().y))/2, 0, 50, 240, 0, true);
+    localRoi.zoom = ofMap(localRoi.alpha, 0, 240, 0.6, 1.15, true);
+    localRoi.radius = ofMap(localRoi.alpha, 0, 190, roiMaxRadius*0.8, roiMaxRadius, true);
+    
+    timePerFrame = 1.0 / oscUpdateRate;
+    if (currentTime - oscUpdateLastTime > timePerFrame){
+        
+        ofxOscMessage m;
+        m.setAddress("/roi/center");
+        m.addFloatArg(localRoi.rawCenter.x);
+        m.addFloatArg(localRoi.rawCenter.y);
+        oscSender.sendMessage(m);
+        
+        oscUpdateLastTime = currentTime;
+    }
+    
+    while(oscReceiver.hasWaitingMessages()){
+        // get the next message
+        ofxOscMessage m;
+        oscReceiver.getNextMessage(&m);
+        
+        // check for mouse moved message
+        if(m.getAddress() == "/roi/center"){
+            // both the arguments are int32's
+            remoteRoi.center = remoteRoi.centerFilter.update(ofVec2f(m.getArgAsFloat(0),m.getArgAsFloat(1)));
+            remoteRoi.highPass.update(ofVec2f(mouseX, mouseY));
+            
+            remoteRoi.alpha = ofMap((abs(remoteRoi.highPass.value().x)+abs(remoteRoi.highPass.value().y))/2, 0, 50, 240, 0, true);
+            remoteRoi.zoom = ofMap(remoteRoi.alpha, 0, 240, 0.6, 1.15, true);
+            remoteRoi.radius = ofMap(remoteRoi.alpha, 0, 190, roiMaxRadius*0.8, roiMaxRadius, true);
+        }
+    }
     
 }
 
@@ -149,7 +230,7 @@ void ofApp::draw(){
     
         camOutFboHQ.begin();
         ofBackground(0,0,0);
-        ofTranslate(-roi.center+roiMaxRadius);
+        ofTranslate(-localRoi.center+roiMaxRadius);
         camFbo.draw(0,0);
         camOutFboHQ.end();
         
@@ -159,31 +240,15 @@ void ofApp::draw(){
         shaderDesaturate.end();
         camOutFboLQ.end();
     
-    
-    camOutFboLQ.readToPixels(outPixelsLQ);
-#ifdef USE_SENDER
-    lqsender.sendFrame(outPixelsLQ);
-#endif
-    float timePerFrame = 1.0 / hqFrameRate;
-    float currentTime = ofGetElapsedTimef();
-    if (currentTime - lastTime > timePerFrame){
-        
-        camOutFboHQ.readToPixels(outPixelsHQ);
-#ifdef USE_SENDER
-        hqsender.sendFrame(outPixelsHQ);
-#endif
-        lastTime = currentTime;
-    }  
-    
     camFbo.draw(0,0,streamWidth/2, streamHeight/2);
     camOutFboHQ.draw(0,streamHeight/2,camOutFboHQ.getWidth(),camOutFboHQ.getHeight());
     
     ofPushMatrix(); {
-    ofScale(0.5,0.5);
-    ofNoFill();
-    ofRect(roi.center.x - roiMaxRadius, roi.center.y - roiMaxRadius, roiMaxRadius*2, roiMaxRadius*2);
-    ofCircle(roi.center, roi.radius);
-    ofFill();
+        ofScale(0.5,0.5);
+        ofNoFill();
+        ofRect(localRoi.center.x - roiMaxRadius, localRoi.center.y - roiMaxRadius, roiMaxRadius*2, roiMaxRadius*2);
+        ofCircle(localRoi.center, localRoi.radius);
+        ofFill();
     } ofPopMatrix();
     
     fboBlurOnePass.begin();
@@ -211,23 +276,20 @@ void ofApp::draw(){
     ofSetColor(255,255,255,255);
 
     
-    //ofScale(0.5,0.5);
-    //hqreceiver.draw(roi.center - roiMaxRadius);
-    //hqreceiver.getTextureReference().setAlphaMask(<#ofTexture &mask#>)
 #ifdef USE_SENDER
     ofPushMatrix();{
-    ofSetColor(255,255,255,roi.alpha);
+    ofSetColor(255,255,255,remoteRoi.alpha);
 
     hqreceiver.getTextureReference().bind();
 
-    //ofCircle(roi.center*ofVec2f(streamWidth/2, streamHeight/2), roi.radius*streamHeight);
-    ofTranslate(roi.center);
-    ofScale(roi.zoom, roi.zoom);
+    //ofCircle(localRoi.center*ofVec2f(streamWidth/2, streamHeight/2), localRoi.radius*streamHeight);
+    ofTranslate(remoteRoi.center);
+    ofScale(remoteRoi.zoom, remoteRoi.zoom);
     
     glBegin(GL_POLYGON);
     for(int i = 0; i < NormCirclePts.size(); i++){
         glTexCoord2f(NormCircleCoords[i].x, NormCircleCoords[i].y);
-        glVertex2f( NormCirclePts[i].x * roi.radius,  NormCirclePts[i].y * roi.radius);
+        glVertex2f( NormCirclePts[i].x * remoteRoi.radius,  NormCirclePts[i].y * remoteRoi.radius);
     }
     glEnd();
     
