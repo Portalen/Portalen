@@ -37,7 +37,7 @@ void ofApp::setup(){
     remoteRoi->centerFilter.setFc(0.05);
     remoteRoi->centerFilter.setType(OFX_BIQUAD_TYPE_LOWPASS);
     
-    remoteRoi->highPass.setFc(0.4);
+    remoteRoi->highPass.setFc(0.1);
     //remoteRoi->highPass.setQ(0.44);
     remoteRoi->highPass.setType(OFX_BIQUAD_TYPE_BANDPASS);
     
@@ -85,8 +85,12 @@ void ofApp::setup(){
 
     
     camFbo.begin();
-    ofClear(0,0,0);
+    ofBackground(0,255,0);
     camFbo.end();
+    
+    outFbo.begin();
+    ofBackground(255,0,0);
+    outFbo.end();
     
     int numPts  = 64;
     float angle = 0.0;
@@ -213,6 +217,8 @@ void ofApp::update(){
 
 //--------------------------------------------------------------
 void ofApp::draw(){
+    ofBackground(20, 20, 20);
+
     ofSetColor(ofColor::white);
     
     float blur = 2.2f;
@@ -257,7 +263,11 @@ void ofApp::draw(){
     
     shaderBlurX.begin();
     shaderBlurX.setUniform1f("blurAmnt", blur);
-    lqreceiver.draw(0, 0, outFbo.getWidth(), outFbo.getHeight());
+    if(lqreceiver.isConnected()) {
+        lqreceiver.draw(0, 0, outFbo.getWidth(), outFbo.getHeight());
+    } else {
+        ofBackground(255, 0, 0);
+    }
     shaderBlurX.end();
     fboBlurOnePass.end();
     

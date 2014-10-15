@@ -1,12 +1,12 @@
 #pragma once
 
-//#define USE_WEBCAM
+#define USE_WEBCAM
 //#define USE_CANON_LIVEVIEW
 //#define USE_GRABBER
 
 #define USE_SENDER
 
-#define REMOTE_HOST "25.163.99.7"
+#define REMOTE_HOST "25.91.17.173"
 
 #define LOW_QUALITY_STREAM_PORT 9000
 #define HIGH_QUALITY_STREAM_PORT 9100
@@ -17,6 +17,7 @@
 #include "ofxOpenCv.h"
 #include "ofxOsc.h"
 #include "ofxBiquadFilter.h"
+#include "ofxFlowTools.h"
 
 #ifndef USE_WEBCAM
 #include "Canon.h"
@@ -74,8 +75,8 @@ class ofApp : public ofBaseApp{
     float lqFrameLastTime;
     float oscUpdateLastTime;
     
-    float hqFrameRate = 30;
-    float lqFrameRate = 30;//to do implement
+    float hqFrameRate = 25;
+    float lqFrameRate = 25;
     float oscUpdateRate = 30;
     
     float streamWidth, streamHeight;
@@ -109,7 +110,5 @@ class ofApp : public ofBaseApp{
     ofFbo fboBlurTwoPass;
     
     bool debugMode = false;
-    
-    
     
 };
