@@ -1,7 +1,7 @@
 #pragma once
 
 #define USE_WEBCAM
-#define USE_SENDER
+//#define USE_SENDER
 #define REMOTE_HOST "127.0.0.1"
 
 #include "ofMain.h"
@@ -11,6 +11,8 @@
 #include "ofxBiquadFilter.h"
 #include "ofxGui.h"
 
+
+#include "ofxOpticalFlowFarneback.h"
 
 
 #ifndef USE_WEBCAM
@@ -100,6 +102,8 @@ class ofApp : public ofBaseApp{
     ofFbo fboBlurOnePass;
     ofFbo fboBlurTwoPass;
     
+    ofxOpticalFlowFarneback flowSolver;
+    ofPoint center;
     
     
     

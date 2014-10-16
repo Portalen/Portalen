@@ -41,6 +41,7 @@
 		04CB0E9319EC54270048ABDC /* ofxSlider.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04CB0E8819EC54270048ABDC /* ofxSlider.cpp */; };
 		04CB0E9419EC54270048ABDC /* ofxSliderGroup.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04CB0E8A19EC54270048ABDC /* ofxSliderGroup.cpp */; };
 		04CB0E9519EC54270048ABDC /* ofxToggle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04CB0E8C19EC54270048ABDC /* ofxToggle.cpp */; };
+		2227539D19F00A4E00C6614E /* ofxOpticalFlowFarneback.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2227539B19F00A4E00C6614E /* ofxOpticalFlowFarneback.cpp */; };
 		223EC15119ED231C00FADE7C /* ofxCvColorImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 223EC09019ED231C00FADE7C /* ofxCvColorImage.cpp */; };
 		223EC15219ED231C00FADE7C /* ofxCvContourFinder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 223EC09319ED231C00FADE7C /* ofxCvContourFinder.cpp */; };
 		223EC15319ED231C00FADE7C /* ofxCvFloatImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 223EC09519ED231C00FADE7C /* ofxCvFloatImage.cpp */; };
@@ -201,6 +202,8 @@
 		04CB0E8B19EC54270048ABDC /* ofxSliderGroup.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxSliderGroup.h; sourceTree = "<group>"; };
 		04CB0E8C19EC54270048ABDC /* ofxToggle.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ofxToggle.cpp; sourceTree = "<group>"; };
 		04CB0E8D19EC54270048ABDC /* ofxToggle.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxToggle.h; sourceTree = "<group>"; };
+		2227539B19F00A4E00C6614E /* ofxOpticalFlowFarneback.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ofxOpticalFlowFarneback.cpp; sourceTree = "<group>"; };
+		2227539C19F00A4E00C6614E /* ofxOpticalFlowFarneback.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxOpticalFlowFarneback.h; sourceTree = "<group>"; };
 		223EC08F19ED231C00FADE7C /* ofxCvBlob.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxCvBlob.h; sourceTree = "<group>"; };
 		223EC09019ED231C00FADE7C /* ofxCvColorImage.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ofxCvColorImage.cpp; sourceTree = "<group>"; };
 		223EC09119ED231C00FADE7C /* ofxCvColorImage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxCvColorImage.h; sourceTree = "<group>"; };
@@ -638,6 +641,24 @@
 			path = ../../../addons/ofxGui/src;
 			sourceTree = "<group>";
 		};
+		2227539919F00A4E00C6614E /* ofxOpticalFlowFarneback */ = {
+			isa = PBXGroup;
+			children = (
+				2227539A19F00A4E00C6614E /* src */,
+			);
+			name = ofxOpticalFlowFarneback;
+			sourceTree = "<group>";
+		};
+		2227539A19F00A4E00C6614E /* src */ = {
+			isa = PBXGroup;
+			children = (
+				2227539B19F00A4E00C6614E /* ofxOpticalFlowFarneback.cpp */,
+				2227539C19F00A4E00C6614E /* ofxOpticalFlowFarneback.h */,
+			);
+			name = src;
+			path = ../../../addons/ofxOpticalFlowFarneback/src;
+			sourceTree = "<group>";
+		};
 		223EC08D19ED231C00FADE7C /* ofxOpenCv */ = {
 			isa = PBXGroup;
 			children = (
@@ -985,6 +1006,7 @@
 		BB4B014C10F69532006C3DED /* addons */ = {
 			isa = PBXGroup;
 			children = (
+				2227539919F00A4E00C6614E /* ofxOpticalFlowFarneback */,
 				223EC15919ED248F00FADE7C /* ofxSyphon */,
 				223EC08D19ED231C00FADE7C /* ofxOpenCv */,
 				04A911AB19EC6C000072CCC4 /* ofxBlur */,
@@ -1174,6 +1196,7 @@
 				223EC17119ED269E00FADE7C /* ofxBiquadFilterInstance.cpp in Sources */,
 				043267BE19EBED8C0030EDA6 /* ofxOscReceiver.cpp in Sources */,
 				223EC15319ED231C00FADE7C /* ofxCvFloatImage.cpp in Sources */,
+				2227539D19F00A4E00C6614E /* ofxOpticalFlowFarneback.cpp in Sources */,
 				049ED10219E52E3B00CA5310 /* ofxStreamerReceiver.cpp in Sources */,
 				043267C519EBED8C0030EDA6 /* OscReceivedElements.cpp in Sources */,
 				04CB0E8E19EC54270048ABDC /* ofxBaseGui.cpp in Sources */,

@@ -27,7 +27,7 @@ void ofApp::setup(){
     int internalFormat = GL_RGB8;
     
 #ifdef USE_WEBCAM
-    grabber.initGrabber(streamWidth, streamHeight);
+    grabber.initGrabber(320, 240);
 
 
 #else
@@ -63,6 +63,9 @@ void ofApp::setup(){
     
 #endif
     
+    flowSolver.setup(grabber.getWidth(), grabber.getHeight(), 0.35, 5, 10, 1, 3, 2.25, false, false);
+
+    
     camFbo.begin();
     ofClear(0,0,0);
     camFbo.end();
@@ -96,9 +99,9 @@ void ofApp::setup(){
 //--------------------------------------------------------------
 void ofApp::update(){
     
-    roi.center = roi.centerFilter.update(ofVec2f(mouseX*2, mouseY*2));
+    //roi.center = roi.centerFilter.update(ofVec2f(mouseX*2, mouseY*2));
     
-    roi.highPass.update(ofVec2f(mouseX, mouseY));
+    //roi.highPass.update(ofVec2f(mouseX, mouseY));
     
     roi.alpha = ofMap((abs(roi.highPass.value().x)+abs(roi.highPass.value().y))/2, 0, 50, 240, 0, true);
     roi.zoom = ofMap(roi.alpha, 0, 240, 0.6, 1.15, true);
@@ -114,6 +117,8 @@ void ofApp::update(){
     grabber.update();
     if(grabber.isInitialized() && grabber.isFrameNew()){
     
+        
+
         camFbo.begin();
         grabber.draw(0, 0, camFbo.getWidth(), camFbo.getHeight());
         camFbo.end();
@@ -126,6 +131,39 @@ void ofApp::update(){
     }
 #endif
     
+    flowSolver.update(grabber);
+    
+    
+    ofPoint vel  = ofPoint(0.0,0.0);
+    float totalVel = 0.0;
+    int count = 0;
+    ofPoint tmpCenter = ofPoint(0.0,0.0);
+    for(int x = 0; x < grabber.width; x++){
+        for(int y = 0; y < grabber.height; y++){
+            vel = flowSolver.getVelAtPixel(x, y);
+            totalVel += vel.length();
+
+            if(vel.length()>5.0f)
+            {
+                
+                tmpCenter += ofPoint(x,y);
+                count ++;
+            }
+        }
+    }
+    if(count>grabber.width*grabber.height*0.01f) // at least 5 percent
+    {
+        tmpCenter /= count;
+        tmpCenter.x /= grabber.width;
+        tmpCenter.y /= grabber.height;
+        
+        center = tmpCenter;
+        
+        cout << center.x << "   ,   " <<  center.y << endl;
+    }
+    
+    roi.center = roi.centerFilter.update(ofVec2f(center.x*camFbo.getWidth(), center.y*camFbo.getHeight()));
+    roi.highPass.update(ofVec2f(center.x*camFbo.getWidth(), center.y*camFbo.getHeight()));
 }
 
 //--------------------------------------------------------------
@@ -206,6 +244,11 @@ void ofApp::draw(){
     ofSetColor(ofColor::white);
     fboBlurTwoPass.draw(0, 0);
     
+    flowSolver.drawColored(camFbo.getWidth(), camFbo.getHeight(), 10, 3);
+    
+    ofFill();
+    ofCircle(center.x*camFbo.getWidth() , center.y*camFbo.getHeight(), 50);
+    
     //ofScale(0.5,0.5);
     //hqreceiver.draw(roi.center - roiMaxRadius);
     //hqreceiver.getTextureReference().setAlphaMask(<#ofTexture &mask#>)
@@ -241,6 +284,8 @@ void ofApp::draw(){
     
     
     }ofPopMatrix();
+    
+    
     
     
 }
