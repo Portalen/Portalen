@@ -173,12 +173,6 @@ void ofApp::update(){
         cout << center.x << "   ,   " <<  center.y << endl;
     }
     
-    roi.center = roi.centerFilter.update(ofVec2f(center.x*camFbo.getWidth(), center.y*camFbo.getHeight()));
-    roi.highPass.update(ofVec2f(center.x*camFbo.getWidth(), center.y*camFbo.getHeight()));
-    roi.alpha = ofMap((abs(roi.highPass.value().x)+abs(roi.highPass.value().y))/2, 0, 50, 240, 0, true);
-    roi.zoom = ofMap(roi.alpha, 0, 240, 0.6, 1.15, true);
-    roi.radius = ofMap(roi.alpha, 0, 190, roiMaxRadius*0.8, roiMaxRadius, true);
-    
     
     // Stream low quality frames
     float currentTime = ofGetElapsedTimef();
@@ -215,9 +209,12 @@ void ofApp::update(){
     }
     
     
-    localRoi->rawCenter = ofVec2f(mouseX*2, mouseY*2);
+    
+    localRoi->rawCenter = ofVec2f(center.x*camFbo.getWidth(), center.y*camFbo.getHeight());
     localRoi->center = localRoi->centerFilter.update(localRoi->rawCenter);
-    localRoi->highPass.update(ofVec2f(mouseX, mouseY));
+    localRoi->highPass.update(ofVec2f(center.x*camFbo.getWidth(), center.y*camFbo.getHeight()));
+
+  
     
     localRoi->alpha = ofMap((abs(localRoi->highPass.value().x)+abs(localRoi->highPass.value().y))/2, 0, 50, 240, 0, true);
     localRoi->zoom = ofMap(localRoi->alpha, 0, 240, 0.6, 1.15, true);

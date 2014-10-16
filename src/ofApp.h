@@ -3,7 +3,6 @@
 #define USE_WEBCAM
 //#define USE_SENDER
 #define REMOTE_HOST "127.0.0.1"
-=======
 //#define USE_CANON_LIVEVIEW
 //#define USE_GRABBER
 
@@ -22,7 +21,6 @@
 
 
 #include "ofxOpticalFlowFarneback.h"
-#include "ofxFlowTools.h"
 
 #ifndef USE_WEBCAM
 #include "Canon.h"
