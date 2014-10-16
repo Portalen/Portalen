@@ -3,6 +3,15 @@
 #define USE_WEBCAM
 //#define USE_SENDER
 #define REMOTE_HOST "127.0.0.1"
+=======
+//#define USE_CANON_LIVEVIEW
+//#define USE_GRABBER
+
+#define REMOTE_HOST "25.91.17.173"
+
+#define LOW_QUALITY_STREAM_PORT 9000
+#define HIGH_QUALITY_STREAM_PORT 9100
+#define OSC_DATA_PORT 9200
 
 #include "ofMain.h"
 #include "ofxStreamer.h"
@@ -13,7 +22,7 @@
 
 
 #include "ofxOpticalFlowFarneback.h"
-
+#include "ofxFlowTools.h"
 
 #ifndef USE_WEBCAM
 #include "Canon.h"
@@ -22,13 +31,16 @@
 class RegionOfInterest {
 public:
     ofVec2f center;
+    ofVec2f rawCenter;
+
     ofVec2f lastCenter;
     float radius;
     float zoom;
     float alpha;
     
-    ofxBiquadFilter2f centerFilter;
+    bool local = true;
     
+    ofxBiquadFilter2f centerFilter;
     ofxBiquadFilter2f highPass;
 };
 
@@ -55,7 +67,7 @@ class ofApp : public ofBaseApp{
     roxlu::Canon canon;
 #endif
     
-    ofxOscReceiver oscReciver;
+    ofxOscReceiver oscReceiver;
     ofxOscSender oscSender;
     
     ofxStreamerReceiver hqreceiver;
@@ -64,7 +76,13 @@ class ofApp : public ofBaseApp{
     ofxStreamerSender hqsender;
     ofxStreamerSender lqsender;
     
-    float hqFrameRate = 30;
+    float hqFrameLastTime;
+    float lqFrameLastTime;
+    float oscUpdateLastTime;
+    
+    float hqFrameRate = 14;
+    float lqFrameRate = 14;
+    float oscUpdateRate = 20;
     
     float streamWidth, streamHeight;
     
@@ -77,19 +95,13 @@ class ofApp : public ofBaseApp{
     ofPixels outPixelsHQ;
     ofPixels outPixelsLQ;
     
-    float lastTime;
-    
-    RegionOfInterest roi;
+    RegionOfInterest * localRoi;
+    RegionOfInterest * remoteRoi;
     
     float roiMaxRadius;
     
     vector <ofPoint> NormCirclePts;
     vector <ofPoint> NormCircleCoords;
-    
-
-    
-    ofxPanel gui;
-    ofParameterGroup params;
     
     ofParameter<float> roiSize;
     ofParameter<float> roiZoom;
@@ -104,7 +116,7 @@ class ofApp : public ofBaseApp{
     
     ofxOpticalFlowFarneback flowSolver;
     ofPoint center;
-    
-    
+
+    bool debugMode = false;
     
 };
