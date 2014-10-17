@@ -3,6 +3,10 @@
 //--------------------------------------------------------------
 void ofApp::setup(){
     
+    ofEnableSmoothing();
+
+    syphonOut.setName("Portal");
+    
     localRoi = new RegionOfInterest();
     remoteRoi =  new RegionOfInterest();
     
@@ -212,7 +216,6 @@ void ofApp::update(){
             remoteRoi->radius = ofMap(remoteRoi->alpha, 0, 190, roiMaxRadius*0.8, roiMaxRadius, true);
         }
     }
-    
 }
 
 //--------------------------------------------------------------
@@ -323,6 +326,8 @@ void ofApp::draw(){
     
     }ofPopMatrix();
     
+    
+    syphonOut.publishTexture(&outFbo.getTextureReference());
     
 }
 

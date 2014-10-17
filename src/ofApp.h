@@ -1,12 +1,12 @@
 #pragma once
 
-#define USE_WEBCAM
-//#define USE_CANON_LIVEVIEW
+//#define USE_WEBCAM
+#define USE_CANON_LIVEVIEW
 //#define USE_GRABBER
 
 #define USE_SENDER
 
-#define REMOTE_HOST "25.91.17.173"
+#define REMOTE_HOST "25.163.99.7" //25.91.17.173"
 
 #define LOW_QUALITY_STREAM_PORT 9000
 #define HIGH_QUALITY_STREAM_PORT 9100
@@ -18,6 +18,7 @@
 #include "ofxOsc.h"
 #include "ofxBiquadFilter.h"
 #include "ofxFlowTools.h"
+#include "ofxSyphon.h"
 
 #ifndef USE_WEBCAM
 #include "Canon.h"
@@ -110,5 +111,7 @@ class ofApp : public ofBaseApp{
     ofFbo fboBlurTwoPass;
     
     bool debugMode = false;
+    
+    ofxSyphonServer syphonOut;
     
 };
