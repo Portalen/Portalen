@@ -65,6 +65,14 @@
 		049ED10C19E52E3B00CA5310 /* libswscale.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 049ED10019E52E3B00CA5310 /* libswscale.a */; };
 		049ED10D19E52E3B00CA5310 /* libx264.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 049ED10119E52E3B00CA5310 /* libx264.a */; };
 		1529469219F1AC2A00CF9B58 /* ofxOpticalFlowFarneback.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1529469019F1AC2A00CF9B58 /* ofxOpticalFlowFarneback.cpp */; };
+		152946A619F1B1ED00CF9B58 /* ofxBaseGui.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1529469519F1B1ED00CF9B58 /* ofxBaseGui.cpp */; };
+		152946A719F1B1ED00CF9B58 /* ofxButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1529469719F1B1ED00CF9B58 /* ofxButton.cpp */; };
+		152946A819F1B1ED00CF9B58 /* ofxGuiGroup.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1529469A19F1B1ED00CF9B58 /* ofxGuiGroup.cpp */; };
+		152946A919F1B1ED00CF9B58 /* ofxLabel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1529469C19F1B1ED00CF9B58 /* ofxLabel.cpp */; };
+		152946AA19F1B1ED00CF9B58 /* ofxPanel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1529469E19F1B1ED00CF9B58 /* ofxPanel.cpp */; };
+		152946AB19F1B1ED00CF9B58 /* ofxSlider.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 152946A019F1B1ED00CF9B58 /* ofxSlider.cpp */; };
+		152946AC19F1B1ED00CF9B58 /* ofxSliderGroup.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 152946A219F1B1ED00CF9B58 /* ofxSliderGroup.cpp */; };
+		152946AD19F1B1ED00CF9B58 /* ofxToggle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 152946A419F1B1ED00CF9B58 /* ofxToggle.cpp */; };
 		223EC15119ED231C00FADE7C /* ofxCvColorImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 223EC09019ED231C00FADE7C /* ofxCvColorImage.cpp */; };
 		223EC15219ED231C00FADE7C /* ofxCvContourFinder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 223EC09319ED231C00FADE7C /* ofxCvContourFinder.cpp */; };
 		223EC15319ED231C00FADE7C /* ofxCvFloatImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 223EC09519ED231C00FADE7C /* ofxCvFloatImage.cpp */; };
@@ -300,6 +308,23 @@
 		04CB0E7719EC42290048ABDC /* ofxBiquadFilterInstance.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxBiquadFilterInstance.h; sourceTree = "<group>"; };
 		1529469019F1AC2A00CF9B58 /* ofxOpticalFlowFarneback.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ofxOpticalFlowFarneback.cpp; sourceTree = "<group>"; };
 		1529469119F1AC2A00CF9B58 /* ofxOpticalFlowFarneback.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxOpticalFlowFarneback.h; sourceTree = "<group>"; };
+		1529469519F1B1ED00CF9B58 /* ofxBaseGui.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ofxBaseGui.cpp; sourceTree = "<group>"; };
+		1529469619F1B1ED00CF9B58 /* ofxBaseGui.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxBaseGui.h; sourceTree = "<group>"; };
+		1529469719F1B1ED00CF9B58 /* ofxButton.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ofxButton.cpp; sourceTree = "<group>"; };
+		1529469819F1B1ED00CF9B58 /* ofxButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxButton.h; sourceTree = "<group>"; };
+		1529469919F1B1ED00CF9B58 /* ofxGui.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxGui.h; sourceTree = "<group>"; };
+		1529469A19F1B1ED00CF9B58 /* ofxGuiGroup.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ofxGuiGroup.cpp; sourceTree = "<group>"; };
+		1529469B19F1B1ED00CF9B58 /* ofxGuiGroup.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxGuiGroup.h; sourceTree = "<group>"; };
+		1529469C19F1B1ED00CF9B58 /* ofxLabel.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ofxLabel.cpp; sourceTree = "<group>"; };
+		1529469D19F1B1ED00CF9B58 /* ofxLabel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxLabel.h; sourceTree = "<group>"; };
+		1529469E19F1B1ED00CF9B58 /* ofxPanel.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ofxPanel.cpp; sourceTree = "<group>"; };
+		1529469F19F1B1ED00CF9B58 /* ofxPanel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxPanel.h; sourceTree = "<group>"; };
+		152946A019F1B1ED00CF9B58 /* ofxSlider.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ofxSlider.cpp; sourceTree = "<group>"; };
+		152946A119F1B1ED00CF9B58 /* ofxSlider.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxSlider.h; sourceTree = "<group>"; };
+		152946A219F1B1ED00CF9B58 /* ofxSliderGroup.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ofxSliderGroup.cpp; sourceTree = "<group>"; };
+		152946A319F1B1ED00CF9B58 /* ofxSliderGroup.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxSliderGroup.h; sourceTree = "<group>"; };
+		152946A419F1B1ED00CF9B58 /* ofxToggle.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ofxToggle.cpp; sourceTree = "<group>"; };
+		152946A519F1B1ED00CF9B58 /* ofxToggle.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxToggle.h; sourceTree = "<group>"; };
 		223EC08F19ED231C00FADE7C /* ofxCvBlob.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxCvBlob.h; sourceTree = "<group>"; };
 		223EC09019ED231C00FADE7C /* ofxCvColorImage.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ofxCvColorImage.cpp; sourceTree = "<group>"; };
 		223EC09119ED231C00FADE7C /* ofxCvColorImage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxCvColorImage.h; sourceTree = "<group>"; };
@@ -954,6 +979,39 @@
 			path = ../../../addons/ofxOpticalFlowFarneback/src;
 			sourceTree = "<group>";
 		};
+		1529469319F1B1ED00CF9B58 /* ofxGui */ = {
+			isa = PBXGroup;
+			children = (
+				1529469419F1B1ED00CF9B58 /* src */,
+			);
+			name = ofxGui;
+			sourceTree = "<group>";
+		};
+		1529469419F1B1ED00CF9B58 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				1529469519F1B1ED00CF9B58 /* ofxBaseGui.cpp */,
+				1529469619F1B1ED00CF9B58 /* ofxBaseGui.h */,
+				1529469719F1B1ED00CF9B58 /* ofxButton.cpp */,
+				1529469819F1B1ED00CF9B58 /* ofxButton.h */,
+				1529469919F1B1ED00CF9B58 /* ofxGui.h */,
+				1529469A19F1B1ED00CF9B58 /* ofxGuiGroup.cpp */,
+				1529469B19F1B1ED00CF9B58 /* ofxGuiGroup.h */,
+				1529469C19F1B1ED00CF9B58 /* ofxLabel.cpp */,
+				1529469D19F1B1ED00CF9B58 /* ofxLabel.h */,
+				1529469E19F1B1ED00CF9B58 /* ofxPanel.cpp */,
+				1529469F19F1B1ED00CF9B58 /* ofxPanel.h */,
+				152946A019F1B1ED00CF9B58 /* ofxSlider.cpp */,
+				152946A119F1B1ED00CF9B58 /* ofxSlider.h */,
+				152946A219F1B1ED00CF9B58 /* ofxSliderGroup.cpp */,
+				152946A319F1B1ED00CF9B58 /* ofxSliderGroup.h */,
+				152946A419F1B1ED00CF9B58 /* ofxToggle.cpp */,
+				152946A519F1B1ED00CF9B58 /* ofxToggle.h */,
+			);
+			name = src;
+			path = ../../../addons/ofxGui/src;
+			sourceTree = "<group>";
+		};
 		223EC08D19ED231C00FADE7C /* ofxOpenCv */ = {
 			isa = PBXGroup;
 			children = (
@@ -1234,6 +1292,7 @@
 		BB4B014C10F69532006C3DED /* addons */ = {
 			isa = PBXGroup;
 			children = (
+				1529469319F1B1ED00CF9B58 /* ofxGui */,
 				1529468E19F1AC2A00CF9B58 /* ofxOpticalFlowFarneback */,
 				047DE9DE19EED2E300360084 /* ofxFlowTools */,
 				047DE99B19ED8A4E00360084 /* ofxCanon */,
@@ -1424,6 +1483,7 @@
 				047DE9C419ED8A4E00360084 /* CanonTask.cpp in Sources */,
 				223EC17019ED269B00FADE7C /* ofxBiquadFilter.cpp in Sources */,
 				223EC17119ED269E00FADE7C /* ofxBiquadFilterInstance.cpp in Sources */,
+				152946A719F1B1ED00CF9B58 /* ofxButton.cpp in Sources */,
 				043267BE19EBED8C0030EDA6 /* ofxOscReceiver.cpp in Sources */,
 				047DE9C219ED8A4E00360084 /* CanonEventListener.cpp in Sources */,
 				223EC15319ED231C00FADE7C /* ofxCvFloatImage.cpp in Sources */,
@@ -1431,10 +1491,12 @@
 				043267C519EBED8C0030EDA6 /* OscReceivedElements.cpp in Sources */,
 				043267C019EBED8C0030EDA6 /* IpEndpointName.cpp in Sources */,
 				047DE9CC19ED8A4E00360084 /* CanonTaskQueue.cpp in Sources */,
+				152946AC19F1B1ED00CF9B58 /* ofxSliderGroup.cpp in Sources */,
 				223EC15219ED231C00FADE7C /* ofxCvContourFinder.cpp in Sources */,
 				047DE9C719ED8A4E00360084 /* CanonTaskDownloadPicture.cpp in Sources */,
 				047DE9C919ED8A4E00360084 /* CanonTaskGetProperty.cpp in Sources */,
 				223EC15719ED231C00FADE7C /* ofxCvShortImage.cpp in Sources */,
+				152946AA19F1B1ED00CF9B58 /* ofxPanel.cpp in Sources */,
 				E4B69E200A3A1BDC003C02F2 /* main.cpp in Sources */,
 				047DE99919ED866700360084 /* SyphonNameboundClient.m in Sources */,
 				043267C119EBED8C0030EDA6 /* NetworkingUtils.cpp in Sources */,
@@ -1442,11 +1504,14 @@
 				047DE99619ED866600360084 /* ofxSyphonServer.mm in Sources */,
 				223EC15619ED231C00FADE7C /* ofxCvImage.cpp in Sources */,
 				223EC15119ED231C00FADE7C /* ofxCvColorImage.cpp in Sources */,
+				152946A619F1B1ED00CF9B58 /* ofxBaseGui.cpp in Sources */,
 				043267C619EBED8C0030EDA6 /* OscTypes.cpp in Sources */,
+				152946AD19F1B1ED00CF9B58 /* ofxToggle.cpp in Sources */,
 				047DE9CD19ED8A4E00360084 /* CanonTaskShutdown.cpp in Sources */,
 				047DE9CF19ED8A4E00360084 /* CanonTaskTakePicture.cpp in Sources */,
 				E4B69E210A3A1BDC003C02F2 /* ofApp.cpp in Sources */,
 				043267C419EBED8C0030EDA6 /* OscPrintReceivedElements.cpp in Sources */,
+				152946A819F1B1ED00CF9B58 /* ofxGuiGroup.cpp in Sources */,
 				043267BB19EBED8C0030EDA6 /* ofxOscBundle.cpp in Sources */,
 				043267BD19EBED8C0030EDA6 /* ofxOscParameterSync.cpp in Sources */,
 				047DE9CA19ED8A4E00360084 /* CanonTaskInit.cpp in Sources */,
@@ -1467,7 +1532,9 @@
 				043267BC19EBED8C0030EDA6 /* ofxOscMessage.cpp in Sources */,
 				047DE9C519ED8A4E00360084 /* CanonTaskCloseSession.cpp in Sources */,
 				047DEA1819EED2E300360084 /* ftFluidSimulation.cpp in Sources */,
+				152946A919F1B1ED00CF9B58 /* ofxLabel.cpp in Sources */,
 				047DE99719ED866600360084 /* ofxSyphonServerDirectory.mm in Sources */,
+				152946AB19F1B1ED00CF9B58 /* ofxSlider.cpp in Sources */,
 				047DEA1719EED2E300360084 /* ftDrawForce.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -49,7 +49,7 @@ void ofApp::setup(){
     int internalFormat = GL_RGB8;
     
 #ifdef USE_WEBCAM
-    grabber.initGrabber(streamWidth, streamHeight);
+    grabber.initGrabber(320, 240);
 
 
 #else
@@ -84,6 +84,8 @@ void ofApp::setup(){
     
 #endif
     
+    flowSolver.setup(outFbo.getWidth(), outFbo.getHeight(), 0.35, 5, 10, 1, 3, 2.25, false, false);
+   
     oscSender.setup(REMOTE_HOST, OSC_DATA_PORT);
     oscReceiver.setup(OSC_DATA_PORT);
 
@@ -124,6 +126,7 @@ void ofApp::setup(){
 //--------------------------------------------------------------
 void ofApp::update(){
     
+   
 #ifdef USE_SENDER
     lqreceiver.update();
     hqreceiver.update();
@@ -142,6 +145,38 @@ void ofApp::update(){
         canon.startLiveView();
     }
 #endif
+    
+    //flowSolver.update(grabber);
+    
+    
+    ofPoint vel  = ofPoint(0.0,0.0);
+    float totalVel = 0.0;
+    int count = 0;
+    ofPoint tmpCenter = ofPoint(0.0,0.0);
+   /*for(int x = 0; x < grabber.width; x++){
+        for(int y = 0; y < grabber.height; y++){
+            vel = flowSolver.getVelAtPixel(x, y);
+            totalVel += vel.length();
+
+            if(vel.length()>5.0f)
+            {
+                
+                tmpCenter += ofPoint(x,y);
+                count ++;
+            }
+        }
+    }
+    if(count>grabber.width*grabber.height*0.01f) // at least 5 percent
+    {
+        tmpCenter /= count;
+        tmpCenter.x /= grabber.width;
+        tmpCenter.y /= grabber.height;
+        
+        center = tmpCenter;
+        
+        cout << center.x << "   ,   " <<  center.y << endl;
+    }
+    */
     
     // Stream low quality frames
     float currentTime = ofGetElapsedTimef();
@@ -178,9 +213,12 @@ void ofApp::update(){
     }
     
     
-    localRoi->rawCenter = ofVec2f(mouseX*2, mouseY*2);
+    
+    localRoi->rawCenter = ofVec2f(center.x*camFbo.getWidth(), center.y*camFbo.getHeight());
     localRoi->center = localRoi->centerFilter.update(localRoi->rawCenter);
-    localRoi->highPass.update(ofVec2f(mouseX, mouseY));
+    localRoi->highPass.update(ofVec2f(center.x*camFbo.getWidth(), center.y*camFbo.getHeight()));
+
+  
     
     localRoi->alpha = ofMap((abs(localRoi->highPass.value().x)+abs(localRoi->highPass.value().y))/2, 0, 50, 240, 0, true);
     localRoi->zoom = ofMap(localRoi->alpha, 0, 240, 0.6, 1.15, true);
@@ -288,6 +326,15 @@ void ofApp::draw(){
     ofSetColor(255,255,255,200);
     fboBlurTwoPass.draw(0, 0);
     
+    flowSolver.drawColored(camFbo.getWidth(), camFbo.getHeight(), 10, 3);
+    
+    ofFill();
+    ofCircle(center.x*camFbo.getWidth() , center.y*camFbo.getHeight(), 50);
+    
+    //ofScale(0.5,0.5);
+    //hqreceiver.draw(roi.center - roiMaxRadius);
+    //hqreceiver.getTextureReference().setAlphaMask(<#ofTexture &mask#>)
+
     ofSetColor(255,255,255,255);
 
     
@@ -326,9 +373,11 @@ void ofApp::draw(){
     
     }ofPopMatrix();
     
-    
+
     syphonOut.publishTexture(&outFbo.getTextureReference());
+
     
+ 
 }
 
 void ofApp::exit(){

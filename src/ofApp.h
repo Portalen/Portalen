@@ -8,6 +8,7 @@
 
 #define REMOTE_HOST "25.163.99.7" //25.91.17.173"
 
+
 #define LOW_QUALITY_STREAM_PORT 9000
 #define HIGH_QUALITY_STREAM_PORT 9100
 #define OSC_DATA_PORT 9200
@@ -19,6 +20,11 @@
 #include "ofxBiquadFilter.h"
 #include "ofxFlowTools.h"
 #include "ofxSyphon.h"
+
+#include "ofxGui.h"
+
+
+#include "ofxOpticalFlowFarneback.h"
 
 #ifndef USE_WEBCAM
 #include "Canon.h"
@@ -110,6 +116,9 @@ class ofApp : public ofBaseApp{
     ofFbo fboBlurOnePass;
     ofFbo fboBlurTwoPass;
     
+    ofxOpticalFlowFarneback flowSolver;
+    ofPoint center;
+
     bool debugMode = false;
     
     ofxSyphonServer syphonOut;
