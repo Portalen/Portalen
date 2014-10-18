@@ -118,7 +118,7 @@ class ofApp : public ofBaseApp{
     ofShader shaderBlurX;
     ofShader shaderBlurY;
     
-    ofShader deinterlace;
+    //ofShader deinterlace;
     
     ofShader shaderDesaturate;
     

@@ -68,7 +68,7 @@ void ofApp::setup(){
         shaderBlurY.load("shadersGL2/shaderBlurY");
         shaderDesaturate.load("shadersGL2/desaturate");
         
-        deinterlace.load("shadersGL2/deinterlace");
+        //deinterlace.load("shadersGL2/deinterlace");
         
     }
     
