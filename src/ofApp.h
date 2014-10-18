@@ -20,6 +20,8 @@
 #include "ofxBiquadFilter.h"
 #include "ofxFlowTools.h"
 #include "ofxSyphon.h"
+#include "ofxGui.h"
+#include "ofxOpticalFlowFarneback.h"
 
 #ifdef USE_CANON_LIVEVIEW
 #include "Canon.h"
@@ -123,11 +125,17 @@ class ofApp : public ofBaseApp{
     ofFbo fboBlurOnePass;
     ofFbo fboBlurTwoPass;
     
-    ofxSyphonServer syphonOut;
-    
     bool debugView = true;
     bool enableSyphonOut = true;
     bool fullscreen = true;
     
     float fadeRemote = 0;
+
+    ofxOpticalFlowFarneback flowSolver;
+    ofPoint center;
+
+    bool debugMode = false;
+    
+    ofxSyphonServer syphonOut;
+    
 };
