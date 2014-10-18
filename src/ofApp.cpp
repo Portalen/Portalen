@@ -304,7 +304,7 @@ void ofApp::updateFlow(){
 
     if(count>flowFbo.getWidth()*flowFbo.getHeight()*0.01f) // at least some percent
     {
-        flowMagnitude = ofLerp(flowMagnitude, 1.0, 0.15);
+        flowMagnitude = ofLerp(flowMagnitude, 1.0, 0.5);
         tmpCenter /= totalVelOfActivePixels;
         tmpCenter.x /= flowFbo.getWidth();
         tmpCenter.y /= flowFbo.getHeight();
@@ -453,7 +453,7 @@ void ofApp::draw(){
         ofSetColor(255, 255, 255, 255);
         
         ofSetLineWidth(35.0);
-        ofSetColor(255, 255, 255, 255*flowMagnitude);
+        ofSetColor(255, 255, 255, 100+155*flowMagnitude);
         
         flowSolver.draw(portalFbo.getWidth(), portalFbo.getHeight(),1.5,8);
         ofSetLineWidth(1.0);
@@ -463,10 +463,10 @@ void ofApp::draw(){
     
     outFbo.begin();{
         
-        camFbo.draw(0,0,outFbo.getWidth(),outFbo.getHeight());
+        //camFbo.draw(0,0,outFbo.getWidth(),outFbo.getHeight());
         
         ofSetColor(255,255,255,255);
-        fboBlurTwoPass.draw(0, 0);
+        //fboBlurTwoPass.draw(0, 0);
 
         ofSetColor(255,255,255,255);
         //TODO: Draw blur image> fboBlurTwoPass.draw(0, 0);
@@ -487,7 +487,7 @@ void ofApp::draw(){
     outFbo.begin(); {
     
     ofSetColor(255,255,255,255);
-    
+        blendFbo.draw(0,0);
 #ifdef USE_SENDER
     ofPushMatrix();{
         ofSetColor(255,255,255,remoteRoi->alpha);
@@ -515,11 +515,11 @@ void ofApp::draw(){
 #endif
     
 } outFbo.end();
-    /*
+    
     flowFbo.begin();{
         camFbo.draw(0,0,flowFbo.getWidth(),flowFbo.getHeight());
     }flowFbo.end();
-    */
+    
     if(debugView) {
 
         
@@ -534,7 +534,7 @@ void ofApp::draw(){
             ofFill();
         } ofPopMatrix();
     
-        //blendFbo.draw(0,0,camFbo.getWidth(),camFbo.getHeight());
+        
 
         ofPushMatrix();{
             ofSetColor(255,255,255,255);
@@ -542,11 +542,11 @@ void ofApp::draw(){
             ofTranslate(streamWidth/2,  0);
             ofScale(0.9,0.9);
             
-            //outFbo.draw(0,0);
-            //lqreceiver.draw(0,0,500,500);
             outFbo.draw(0,0);
+            //lqreceiver.draw(0,0,500,500);
+            //outFbo.draw(0,0);
             //fboBlurOnePass.draw(0, 0,outFbo.getWidth(),outFbo.getHeight());
-            //portalImage.draw(0,0);
+            //lqreceiver.draw(0,0,500,500);
             
         }ofPopMatrix();
     }
