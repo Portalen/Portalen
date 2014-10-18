@@ -35,7 +35,7 @@ class RegionOfInterest {
 public:
     ofVec2f center;
     ofVec2f rawCenter;
-
+    
     ofVec2f lastCenter;
     float radius;
     float zoom;
@@ -48,25 +48,25 @@ public:
 };
 
 class ofApp : public ofBaseApp{
-
-	public:
-		void setup();
-		void update();
-		void draw();
-        void exit();
-		void keyPressed(int key);
-		void keyReleased(int key);
-		void mouseMoved(int x, int y );
-		void mouseDragged(int x, int y, int button);
-		void mousePressed(int x, int y, int button);
-		void mouseReleased(int x, int y, int button);
-		void windowResized(int w, int h);
-		void dragEvent(ofDragInfo dragInfo);
-		void gotMessage(ofMessage msg);
     
-        void updateFlow();
-        void sendStreams();
-        void sendOsc();
+public:
+    void setup();
+    void update();
+    void draw();
+    void exit();
+    void keyPressed(int key);
+    void keyReleased(int key);
+    void mouseMoved(int x, int y );
+    void mouseDragged(int x, int y, int button);
+    void mousePressed(int x, int y, int button);
+    void mouseReleased(int x, int y, int button);
+    void windowResized(int w, int h);
+    void dragEvent(ofDragInfo dragInfo);
+    void gotMessage(ofMessage msg);
+    
+    void updateFlow();
+    void sendStreams();
+    void sendOsc();
     void receiveOsc();
     
 #ifdef USE_WEBCAM
@@ -148,14 +148,14 @@ class ofApp : public ofBaseApp{
     
     ofFbo fboBlurOnePass;
     ofFbo fboBlurTwoPass;
-
+    
     bool debugView = true;
     bool enableSyphonOut = true;
     bool fullscreen = false;
     
     float fadeRemote = 0;
-
-
+    
+    
     bool debugMode = false;
     
     ofxSyphonServer syphonOut;

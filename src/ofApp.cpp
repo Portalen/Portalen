@@ -297,8 +297,8 @@ void ofApp::update(){
     grabber.update();
     if(grabber.isInitialized() && grabber.isFrameNew()){
         camFbo.begin();{
-        grabber.draw(0, 0, camFbo.getWidth(), camFbo.getHeight());
-    }camFbo.end();
+            grabber.draw(0, 0, camFbo.getWidth(), camFbo.getHeight());
+        }camFbo.end();
     }
 #endif
     
@@ -313,7 +313,7 @@ void ofApp::update(){
     
     if(canon.isLiveViewActive()) {
         camFbo.begin();{
-        canon.drawLiveView();
+            canon.drawLiveView();
         }camFbo.end();
     }
 #endif
@@ -347,11 +347,11 @@ void ofApp::draw(){
 #ifdef USE_BLACK_MAGIC
     camFbo.begin();{
         ofPushMatrix();{
-    ofTranslate(camFbo.getWidth()/2, camFbo.getHeight()/2);
-    ofScale(1.18,1.18);
-    ofTranslate(-camFbo.getWidth()/2, -camFbo.getHeight()/2);
-    blackMagicCam.getColorTexture().draw(0, 0, camFbo.getWidth(), camFbo.getHeight());
-    }ofPopMatrix();
+            ofTranslate(camFbo.getWidth()/2, camFbo.getHeight()/2);
+            ofScale(1.18,1.18);
+            ofTranslate(-camFbo.getWidth()/2, -camFbo.getHeight()/2);
+            blackMagicCam.getColorTexture().draw(0, 0, camFbo.getWidth(), camFbo.getHeight());
+        }ofPopMatrix();
     }camFbo.end();
 #endif
     
@@ -361,7 +361,7 @@ void ofApp::draw(){
 #ifdef USE_CANON_LIVEVIEW
     if(canon.isLiveViewActive()) {
         camFbo.begin();{
-        canon.drawLiveView();
+            canon.drawLiveView();
         }camFbo.end();
     }
 #endif
@@ -371,16 +371,16 @@ void ofApp::draw(){
     ofSetColor(255, 255, 255, 255);
     
     camOutFboHQ.begin();{
-    ofBackground(0,0,0);
-    ofTranslate(-localRoi->center+roiMaxRadius);
-    camFbo.draw(0,0);
+        ofBackground(0,0,0);
+        ofTranslate(-localRoi->center+roiMaxRadius);
+        camFbo.draw(0,0);
     }camOutFboHQ.end();
     
     camOutFboLQ.begin();{
         shaderDesaturate.begin();{
-    camFbo.draw(0,0,camOutFboLQ.getWidth(),camOutFboLQ.getHeight());
+            camFbo.draw(0,0,camOutFboLQ.getWidth(),camOutFboLQ.getHeight());
         }shaderDesaturate.end();
-}camOutFboLQ.end();
+    }camOutFboLQ.end();
     
     camFbo.draw(0,0,streamWidth/2, streamHeight/2);
     camOutFboHQ.draw(0,streamHeight/2,camOutFboHQ.getWidth(),camOutFboHQ.getHeight());
@@ -396,92 +396,92 @@ void ofApp::draw(){
     
     // Blue lq receiver
     fboBlurOnePass.begin();{
-    
-    shaderBlurX.begin();{
-    shaderBlurX.setUniform1f("blurAmnt", blur);
-    if(lqreceiver.isConnected()) {
-        lqreceiver.draw(0, 0, outFbo.getWidth(), outFbo.getHeight());
-    } else {
-        ofBackground(255, 0, 0);
-    }
-}shaderBlurX.end();
-}fboBlurOnePass.end();
+        
+        shaderBlurX.begin();{
+            shaderBlurX.setUniform1f("blurAmnt", blur);
+            if(lqreceiver.isConnected()) {
+                lqreceiver.draw(0, 0, outFbo.getWidth(), outFbo.getHeight());
+            } else {
+                ofBackground(255, 0, 0);
+            }
+        }shaderBlurX.end();
+    }fboBlurOnePass.end();
     
     fboBlurTwoPass.begin();{
         shaderBlurY.begin();{
-    shaderBlurY.setUniform1f("blurAmnt", blur);
-    fboBlurOnePass.draw(0, 0);
-    }shaderBlurY.end();
+            shaderBlurY.setUniform1f("blurAmnt", blur);
+            fboBlurOnePass.draw(0, 0);
+        }shaderBlurY.end();
     }fboBlurTwoPass.end();
     // done blurring lq receiver
     
     
     portalFbo.begin();{
-    ofSetColor(0, 0, 0,10);
-    ofRect(0, 0, portalFbo.getWidth(), portalFbo.getHeight());
-    ofSetColor(255, 255, 255, 255);
-    
-    ofSetLineWidth(25.0);
-    
-    flowSolver.draw(portalFbo.getWidth(), portalFbo.getHeight(),1.5,8);
-    ofSetLineWidth(1.0);
-    
-    ofSetColor(255, 255, 255);
+        ofSetColor(0, 0, 0,10);
+        ofRect(0, 0, portalFbo.getWidth(), portalFbo.getHeight());
+        ofSetColor(255, 255, 255, 255);
+        
+        ofSetLineWidth(25.0);
+        
+        flowSolver.draw(portalFbo.getWidth(), portalFbo.getHeight(),1.5,8);
+        ofSetLineWidth(1.0);
+        
+        ofSetColor(255, 255, 255);
     }portalFbo.end();
     
     
     
     outFbo.begin();{
-    
-    camFbo.draw(0,0,outFbo.getWidth(),outFbo.getHeight());
-    
-    ofSetColor(255,255,255,fadeRemote*255);
-    fboBlurTwoPass.draw(0, 0);
-    
-    if(activeRegionOfInterest)
-    {
-        ofFill();
-        ofCircle(center.x*camFbo.getWidth() , center.y*camFbo.getHeight(), 50);
-    }
-
-    ofSetColor(255,255,255,255);
-    
-#ifdef USE_SENDER
-    ofPushMatrix();{
-        ofSetColor(255,255,255,remoteRoi->alpha);
-        if(remoteActiveRegionOfInterest)
+        
+        camFbo.draw(0,0,outFbo.getWidth(),outFbo.getHeight());
+        
+        ofSetColor(255,255,255,fadeRemote*255);
+        fboBlurTwoPass.draw(0, 0);
+        
+        if(activeRegionOfInterest)
         {
-            if(hqreceiver.isConnected()) {
-                hqreceiver.getTextureReference().bind();
-                
-                //ofCircle(localRoi->center*ofVec2f(streamWidth/2, streamHeight/2), localRoi->radius*streamHeight);
-                ofTranslate(remoteRoi->center);
-                ofScale(remoteRoi->zoom, remoteRoi->zoom);
-                
-                glBegin(GL_POLYGON); {
-                for(int i = 0; i < NormCirclePts.size(); i++){
-                    glTexCoord2f(NormCircleCoords[i].x, NormCircleCoords[i].y);
-                    glVertex2f( NormCirclePts[i].x * remoteRoi->radius,  NormCirclePts[i].y * remoteRoi->radius);
-                }
-                } glEnd();
-                
-                hqreceiver.getTextureReference().unbind();
-            }
+            ofFill();
+            ofCircle(center.x*camFbo.getWidth() , center.y*camFbo.getHeight(), 50);
         }
         
-    }ofPopMatrix();
+        ofSetColor(255,255,255,255);
+        
+#ifdef USE_SENDER
+        ofPushMatrix();{
+            ofSetColor(255,255,255,remoteRoi->alpha);
+            if(remoteActiveRegionOfInterest)
+            {
+                if(hqreceiver.isConnected()) {
+                    hqreceiver.getTextureReference().bind();
+                    
+                    //ofCircle(localRoi->center*ofVec2f(streamWidth/2, streamHeight/2), localRoi->radius*streamHeight);
+                    ofTranslate(remoteRoi->center);
+                    ofScale(remoteRoi->zoom, remoteRoi->zoom);
+                    
+                    glBegin(GL_POLYGON); {
+                        for(int i = 0; i < NormCirclePts.size(); i++){
+                            glTexCoord2f(NormCircleCoords[i].x, NormCircleCoords[i].y);
+                            glVertex2f( NormCirclePts[i].x * remoteRoi->radius,  NormCirclePts[i].y * remoteRoi->radius);
+                        }
+                    } glEnd();
+                    
+                    hqreceiver.getTextureReference().unbind();
+                }
+            }
+            
+        }ofPopMatrix();
 #endif
-    
-}outFbo.end();
+        
+    }outFbo.end();
     
     
     blendFbo.begin();{
         shaderBlend.begin();{
-    shaderBlend.setUniformTexture("imageMask", portalFbo.getTextureReference(), 1);
-    shaderBlend.setUniformTexture("bg", outFbo.getTextureReference(), 2);
-    
-    camFbo.draw(0,0,camFbo.getWidth(),camFbo.getHeight());
-    }shaderBlend.end();
+            shaderBlend.setUniformTexture("imageMask", portalFbo.getTextureReference(), 1);
+            shaderBlend.setUniformTexture("bg", outFbo.getTextureReference(), 2);
+            
+            camFbo.draw(0,0,camFbo.getWidth(),camFbo.getHeight());
+        }shaderBlend.end();
     }blendFbo.end();
     
     
@@ -494,12 +494,8 @@ void ofApp::draw(){
             ofTranslate(streamWidth/2,  0);
             ofScale(0.9,0.9);
             
-            
             outFbo.draw(0,0);
             //blendFbo.draw(0,0);
-            
-            
-            
             
         }ofPopMatrix();
         
@@ -511,7 +507,7 @@ void ofApp::draw(){
     
     
     flowFbo.begin();{
-    camFbo.draw(0,0,flowFbo.getWidth(),flowFbo.getHeight());
+        camFbo.draw(0,0,flowFbo.getWidth(),flowFbo.getHeight());
     }flowFbo.end();
     
 }
@@ -528,7 +524,7 @@ void ofApp::exit(){
 #ifdef USE_BLACK_MAGIC
     blackMagicCam.close();
 #endif
-  
+    
 #ifdef USE_SENDER
     hqreceiver.close();
     lqreceiver.close();
