@@ -112,13 +112,13 @@ void ofApp::setup(){
     oscReceiver.setup(OSC_DATA_PORT);
     
     
-    camFbo.begin();
+    camFbo.begin(); {
     ofBackground(0,255,0);
-    camFbo.end();
+    } camFbo.end();
     
-    outFbo.begin();
+    outFbo.begin(); {
     ofBackground(255,0,0);
-    outFbo.end();
+    } outFbo.end();
     
     int numPts  = 64;
     float angle = 0.0;
@@ -410,17 +410,6 @@ void ofApp::draw(){
         }shaderDesaturate.end();
     }camOutFboLQ.end();
     
-    camFbo.draw(0,0,streamWidth/2, streamHeight/2);
-    camOutFboHQ.draw(0,streamHeight/2,camOutFboHQ.getWidth(),camOutFboHQ.getHeight());
-    
-    ofPushMatrix(); {
-        ofScale(0.5,0.5);
-        ofNoFill();
-        ofRect(localRoi->center.x - roiMaxRadius, localRoi->center.y - roiMaxRadius, roiMaxRadius*2, roiMaxRadius*2);
-        ofCircle(localRoi->center, localRoi->radius);
-        ofFill();
-    } ofPopMatrix();
-    
     
    /* // Blue lq receiver
     fboBlurOnePass.begin();{
@@ -457,9 +446,7 @@ void ofApp::draw(){
         ofSetColor(255, 255, 255);
     }portalFbo.end();
     
-    
-   
-    outFbo.begin();{
+    /*outFbo.begin();{
         
         camFbo.draw(0,0,outFbo.getWidth(),outFbo.getHeight());
         
@@ -470,8 +457,7 @@ void ofApp::draw(){
         //TODO: Draw blur image> fboBlurTwoPass.draw(0, 0);
         lqreceiver.draw(0, 0,outFbo.getWidth(),outFbo.getHeight());
         
-    }outFbo.end();
-    
+    }outFbo.end();*/
     
     blendFbo.begin();{
         shaderBlend.begin();{
@@ -482,12 +468,7 @@ void ofApp::draw(){
         }shaderBlend.end();
     }blendFbo.end();
     
-    outFbo.begin();
-    
-    blendFbo.draw(0,0,camFbo.getWidth(),camFbo.getHeight());
-
-    
-    
+    outFbo.begin(); {
     
     ofSetColor(255,255,255,255);
     
@@ -517,11 +498,28 @@ void ofApp::draw(){
     }ofPopMatrix();
 #endif
     
-    outFbo.end();
+} outFbo.end();
     
+    flowFbo.begin();{
+        camFbo.draw(0,0,flowFbo.getWidth(),flowFbo.getHeight());
+    }flowFbo.end();
     
     if(debugView) {
+
         
+        camFbo.draw(0,0,streamWidth/2, streamHeight/2);
+        camOutFboHQ.draw(0,streamHeight/2,camOutFboHQ.getWidth(),camOutFboHQ.getHeight());
+        
+        ofPushMatrix(); {
+            ofScale(0.5,0.5);
+            ofNoFill();
+            ofRect(localRoi->center.x - roiMaxRadius, localRoi->center.y - roiMaxRadius, roiMaxRadius*2, roiMaxRadius*2);
+            ofCircle(localRoi->center, localRoi->radius);
+            ofFill();
+        } ofPopMatrix();
+    
+        //blendFbo.draw(0,0,camFbo.getWidth(),camFbo.getHeight());
+
         ofPushMatrix();{
             ofSetColor(255,255,255,255);
             
@@ -535,17 +533,11 @@ void ofApp::draw(){
             //portalImage.draw(0,0);
             
         }ofPopMatrix();
-        
     }
     
     if(enableSyphonOut) {
         syphonOut.publishTexture(&outFbo.getTextureReference());
     }
-    
-    
-    flowFbo.begin();{
-        camFbo.draw(0,0,flowFbo.getWidth(),flowFbo.getHeight());
-    }flowFbo.end();
     
 }
 
@@ -570,6 +562,10 @@ void ofApp::exit(){
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
+    
+    if(key == 'd') {
+        debugView = !debugView;
+    }
     
 }
 
