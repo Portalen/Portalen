@@ -64,6 +64,11 @@ class ofApp : public ofBaseApp{
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
     
+        void updateFlow();
+        void sendStreams();
+        void sendOsc();
+    void receiveOsc();
+    
 #ifdef USE_WEBCAM
     ofVideoGrabber grabber;
 #endif
