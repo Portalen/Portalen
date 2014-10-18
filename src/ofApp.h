@@ -104,8 +104,6 @@ public:
     ofFbo camOutFboHQ;
     ofFbo camOutFboLQ;
     
-    
-    
     ofFbo outFbo;
     ofTexture portalTexture;
     ofPixels outPixelsHQ;
@@ -135,10 +133,8 @@ public:
     
     //ofParameter<float> roiSize;
     //ofParameter<float> roiZoom;
-    
     ofShader shaderBlurX;
     ofShader shaderBlurY;
-    
     //ofShader deinterlace;
     
     ofShader shaderDesaturate;
@@ -154,8 +150,7 @@ public:
     bool enableSyphonOut = true;
     bool fullscreen = false;
     
-    float fadeRemote = 0;
-    
+//float fadeRemote = 1;
     
     bool debugMode = false;
     

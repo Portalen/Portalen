@@ -35,7 +35,7 @@ void ofApp::setup(){
     localRoi->highPass.setQ(0.44);
     localRoi->highPass.setType(OFX_BIQUAD_TYPE_BANDPASS);
     
-    remoteRoi->center = ofVec2f(streamWidth,streamHeight);
+    remoteRoi->center = ofVec2f(streamWidth/2,streamHeight/2);
     remoteRoi->radius = 200;
     remoteRoi->zoom = 1.09;
     
@@ -71,7 +71,6 @@ void ofApp::setup(){
         shaderBlurY.load("shadersGL2/shaderBlurY");
         shaderDesaturate.load("shadersGL2/desaturate");
         shaderBlend.load("shadersGL2/blend");
-        
     }
     
     
@@ -105,7 +104,6 @@ void ofApp::setup(){
     
     hqreceiver.setup(HIGH_QUALITY_STREAM_PORT);
     lqreceiver.setup(LOW_QUALITY_STREAM_PORT);
-    
 #endif
     
     
@@ -289,14 +287,11 @@ void ofApp::updateFlow(){
         
         center = tmpCenter;
         activeRegionOfInterest = true;
-        
     }
     else
     {
         activeRegionOfInterest = false;
     }
-    
-    
 }
 
 //--------------------------------------------------------------
@@ -338,7 +333,16 @@ void ofApp::update(){
     receiveOsc();
     
     localRoi->rawCenter = ofVec2f(center.x*camFbo.getWidth(), center.y*camFbo.getHeight());
+    
+    // clamp width and height so the ROI is not grabbing pixels that doesnt exist.
+    localRoi->rawCenter.x = ofClamp(localRoi->rawCenter.x, localRoi->radius, camFbo.getWidth()-localRoi->radius);
+    
+    localRoi->rawCenter.y = ofClamp(localRoi->rawCenter.y, localRoi->radius, camFbo.getHeight()-localRoi->radius);
+    
+    // filter the ROI location
     localRoi->center = localRoi->centerFilter.update(localRoi->rawCenter);
+    
+    // highpass filter for alpha and size
     localRoi->highPass.update(ofVec2f(center.x*camFbo.getWidth(), center.y*camFbo.getHeight()));
     
     localRoi->alpha = ofMap((abs(localRoi->highPass.value().x)+abs(localRoi->highPass.value().y))/2, 0, 50, 240, 0, true);
@@ -350,7 +354,7 @@ void ofApp::update(){
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-    ofSetFullscreen(fullscreen);
+    //ofSetFullscreen(fullscreen);
     
     ofBackground(20, 20, 20);
     
@@ -446,8 +450,11 @@ void ofApp::draw(){
     
     outFbo.begin();{
         
-        //camFbo.draw(0,0,outFbo.getWidth(),outFbo.getHeight());
+        camFbo.draw(0,0,outFbo.getWidth(),outFbo.getHeight());
         
+        ofSetColor(255,255,255,255);
+        fboBlurTwoPass.draw(0, 0);
+
         ofSetColor(255,255,255,255);
         //TODO: Draw blur image> fboBlurTwoPass.draw(0, 0);
         lqreceiver.draw(0, 0,outFbo.getWidth(),outFbo.getHeight());
