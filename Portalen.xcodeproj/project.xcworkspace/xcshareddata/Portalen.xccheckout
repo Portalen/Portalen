@@ -28,6 +28,8 @@
 		<string>github.com:Portalen/Portalen.git</string>
 		<key>B7CCA6A8C889ED4C803FBF307564FD139754E943</key>
 		<string>https://github.com/patriciogonzalezvivo/ofxFX.git</string>
+		<key>BC9922FFE483A78DDBB9267B94D68853DF1435F5</key>
+		<string>https://github.com/kylemcdonald/ofxBlackmagic.git</string>
 		<key>F4CCB893AFADB97238A965FD2F28717F1CAAE613</key>
 		<string>https://github.com/astellato/ofxSyphon.git</string>
 	</dict>
@@ -36,7 +38,7 @@
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>2A03CE0CF301C466938025B767254CAAC3CB8DB0</key>
-		<string>../../../../../addons/ofxFlowTools</string>
+		<string>../../../addons/ofxFlowTools</string>
 		<key>2DE9C8846D9375EAACFABA8963120E8E7719BAF5</key>
 		<string>../../../openFrameworks</string>
 		<key>37526DA425E5430474A14FBFA1BC4525160B5FC1</key>
@@ -53,6 +55,8 @@
 		<string>../..</string>
 		<key>B7CCA6A8C889ED4C803FBF307564FD139754E943</key>
 		<string>../../../addons/ofxFX</string>
+		<key>BC9922FFE483A78DDBB9267B94D68853DF1435F5</key>
+		<string>../../../../../addons/ofxBlackmagic</string>
 		<key>F4CCB893AFADB97238A965FD2F28717F1CAAE613</key>
 		<string>../../../openFrameworks/addons/ofxSyphon</string>
 	</dict>
@@ -71,6 +75,14 @@
 			<string>3FD0A6B0728805B39B1EC65C31D9BA97C2D2ABC7</string>
 			<key>IDESourceControlWCCName</key>
 			<string>ofxBiquadFilter</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>BC9922FFE483A78DDBB9267B94D68853DF1435F5</string>
+			<key>IDESourceControlWCCName</key>
+			<string>ofxBlackmagic</string>
 		</dict>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>

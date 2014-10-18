@@ -3,6 +3,10 @@
 //--------------------------------------------------------------
 void ofApp::setup(){
     
+    ofEnableSmoothing();
+
+    syphonOut.setName("Portal");
+    
     localRoi = new RegionOfInterest();
     remoteRoi =  new RegionOfInterest();
     
@@ -46,11 +50,14 @@ void ofApp::setup(){
     
 #ifdef USE_WEBCAM
     grabber.initGrabber(streamWidth, streamHeight);
+#endif
 
-
-#else
-    canon.start();
+#ifdef USE_BLACK_MAGIC
+    blackMagicCam.setup(1920, 1080, 59.9400000000);
+#endif
     
+#ifdef USE_CANON_LIVEVIEW
+    canon.start();
 #endif
     
     if(ofIsGLProgrammableRenderer()){
@@ -60,6 +67,9 @@ void ofApp::setup(){
         shaderBlurX.load("shadersGL2/shaderBlurX");
         shaderBlurY.load("shadersGL2/shaderBlurY");
         shaderDesaturate.load("shadersGL2/desaturate");
+        
+        deinterlace.load("shadersGL2/deinterlace");
+        
     }
     
     fboBlurOnePass.allocate(streamWidth, streamHeight);
@@ -132,10 +142,23 @@ void ofApp::update(){
         grabber.draw(0, 0, camFbo.getWidth(), camFbo.getHeight());
         camFbo.end();
     }
+#endif
+
+#ifdef USE_BLACK_MAGIC
+    blackMagicCam.update();
+#endif
     
-#else
+#ifdef USE_CANON_LIVEVIEW
     if(!canon.isLiveViewActive() && canon.isSessionOpen()) {
         canon.startLiveView();
+    }
+#endif
+    
+#ifdef USE_CANON_LIVEVIEW
+    if(canon.isLiveViewActive()) {
+        camFbo.begin();
+        canon.drawLiveView();
+        camFbo.end();
     }
 #endif
     
@@ -212,29 +235,34 @@ void ofApp::update(){
             remoteRoi->radius = ofMap(remoteRoi->alpha, 0, 190, roiMaxRadius*0.8, roiMaxRadius, true);
         }
     }
-    
 }
 
 //--------------------------------------------------------------
 void ofApp::draw(){
+    ofSetFullscreen(fullscreen);
+
     ofBackground(20, 20, 20);
 
     ofSetColor(ofColor::white);
     
     float blur = 2.2f;
     
+#ifdef USE_BLACK_MAGIC
+    camFbo.begin();
+    ofPushMatrix();
+    ofTranslate(camFbo.getWidth()/2, camFbo.getHeight()/2);
+    ofScale(1.18,1.18);
+    ofTranslate(-camFbo.getWidth()/2, -camFbo.getHeight()/2);
+    
+    blackMagicCam.getColorTexture().draw(0, 0, camFbo.getWidth(), camFbo.getHeight());
+    ofPopMatrix();
+    
+    camFbo.end();
+#endif
+
+    
     //ofSetWindowTitle(ofToString(ofGetFrameRate()));
     ofSetColor(255, 255, 255, 255);
-    
-    
-#ifdef USE_WEBCAM
-#else
-    if(canon.isLiveViewActive()) {
-        camFbo.begin();
-        canon.drawLiveView();
-        camFbo.end();
-    }
-#endif
     
         camOutFboHQ.begin();
         ofBackground(0,0,0);
@@ -282,7 +310,7 @@ void ofApp::draw(){
     
     camFbo.draw(0,0,outFbo.getWidth(),outFbo.getHeight());
     
-    ofSetColor(255,255,255,200);
+    ofSetColor(255,255,255,fadeRemote*255);
     fboBlurTwoPass.draw(0, 0);
     
     ofSetColor(255,255,255,255);
@@ -311,26 +339,40 @@ void ofApp::draw(){
     
     }ofPopMatrix();
 #endif
+        
     outFbo.end();
     
-    ofPushMatrix();{
+    
+    if(debugView) {
+
+        ofPushMatrix();{
         ofSetColor(255,255,255,255);
 
-    ofTranslate(streamWidth/2,  0);
+        ofTranslate(streamWidth/2,  0);
         ofScale(0.9,0.9);
-    outFbo.draw(0,0);
+        outFbo.draw(0,0);
     
     
-    }ofPopMatrix();
+        }ofPopMatrix();
     
+    }
     
+    if(enableSyphonOut) {
+        syphonOut.publishTexture(&outFbo.getTextureReference());
+    }
 }
 
 void ofApp::exit(){
     
 #ifdef USE_WEBCAM
-#else
+#endif
+    
+#ifdef USE_CANON_LIVEVIEW
     canon.endLiveView();
+#endif
+
+#ifdef USE_BLACK_MAGIC
+    blackMagicCam.close();
 #endif
     
     hqreceiver.close();
