@@ -300,7 +300,7 @@ void ofApp::update(){
         }
     }
     
-    flowFbo.getTextureReference().setAlphaMask(portalFbo.getTextureReference());
+    //flowFbo.getTextureReference().setAlphaMask(portalFbo.getTextureReference());
     
 }
 
@@ -324,7 +324,7 @@ void ofApp::draw(){
     blackMagicCam.getColorTexture().draw(0, 0, camFbo.getWidth(), camFbo.getHeight());
     ofPopMatrix();
     
-
+#endif
 #ifdef USE_WEBCAM
 #else
     if(canon.isLiveViewActive()) {
@@ -488,7 +488,6 @@ void ofApp::draw(){
     camFbo.draw(0,0,camFbo.getWidth(),camFbo.getHeight());
     shaderBlend.end();
     blendFbo.end();
-    
    
     
     
@@ -502,14 +501,14 @@ void ofApp::draw(){
 
         
         outFbo.draw(0,0);
-        blendFbo.draw(0,0);
+        //blendFbo.draw(0,0);
 
  
     
     
         }ofPopMatrix();
     
-
+    }
     
     if(enableSyphonOut) {
         syphonOut.publishTexture(&outFbo.getTextureReference());

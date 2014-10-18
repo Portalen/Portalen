@@ -2,8 +2,8 @@
 
 
 //#define USE_WEBCAM
-//#define USE_CANON_LIVEVIEW
-#define USE_BLACK_MAGIC
+#define USE_CANON_LIVEVIEW
+//#define USE_BLACK_MAGIC
 
 #define USE_SENDER
 
@@ -146,12 +146,10 @@ class ofApp : public ofBaseApp{
 
     bool debugView = true;
     bool enableSyphonOut = true;
-    bool fullscreen = true;
+    bool fullscreen = false;
     
     float fadeRemote = 0;
 
-    ofxOpticalFlowFarneback flowSolver;
-    ofPoint center;
 
     bool debugMode = false;
     
