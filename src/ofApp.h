@@ -92,11 +92,27 @@ class ofApp : public ofBaseApp{
     ofFbo camOutFboHQ;
     ofFbo camOutFboLQ;
     
-    ofFbo outFbo;
     
+    
+    ofFbo outFbo;
+    ofTexture portalTexture;
     ofPixels outPixelsHQ;
     ofPixels outPixelsLQ;
     
+    ofFbo flowFbo;
+    ofFbo flowFboBlurX;
+    ofFbo flowFboBlurY;
+    float flowBlurAmount;
+    ofPixels flowPixels;
+    float avgFlowMagnitude;
+    ofxOpticalFlowFarneback flowSolver;
+    ofPoint center;
+    
+    ofFbo portalFbo;
+    ofPixels portalPixels;
+    
+    bool activeRegionOfInterest;
+    bool remoteActiveRegionOfInterest;
     RegionOfInterest * localRoi;
     RegionOfInterest * remoteRoi;
     
@@ -113,11 +129,13 @@ class ofApp : public ofBaseApp{
     
     ofShader shaderDesaturate;
     
+    ofShader shaderBlend;
+    ofFbo blendFbo;
+    
     ofFbo fboBlurOnePass;
     ofFbo fboBlurTwoPass;
     
-    ofxOpticalFlowFarneback flowSolver;
-    ofPoint center;
+    
 
     bool debugMode = false;
     

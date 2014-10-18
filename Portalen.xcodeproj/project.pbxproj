@@ -325,6 +325,8 @@
 		152946A319F1B1ED00CF9B58 /* ofxSliderGroup.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxSliderGroup.h; sourceTree = "<group>"; };
 		152946A419F1B1ED00CF9B58 /* ofxToggle.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ofxToggle.cpp; sourceTree = "<group>"; };
 		152946A519F1B1ED00CF9B58 /* ofxToggle.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxToggle.h; sourceTree = "<group>"; };
+		15A4331119F1F89A00052444 /* blend.frag */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = blend.frag; sourceTree = "<group>"; };
+		15A4331219F1F89A00052444 /* blend.vert */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = blend.vert; sourceTree = "<group>"; };
 		223EC08F19ED231C00FADE7C /* ofxCvBlob.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxCvBlob.h; sourceTree = "<group>"; };
 		223EC09019ED231C00FADE7C /* ofxCvColorImage.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ofxCvColorImage.cpp; sourceTree = "<group>"; };
 		223EC09119ED231C00FADE7C /* ofxCvColorImage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxCvColorImage.h; sourceTree = "<group>"; };
@@ -918,6 +920,8 @@
 		04A911B719EC8A050072CCC4 /* shadersGL2 */ = {
 			isa = PBXGroup;
 			children = (
+				15A4331119F1F89A00052444 /* blend.frag */,
+				15A4331219F1F89A00052444 /* blend.vert */,
 				04A911B819EC8A050072CCC4 /* shaderBlurX.frag */,
 				04A911B919EC8A050072CCC4 /* shaderBlurX.vert */,
 				04A911BA19EC8A050072CCC4 /* shaderBlurY.frag */,
