@@ -103,7 +103,7 @@ void ofApp::setup(){
     hqsender.setup(roiMaxRadius*2, roiMaxRadius*2, REMOTE_HOST, HIGH_QUALITY_STREAM_PORT, "slow", "zerolatency");//, "placebo", "zerolatency");
     lqsender.setup(streamWidth/8, streamHeight/8, REMOTE_HOST, LOW_QUALITY_STREAM_PORT, "veryslow", "zerolatency");//, "ultrafast", "zerolatency");
     
-    hqreceiver.setup(HIGH_QUALITY_STREAM_PORT);
+    //hqreceiver.setup(HIGH_QUALITY_STREAM_PORT);
     lqreceiver.setup(LOW_QUALITY_STREAM_PORT);
 #endif
     
@@ -158,17 +158,6 @@ void ofApp::sendStreams(){
         lqsender.sendFrame(outPixelsLQ);
 #endif
         lqFrameLastTime = currentTime;
-    }
-    
-    // Stream high quality frames
-    timePerFrame = 1.0 / hqFrameRate;
-    if (currentTime - hqFrameLastTime > timePerFrame){
-        
-        camOutFboHQ.readToPixels(outPixelsHQ);
-#ifdef USE_SENDER
-        hqsender.sendFrame(outPixelsHQ);
-#endif
-        hqFrameLastTime = currentTime;
     }
     
     timePerFrame = 1.0 / hqFrameRate;
@@ -448,11 +437,11 @@ void ofApp::draw(){
     */
     
     portalFbo.begin();{
-        ofSetColor(0, 0, 0,6);
+        ofSetColor(0, 0, 0,4);
         ofRect(0, 0, portalFbo.getWidth(), portalFbo.getHeight());
         ofSetColor(255, 255, 255, 255);
         
-        ofSetLineWidth(35.0);
+        ofSetLineWidth(85.0);
         ofSetColor(255, 255, 255, 100+155*flowMagnitude);
         
         flowSolver.draw(portalFbo.getWidth(), portalFbo.getHeight(),1.5,8);
@@ -464,13 +453,11 @@ void ofApp::draw(){
     outFbo.begin();{
         
         //camFbo.draw(0,0,outFbo.getWidth(),outFbo.getHeight());
-        
-        ofSetColor(255,255,255,255);
         //fboBlurTwoPass.draw(0, 0);
 
         ofSetColor(255,255,255,255);
         //TODO: Draw blur image> fboBlurTwoPass.draw(0, 0);
-        lqreceiver.draw(0, 0,outFbo.getWidth(),outFbo.getHeight());
+        lqreceiver.draw(outFbo.getWidth(), 0,-outFbo.getWidth(),outFbo.getHeight());
         
     }outFbo.end();
     
