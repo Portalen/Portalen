@@ -7,7 +7,7 @@
 
 #define USE_SENDER
 
-#define REMOTE_HOST "25.79.159.131" //25.91.17.173"
+#define REMOTE_HOST "25.11.133.159" //25.91.17.173"
 
 #define LOW_QUALITY_STREAM_PORT 9000
 #define HIGH_QUALITY_STREAM_PORT 9100
@@ -145,6 +145,7 @@ public:
     
     ofShader shaderBlend;
     ofFbo blendFbo;
+    ofxCvColorImage portalImage;
     
     ofFbo fboBlurOnePass;
     ofFbo fboBlurTwoPass;

@@ -4,7 +4,7 @@
 void ofApp::setup(){
     
     ofEnableSmoothing();
-    ofEnableAlphaBlending();
+    //ofEnableAlphaBlending();
     
     syphonOut.setName("Portal");
     
@@ -92,7 +92,7 @@ void ofApp::setup(){
     
     // alpha mask
     portalFbo.allocate(streamWidth, streamHeight, internalFormat);
-    
+    portalImage.allocate(streamWidth, streamHeight);
     // outfbo with above alpha mask applied
     blendFbo.allocate(streamWidth, streamHeight, internalFormat);
     
@@ -231,6 +231,20 @@ void ofApp::sendOsc(){
 
 //--------------------------------------------------------------
 void ofApp::updateFlow(){
+    
+    ofPixels portalPixels;
+    portalFbo.readToPixels(portalPixels);
+    portalImage.setFromPixels(portalPixels);
+    portalImage.dilate();
+    portalImage.dilate();
+    portalImage.dilate();
+    portalImage.dilate();
+    portalImage.erode();
+    portalImage.erode();
+    portalImage.blur();
+    /*portalFbo.begin();
+    portalImage.draw(0,0);
+    portalFbo.end();*/
     
     flowFbo.readToPixels(flowPixels);
     
@@ -396,7 +410,6 @@ void ofApp::draw(){
     
     // Blue lq receiver
     fboBlurOnePass.begin();{
-        
         shaderBlurX.begin();{
             shaderBlurX.setUniform1f("blurAmnt", blur);
             if(lqreceiver.isConnected()) {
@@ -433,11 +446,11 @@ void ofApp::draw(){
     
     outFbo.begin();{
         
-        camFbo.draw(0,0,outFbo.getWidth(),outFbo.getHeight());
+        //camFbo.draw(0,0,outFbo.getWidth(),outFbo.getHeight());
         
-        ofSetColor(255,255,255,fadeRemote*255);
-        fboBlurTwoPass.draw(0, 0);
-        
+        ofSetColor(255,255,255,255);
+        //TODO: Draw blur image> fboBlurTwoPass.draw(0, 0);
+        lqreceiver.draw(0, 0,outFbo.getWidth(),outFbo.getHeight());
         if(activeRegionOfInterest)
         {
             ofFill();
@@ -449,7 +462,7 @@ void ofApp::draw(){
 #ifdef USE_SENDER
         ofPushMatrix();{
             ofSetColor(255,255,255,remoteRoi->alpha);
-            if(remoteActiveRegionOfInterest)
+            if(true || remoteActiveRegionOfInterest)
             {
                 if(hqreceiver.isConnected()) {
                     hqreceiver.getTextureReference().bind();
@@ -494,8 +507,10 @@ void ofApp::draw(){
             ofTranslate(streamWidth/2,  0);
             ofScale(0.9,0.9);
             
-            outFbo.draw(0,0);
-            //blendFbo.draw(0,0);
+            //outFbo.draw(0,0);
+            blendFbo.draw(0,0);
+            //fboBlurOnePass.draw(0, 0,outFbo.getWidth(),outFbo.getHeight());
+            //portalImage.draw(0,0);
             
         }ofPopMatrix();
         
