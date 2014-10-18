@@ -112,13 +112,13 @@ void ofApp::setup(){
     oscReceiver.setup(OSC_DATA_PORT);
     
     
-    camFbo.begin();
+    camFbo.begin(); {
     ofBackground(0,255,0);
-    camFbo.end();
+    } camFbo.end();
     
-    outFbo.begin();
+    outFbo.begin(); {
     ofBackground(255,0,0);
-    outFbo.end();
+    } outFbo.end();
     
     int numPts  = 64;
     float angle = 0.0;
@@ -461,7 +461,7 @@ void ofApp::draw(){
         }shaderBlend.end();
     }blendFbo.end();
     
-    outFbo.begin();
+    outFbo.begin(); {
     
     ofSetColor(255,255,255,255);
     
@@ -491,14 +491,14 @@ void ofApp::draw(){
     }ofPopMatrix();
 #endif
     
-    outFbo.end();
+} outFbo.end();
     
     flowFbo.begin();{
         camFbo.draw(0,0,flowFbo.getWidth(),flowFbo.getHeight());
     }flowFbo.end();
     
     if(debugView) {
-        
+
         
         camFbo.draw(0,0,streamWidth/2, streamHeight/2);
         camOutFboHQ.draw(0,streamHeight/2,camOutFboHQ.getWidth(),camOutFboHQ.getHeight());
@@ -510,10 +510,8 @@ void ofApp::draw(){
             ofCircle(localRoi->center, localRoi->radius);
             ofFill();
         } ofPopMatrix();
-        
-        
-        
-        blendFbo.draw(0,0,camFbo.getWidth(),camFbo.getHeight());
+    
+        //blendFbo.draw(0,0,camFbo.getWidth(),camFbo.getHeight());
 
         ofPushMatrix();{
             ofSetColor(255,255,255,255);
