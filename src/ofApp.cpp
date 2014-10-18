@@ -109,6 +109,7 @@ void ofApp::setup(){
     
     
     oscSender.setup(REMOTE_HOST, OSC_DATA_PORT);
+    oscSenderAudio.setup("127.0.0.1", 12345);
     oscReceiver.setup(OSC_DATA_PORT);
     
     
@@ -275,7 +276,7 @@ void ofApp::updateFlow(){
             }
         }
     }
-    float flowMagnitude = 0.0;
+    float oscFlowMagnitude = 0.0;
    
     if(countMovingPixels > 0)
     {
@@ -284,8 +285,22 @@ void ofApp::updateFlow(){
         
     }
     totalHoriozontalFlow = 0.5+ofClamp(totalHoriozontalFlow/5000.0,-0.5,0.5);
-    flowMagnitude = 0.5+ofClamp((15.0*count)/(flowFbo.getWidth()*flowFbo.getHeight()),0.0,1.0)*0.5;
-    cout << totalHoriozontalFlow << endl;
+    oscFlowMagnitude = 0.5+ofClamp((15.0*count)/(flowFbo.getWidth()*flowFbo.getHeight()),0.0,1.0)*0.5;
+    
+    ofxOscMessage m;
+    m.setAddress("/flowMagnitude");
+    m.addFloatArg(oscFlowMagnitude);
+    oscSenderAudio.sendMessage(m);
+    
+    ofxOscMessage m2;
+    m2.setAddress("/flowHorizontal");
+    m2.addFloatArg(totalHoriozontalFlow);
+    oscSenderAudio.sendMessage(m2);
+    
+    ofxOscMessage m3;
+    m3.setAddress("/MicrophoneVolume");
+    m3.addFloatArg(flowMagnitude);
+    oscSenderAudio.sendMessage(m3);
 
     if(count>flowFbo.getWidth()*flowFbo.getHeight()*0.01f) // at least some percent
     {
@@ -446,7 +461,7 @@ void ofApp::draw(){
         ofSetColor(255, 255, 255);
     }portalFbo.end();
     
-    /*outFbo.begin();{
+    outFbo.begin();{
         
         camFbo.draw(0,0,outFbo.getWidth(),outFbo.getHeight());
         
@@ -457,7 +472,7 @@ void ofApp::draw(){
         //TODO: Draw blur image> fboBlurTwoPass.draw(0, 0);
         lqreceiver.draw(0, 0,outFbo.getWidth(),outFbo.getHeight());
         
-    }outFbo.end();*/
+    }outFbo.end();
     
     blendFbo.begin();{
         shaderBlend.begin();{
@@ -467,6 +482,7 @@ void ofApp::draw(){
             camFbo.draw(0,0,camFbo.getWidth(),camFbo.getHeight());
         }shaderBlend.end();
     }blendFbo.end();
+    
     
     outFbo.begin(); {
     
@@ -499,11 +515,11 @@ void ofApp::draw(){
 #endif
     
 } outFbo.end();
-    
+    /*
     flowFbo.begin();{
         camFbo.draw(0,0,flowFbo.getWidth(),flowFbo.getHeight());
     }flowFbo.end();
-    
+    */
     if(debugView) {
 
         
