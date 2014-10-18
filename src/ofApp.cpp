@@ -50,12 +50,15 @@ void ofApp::setup(){
     int internalFormat = GL_RGB8;
     
 #ifdef USE_WEBCAM
-    grabber.initGrabber(320, 240);
+    grabber.initGrabber(streamWidth, streamHeight);
+#endif
 
-
-#else
-    canon.start();
+#ifdef USE_BLACK_MAGIC
+    blackMagicCam.setup(1920, 1080, 59.9400000000);
+#endif
     
+#ifdef USE_CANON_LIVEVIEW
+    canon.start();
 #endif
     
     if(ofIsGLProgrammableRenderer()){
@@ -66,6 +69,7 @@ void ofApp::setup(){
         shaderBlurY.load("shadersGL2/shaderBlurY");
         shaderDesaturate.load("shadersGL2/desaturate");
          shaderBlend.load("shadersGL2/blend");
+      
     }
     
     fboBlurOnePass.allocate(streamWidth, streamHeight);
@@ -150,16 +154,26 @@ void ofApp::update(){
         grabber.draw(0, 0, camFbo.getWidth(), camFbo.getHeight());
         camFbo.end();
     }
+#endif
+
+#ifdef USE_BLACK_MAGIC
+    blackMagicCam.update();
+#endif
     
-#else
+#ifdef USE_CANON_LIVEVIEW
     if(!canon.isLiveViewActive() && canon.isSessionOpen()) {
         canon.startLiveView();
+    }
+
+    if(canon.isLiveViewActive()) {
+        camFbo.begin();
+        canon.drawLiveView();
+        camFbo.end();
     }
 #endif
     flowFbo.readToPixels(flowPixels);
     flowSolver.update(flowPixels,flowFbo.getWidth(),flowFbo.getHeight(),OF_IMAGE_COLOR);
-    
-  
+
     ofPoint vel  = ofPoint(0.0,0.0);
     float totalVel = 0.0;
     float totalVelOfActivePixels = 0.0;
@@ -241,8 +255,6 @@ void ofApp::update(){
         hqFrameLastTime = currentTime;
     }
     
-    
-    
     localRoi->rawCenter = ofVec2f(center.x*camFbo.getWidth(), center.y*camFbo.getHeight());
     localRoi->center = localRoi->centerFilter.update(localRoi->rawCenter);
     localRoi->highPass.update(ofVec2f(center.x*camFbo.getWidth(), center.y*camFbo.getHeight()));
@@ -294,16 +306,25 @@ void ofApp::update(){
 
 //--------------------------------------------------------------
 void ofApp::draw(){
+    ofSetFullscreen(fullscreen);
+
     ofBackground(20, 20, 20);
 
     ofSetColor(ofColor::white);
     
     float blur = 2.2f;
     
-    //ofSetWindowTitle(ofToString(ofGetFrameRate()));
-    ofSetColor(255, 255, 255, 255);
+#ifdef USE_BLACK_MAGIC
+    camFbo.begin();
+    ofPushMatrix();
+    ofTranslate(camFbo.getWidth()/2, camFbo.getHeight()/2);
+    ofScale(1.18,1.18);
+    ofTranslate(-camFbo.getWidth()/2, -camFbo.getHeight()/2);
     
+    blackMagicCam.getColorTexture().draw(0, 0, camFbo.getWidth(), camFbo.getHeight());
+    ofPopMatrix();
     
+
 #ifdef USE_WEBCAM
 #else
     if(canon.isLiveViewActive()) {
@@ -338,7 +359,14 @@ void ofApp::draw(){
         // done bluring flow image
          */
     }
+
+    camFbo.end();
+
 #endif
+
+    
+    //ofSetWindowTitle(ofToString(ofGetFrameRate()));
+    ofSetColor(255, 255, 255, 255);
     
         camOutFboHQ.begin();
         ofBackground(0,0,0);
@@ -405,7 +433,7 @@ void ofApp::draw(){
     
     camFbo.draw(0,0,outFbo.getWidth(),outFbo.getHeight());
     
-    ofSetColor(255,255,255,200);
+    ofSetColor(255,255,255,fadeRemote*255);
     fboBlurTwoPass.draw(0, 0);
     
     if(activeRegionOfInterest)
@@ -448,7 +476,7 @@ void ofApp::draw(){
     
     }ofPopMatrix();
 #endif
-    
+
     outFbo.end();
 
     
@@ -463,20 +491,30 @@ void ofApp::draw(){
     
    
     
-    ofPushMatrix();{
+    
+    if(debugView) {
+
+        ofPushMatrix();{
         ofSetColor(255,255,255,255);
 
-    ofTranslate(streamWidth/2,  0);
+        ofTranslate(streamWidth/2,  0);
         ofScale(0.9,0.9);
+
         
         outFbo.draw(0,0);
         blendFbo.draw(0,0);
+
+ 
     
     
-    }ofPopMatrix();
+        }ofPopMatrix();
     
+
     
-    syphonOut.publishTexture(&outFbo.getTextureReference());
+    if(enableSyphonOut) {
+        syphonOut.publishTexture(&outFbo.getTextureReference());
+    }
+
     
     
 
@@ -489,8 +527,14 @@ void ofApp::draw(){
 void ofApp::exit(){
     
 #ifdef USE_WEBCAM
-#else
+#endif
+    
+#ifdef USE_CANON_LIVEVIEW
     canon.endLiveView();
+#endif
+
+#ifdef USE_BLACK_MAGIC
+    blackMagicCam.close();
 #endif
     
     hqreceiver.close();
