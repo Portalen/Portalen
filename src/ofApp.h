@@ -2,8 +2,8 @@
 
 
 //#define USE_WEBCAM
-#define USE_CANON_LIVEVIEW
-//#define USE_BLACK_MAGIC
+//#define USE_CANON_LIVEVIEW
+#define USE_BLACK_MAGIC
 
 #define USE_SENDER
 
