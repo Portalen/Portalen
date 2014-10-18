@@ -12,6 +12,7 @@
 #define LOW_QUALITY_STREAM_PORT 9000
 #define HIGH_QUALITY_STREAM_PORT 9100
 #define OSC_DATA_PORT 9200
+#define OSC_AUDIO_PORT 12345
 
 #include "ofMain.h"
 #include "ofxStreamer.h"
@@ -83,6 +84,7 @@ public:
     
     ofxOscReceiver oscReceiver;
     ofxOscSender oscSender;
+     ofxOscSender oscSenderAudio;
     
     ofxStreamerReceiver hqreceiver;
     ofxStreamerReceiver lqreceiver;

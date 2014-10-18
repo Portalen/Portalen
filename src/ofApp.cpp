@@ -29,7 +29,7 @@ void ofApp::setup(){
     localRoi->radius = 200;
     localRoi->zoom = 1.09;
     
-    localRoi->centerFilter.setFc(0.04);
+    localRoi->centerFilter.setFc(0.02);
     localRoi->centerFilter.setType(OFX_BIQUAD_TYPE_LOWPASS);
     
     localRoi->highPass.setFc(0.04);
@@ -40,7 +40,7 @@ void ofApp::setup(){
     remoteRoi->radius = 200;
     remoteRoi->zoom = 1.09;
     
-    remoteRoi->centerFilter.setFc(0.05);
+    remoteRoi->centerFilter.setFc(0.02);
     remoteRoi->centerFilter.setType(OFX_BIQUAD_TYPE_LOWPASS);
     
     remoteRoi->highPass.setFc(0.1);
@@ -254,6 +254,7 @@ void ofApp::updateFlow(){
     float totalVelOfActivePixels = 0.0;
     int count = 0;
     int countMovingPixels = 0;
+    float totalHoriozontalFlow = 0.0;
     ofPoint tmpCenter = ofPoint(0.0,0.0);
     for(int x = 0; x < flowFbo.getWidth(); x++){
         for(int y = 0; y < flowFbo.getHeight(); y++){
@@ -262,6 +263,7 @@ void ofApp::updateFlow(){
             {
                 totalVel += vel.length();
                 countMovingPixels++;
+                totalHoriozontalFlow += vel.x;
             }
             
             if(vel.length()>avgFlowMagnitude)
@@ -273,13 +275,18 @@ void ofApp::updateFlow(){
             }
         }
     }
-    
+    float flowMagnitude = 0.0;
+   
     if(countMovingPixels > 0)
     {
         avgFlowMagnitude = fmaxf(10.0, ofLerp(avgFlowMagnitude, totalVel/countMovingPixels, 0.05));
+       
+        
     }
-    
-    
+    totalHoriozontalFlow = 0.5+ofClamp(totalHoriozontalFlow/5000.0,-0.5,0.5);
+    flowMagnitude = 0.5+ofClamp((15.0*count)/(flowFbo.getWidth()*flowFbo.getHeight()),0.0,1.0)*0.5;
+    cout << totalHoriozontalFlow << endl;
+
     if(count>flowFbo.getWidth()*flowFbo.getHeight()*0.01f) // at least some percent
     {
         flowMagnitude = ofLerp(flowMagnitude, 1.0, 0.15);
@@ -348,7 +355,7 @@ void ofApp::update(){
     // highpass filter for alpha and size
     localRoi->highPass.update(ofVec2f(center.x*camFbo.getWidth(), center.y*camFbo.getHeight()));
     
-    localRoi->alpha = ofMap((abs(localRoi->highPass.value().x)+abs(localRoi->highPass.value().y))/2, 0, 50, 240, 0, true);
+    localRoi->alpha = 100+ofMap((abs(localRoi->highPass.value().x)+abs(localRoi->highPass.value().y))/2, 0, 50, 240, 0, true);
     localRoi->zoom = ofMap(localRoi->alpha, 0, 240, 0.6, 1.15, true);
     localRoi->radius = ofMap(localRoi->alpha, 0, 190, roiMaxRadius*0.8, roiMaxRadius, true);
     
