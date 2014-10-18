@@ -149,6 +149,7 @@ public:
     bool debugView = true;
     bool enableSyphonOut = true;
     bool fullscreen = false;
+    float flowMagnitude;
     
 //float fadeRemote = 1;
     
