@@ -146,9 +146,10 @@ public:
     ofFbo fboBlurOnePass;
     ofFbo fboBlurTwoPass;
     
-    bool debugView = true;
+    bool debugView = false;
     bool enableSyphonOut = true;
     bool fullscreen = false;
+    float flowMagnitude;
     
 //float fadeRemote = 1;
         

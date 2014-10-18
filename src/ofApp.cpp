@@ -19,6 +19,7 @@ void ofApp::setup(){
     //ofLogLevel(OF_LOG_SILENT);
     ofSetFrameRate(30);
     
+    flowMagnitude = 0.0f;
     streamWidth = 1056;
     streamHeight = 704;
     
@@ -281,6 +282,7 @@ void ofApp::updateFlow(){
     
     if(count>flowFbo.getWidth()*flowFbo.getHeight()*0.01f) // at least some percent
     {
+        flowMagnitude = ofLerp(flowMagnitude, 1.0, 0.15);
         tmpCenter /= totalVelOfActivePixels;
         tmpCenter.x /= flowFbo.getWidth();
         tmpCenter.y /= flowFbo.getHeight();
@@ -290,6 +292,7 @@ void ofApp::updateFlow(){
     }
     else
     {
+        flowMagnitude = ofLerp(flowMagnitude, 0.0, 0.05);
         activeRegionOfInterest = false;
     }
 }
@@ -400,7 +403,8 @@ void ofApp::draw(){
         }shaderDesaturate.end();
     }camOutFboLQ.end();
     
-    // Blue lq receiver
+    
+   /* // Blue lq receiver
     fboBlurOnePass.begin();{
         shaderBlurX.begin();{
             shaderBlurX.setUniform1f("blurAmnt", blur);
@@ -419,14 +423,15 @@ void ofApp::draw(){
         }shaderBlurY.end();
     }fboBlurTwoPass.end();
     // done blurring lq receiver
-    
+    */
     
     portalFbo.begin();{
-        ofSetColor(0, 0, 0,10);
+        ofSetColor(0, 0, 0,6);
         ofRect(0, 0, portalFbo.getWidth(), portalFbo.getHeight());
         ofSetColor(255, 255, 255, 255);
         
-        ofSetLineWidth(25.0);
+        ofSetLineWidth(35.0);
+        ofSetColor(255, 255, 255, 255*flowMagnitude);
         
         flowSolver.draw(portalFbo.getWidth(), portalFbo.getHeight(),1.5,8);
         ofSetLineWidth(1.0);
@@ -434,9 +439,7 @@ void ofApp::draw(){
         ofSetColor(255, 255, 255);
     }portalFbo.end();
     
-    
-    
-    outFbo.begin();{
+    /*outFbo.begin();{
         
         camFbo.draw(0,0,outFbo.getWidth(),outFbo.getHeight());
         
@@ -446,41 +449,8 @@ void ofApp::draw(){
         ofSetColor(255,255,255,255);
         //TODO: Draw blur image> fboBlurTwoPass.draw(0, 0);
         lqreceiver.draw(0, 0,outFbo.getWidth(),outFbo.getHeight());
-        if(activeRegionOfInterest)
-        {
-            ofFill();
-            ofCircle(center.x*camFbo.getWidth() , center.y*camFbo.getHeight(), 50);
-        }
         
-        ofSetColor(255,255,255,255);
-        
-#ifdef USE_SENDER
-        ofPushMatrix();{
-            ofSetColor(255,255,255,remoteRoi->alpha);
-            if(true || remoteActiveRegionOfInterest)
-            {
-                if(hqreceiver.isConnected()) {
-                    hqreceiver.getTextureReference().bind();
-                    
-                    //ofCircle(localRoi->center*ofVec2f(streamWidth/2, streamHeight/2), localRoi->radius*streamHeight);
-                    ofTranslate(remoteRoi->center);
-                    ofScale(remoteRoi->zoom, remoteRoi->zoom);
-                    
-                    glBegin(GL_POLYGON); {
-                        for(int i = 0; i < NormCirclePts.size(); i++){
-                            glTexCoord2f(NormCircleCoords[i].x, NormCircleCoords[i].y);
-                            glVertex2f( NormCirclePts[i].x * remoteRoi->radius,  NormCirclePts[i].y * remoteRoi->radius);
-                        }
-                    } glEnd();
-                    
-                    hqreceiver.getTextureReference().unbind();
-                }
-            }
-            
-        }ofPopMatrix();
-#endif
-        
-    }outFbo.end();
+    }outFbo.end();*/
     
     blendFbo.begin();{
         shaderBlend.begin();{
@@ -491,12 +461,44 @@ void ofApp::draw(){
         }shaderBlend.end();
     }blendFbo.end();
     
+    outFbo.begin();
+    
+    ofSetColor(255,255,255,255);
+    
+#ifdef USE_SENDER
+    ofPushMatrix();{
+        ofSetColor(255,255,255,remoteRoi->alpha);
+        if(true || remoteActiveRegionOfInterest)
+        {
+            if(hqreceiver.isConnected()) {
+                hqreceiver.getTextureReference().bind();
+                
+                //ofCircle(localRoi->center*ofVec2f(streamWidth/2, streamHeight/2), localRoi->radius*streamHeight);
+                ofTranslate(remoteRoi->center);
+                ofScale(remoteRoi->zoom, remoteRoi->zoom);
+                
+                glBegin(GL_POLYGON); {
+                    for(int i = 0; i < NormCirclePts.size(); i++){
+                        glTexCoord2f(NormCircleCoords[i].x, NormCircleCoords[i].y);
+                        glVertex2f( NormCirclePts[i].x * remoteRoi->radius,  NormCirclePts[i].y * remoteRoi->radius);
+                    }
+                } glEnd();
+                
+                hqreceiver.getTextureReference().unbind();
+            }
+        }
+        
+    }ofPopMatrix();
+#endif
+    
+    outFbo.end();
     
     flowFbo.begin();{
         camFbo.draw(0,0,flowFbo.getWidth(),flowFbo.getHeight());
     }flowFbo.end();
     
     if(debugView) {
+        
         
         camFbo.draw(0,0,streamWidth/2, streamHeight/2);
         camOutFboHQ.draw(0,streamHeight/2,camOutFboHQ.getWidth(),camOutFboHQ.getHeight());
@@ -509,6 +511,10 @@ void ofApp::draw(){
             ofFill();
         } ofPopMatrix();
         
+        
+        
+        blendFbo.draw(0,0,camFbo.getWidth(),camFbo.getHeight());
+
         ofPushMatrix();{
             ofSetColor(255,255,255,255);
             
@@ -516,7 +522,8 @@ void ofApp::draw(){
             ofScale(0.9,0.9);
             
             //outFbo.draw(0,0);
-            blendFbo.draw(0,0);
+            //lqreceiver.draw(0,0,500,500);
+            outFbo.draw(0,0);
             //fboBlurOnePass.draw(0, 0,outFbo.getWidth(),outFbo.getHeight());
             //portalImage.draw(0,0);
             
@@ -550,6 +557,10 @@ void ofApp::exit(){
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
+    
+    if(key == 'd') {
+        debugView = !debugView;
+    }
     
 }
 
