@@ -171,17 +171,6 @@ void ofApp::sendStreams(){
         hqFrameLastTime = currentTime;
     }
     
-    timePerFrame = 1.0 / hqFrameRate;
-    if (currentTime - hqFrameLastTime > timePerFrame){
-        
-        camOutFboHQ.readToPixels(outPixelsHQ);
-#ifdef USE_SENDER
-        hqsender.sendFrame(outPixelsHQ);
-#endif
-        hqFrameLastTime = currentTime;
-    }
-    
-    
     
 }
 
@@ -242,13 +231,8 @@ void ofApp::updateFlow(){
     portalImage.erode();
     portalImage.erode();
     portalImage.blur();
-    /*portalFbo.begin();
-    portalImage.draw(0,0);
-    portalFbo.end();*/
     
     flowFbo.readToPixels(flowPixels);
-    
-    flowSolver.update(flowPixels,flowFbo.getWidth(),flowFbo.getHeight(),OF_IMAGE_COLOR);
     
     ofPoint vel  = ofPoint(0.0,0.0);
     float totalVel = 0.0;
@@ -281,8 +265,6 @@ void ofApp::updateFlow(){
     if(countMovingPixels > 0)
     {
         avgFlowMagnitude = fmaxf(10.0, ofLerp(avgFlowMagnitude, totalVel/countMovingPixels, 0.05));
-       
-        
     }
     totalHoriozontalFlow = 0.5+ofClamp(totalHoriozontalFlow/5000.0,-0.5,0.5);
     oscFlowMagnitude = 0.5+ofClamp((15.0*count)/(flowFbo.getWidth()*flowFbo.getHeight()),0.0,1.0)*0.5;
@@ -410,7 +392,6 @@ void ofApp::draw(){
 #endif
     
     
-    //ofSetWindowTitle(ofToString(ofGetFrameRate()));
     ofSetColor(255, 255, 255, 255);
     
     camOutFboHQ.begin();{
@@ -447,7 +428,7 @@ void ofApp::draw(){
     // done blurring lq receiver
     */
     
-    portalFbo.begin();{
+    /*portalFbo.begin();{
         ofSetColor(0, 0, 0,6);
         ofRect(0, 0, portalFbo.getWidth(), portalFbo.getHeight());
         ofSetColor(255, 255, 255, 255);
@@ -459,7 +440,7 @@ void ofApp::draw(){
         ofSetLineWidth(1.0);
         
         ofSetColor(255, 255, 255);
-    }portalFbo.end();
+    }portalFbo.end();*/
     
     outFbo.begin();{
         
@@ -491,9 +472,10 @@ void ofApp::draw(){
 #ifdef USE_SENDER
     ofPushMatrix();{
         ofSetColor(255,255,255,remoteRoi->alpha);
-        if(true || remoteActiveRegionOfInterest)
+        if(true || remoteActiveRegionOfInterest) //always true what
         {
             if(hqreceiver.isConnected()) {
+                                
                 hqreceiver.getTextureReference().bind();
                 
                 //ofCircle(localRoi->center*ofVec2f(streamWidth/2, streamHeight/2), localRoi->radius*streamHeight);
@@ -542,7 +524,7 @@ void ofApp::draw(){
             ofTranslate(streamWidth/2,  0);
             ofScale(0.9,0.9);
             
-            outFbo.draw(0,0);
+            camFbo.draw(0,0);
             //lqreceiver.draw(0,0,500,500);
             //outFbo.draw(0,0);
             //fboBlurOnePass.draw(0, 0,outFbo.getWidth(),outFbo.getHeight());
