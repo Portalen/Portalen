@@ -474,7 +474,13 @@ void ofApp::draw(){
         if(true || remoteActiveRegionOfInterest) //always true what
         {
             if(hqreceiver.isConnected()) {
-                                
+            
+                ofPushMatrix();{
+                
+                    ofTranslate(outFbo.getWidth()/2, outFbo.getHeight()/2);
+                    ofRotateX(180);
+                    ofTranslate(-outFbo.getWidth()/2, -outFbo.getHeight()/2);
+                
                 hqreceiver.getTextureReference().bind();
                 
                 //ofCircle(localRoi->center*ofVec2f(streamWidth/2, streamHeight/2), localRoi->radius*streamHeight);
@@ -489,6 +495,8 @@ void ofApp::draw(){
                 } glEnd();
                 
                 hqreceiver.getTextureReference().unbind();
+            }ofPopMatrix();
+
             }
         }
         
