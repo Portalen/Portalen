@@ -428,12 +428,13 @@ void ofApp::draw(){
     // done blurring lq receiver
     */
     
-    /*portalFbo.begin();{
-        ofSetColor(0, 0, 0,6);
+    /*
+    portalFbo.begin();{
+        ofSetColor(0, 0, 0,4);
         ofRect(0, 0, portalFbo.getWidth(), portalFbo.getHeight());
         ofSetColor(255, 255, 255, 255);
         
-        ofSetLineWidth(35.0);
+        ofSetLineWidth(85.0);
         ofSetColor(255, 255, 255, 100+155*flowMagnitude);
         
         flowSolver.draw(portalFbo.getWidth(), portalFbo.getHeight(),1.5,8);
@@ -445,13 +446,11 @@ void ofApp::draw(){
     outFbo.begin();{
         
         //camFbo.draw(0,0,outFbo.getWidth(),outFbo.getHeight());
-        
-        ofSetColor(255,255,255,255);
         //fboBlurTwoPass.draw(0, 0);
 
         ofSetColor(255,255,255,255);
         //TODO: Draw blur image> fboBlurTwoPass.draw(0, 0);
-        lqreceiver.draw(0, 0,outFbo.getWidth(),outFbo.getHeight());
+        lqreceiver.draw(outFbo.getWidth(), 0,-outFbo.getWidth(),outFbo.getHeight());
         
     }outFbo.end();
     
